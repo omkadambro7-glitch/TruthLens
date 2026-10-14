@@ -74,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       subtitle: 'Medical, Invoices & Claims'
     },
     {
-      to: '/verify/image?mode=deepfake',
+      to: '/verify/video',
       label: 'Deepfake Video Radar',
       icon: Video,
       badge: 'Biometric',
@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       subtitle: 'Face Swaps & Lip Sync'
     },
     {
-      to: '/verify/image?mode=voice',
+      to: '/verify/voice',
       label: 'AI Voice Clone Detector',
       icon: Mic,
       badge: 'Acoustic',
@@ -90,7 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       subtitle: 'ElevenLabs & Synthetic TTS'
     },
     {
-      to: '/verify/image?mode=text',
+      to: '/verify/text',
       label: 'AI Text & Essay Scanner',
       icon: FileCode,
       badge: 'Perplexity',
@@ -98,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       subtitle: 'ChatGPT & Token Burstiness'
     },
     {
-      to: '/verify/certificate?mode=invoice',
+      to: '/verify/invoice',
       label: 'Receipt & Expense Tamper',
       icon: Receipt,
       badge: 'Financial',
@@ -106,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       subtitle: 'Photoshop Inconsistency'
     },
     {
-      to: '/verify/certificate?mode=kyc',
+      to: '/verify/kyc',
       label: 'KYC & ID Card Scanner',
       icon: CreditCard,
       badge: 'Security',

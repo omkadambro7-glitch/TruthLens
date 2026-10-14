@@ -10,6 +10,11 @@ import { LanguageProvider } from './context/LanguageContext';
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const ImageVerifyPage = lazy(() => import('./pages/ImageVerifyPage'));
 const CertificateVerifyPage = lazy(() => import('./pages/CertificateVerifyPage'));
+const VideoVerifyPage = lazy(() => import('./pages/VideoVerifyPage'));
+const VoiceVerifyPage = lazy(() => import('./pages/VoiceVerifyPage'));
+const TextVerifyPage = lazy(() => import('./pages/TextVerifyPage'));
+const InvoiceVerifyPage = lazy(() => import('./pages/InvoiceVerifyPage'));
+const KycVerifyPage = lazy(() => import('./pages/KycVerifyPage'));
 const AccuracyPage = lazy(() => import('./pages/AccuracyPage'));
 const LearnPage = lazy(() => import('./pages/LearnPage'));
 const SosPage = lazy(() => import('./pages/SosPage'));
@@ -67,6 +72,15 @@ function AppContent() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/verify/image" element={<ImageVerifyPage />} />
               <Route path="/verify/certificate" element={<CertificateVerifyPage />} />
+              <Route path="/verify/video" element={<VideoVerifyPage />} />
+              <Route path="/verify/deepfake" element={<VideoVerifyPage />} />
+              <Route path="/verify/voice" element={<VoiceVerifyPage />} />
+              <Route path="/verify/audio" element={<VoiceVerifyPage />} />
+              <Route path="/verify/text" element={<TextVerifyPage />} />
+              <Route path="/verify/invoice" element={<InvoiceVerifyPage />} />
+              <Route path="/verify/receipt" element={<InvoiceVerifyPage />} />
+              <Route path="/verify/kyc" element={<KycVerifyPage />} />
+              <Route path="/verify/id" element={<KycVerifyPage />} />
               <Route path="/accuracy" element={<AccuracyPage />} />
               <Route path="/learn" element={<LearnPage />} />
               <Route path="/learn/:slug" element={<LearnPage />} />

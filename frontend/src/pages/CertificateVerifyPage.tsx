@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   FileText, 
@@ -25,11 +26,22 @@ import { SAMPLE_CERTIFICATE_CASES, getApiBaseUrl } from '../utils/apiClient';
 
 export const CertificateVerifyPage: React.FC = () => {
   const { t } = useLanguage();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [studentMode, setStudentMode] = useState<boolean>(false);
   const [result, setResult] = useState<CertificateVerificationResult | null>(null);
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    if (mode === 'invoice' || mode === 'receipt') {
+      navigate('/verify/invoice', { replace: true });
+    } else if (mode === 'kyc' || mode === 'id') {
+      navigate('/verify/kyc', { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   const loadSampleCertificate = (key: 'latency' | 'authentic' | 'missing') => {
     setIsVerifying(true);

@@ -49,11 +49,25 @@ export const ImageVerifyPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'heatmap'>('overview');
 
   useEffect(() => {
+    const mode = searchParams.get('mode');
+    if (mode === 'deepfake' || mode === 'video') {
+      navigate('/verify/video', { replace: true });
+      return;
+    }
+    if (mode === 'voice' || mode === 'audio') {
+      navigate('/verify/voice', { replace: true });
+      return;
+    }
+    if (mode === 'text' || mode === 'essay') {
+      navigate('/verify/text', { replace: true });
+      return;
+    }
+
     const sample = searchParams.get('sample');
     if (sample && (sample === 'deepfake' || sample === 'real' || sample === 'compressed')) {
       loadSample(sample);
     }
-  }, [searchParams]);
+  }, [searchParams, navigate]);
 
   useEffect(() => {
     if (location.state && (location.state as any).initialFile) {

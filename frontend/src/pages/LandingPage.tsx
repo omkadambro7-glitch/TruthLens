@@ -45,7 +45,7 @@ export const LandingPage: React.FC = () => {
       desc: 'Verify "damaged item" and "wrong order" photos before credit or refund is issued. Stop staged, edited, and fully AI-generated claim evidence.',
       badge: 'DELIVERY',
       attackPattern: 'A customer prompts an AI image model: "make this food look undercooked" and claims an instant automated refund across multiple accounts.',
-      link: '/verify/image',
+      link: '/verify/invoice',
       actionText: 'Explore Claim Verification'
     },
     {
@@ -72,7 +72,7 @@ export const LandingPage: React.FC = () => {
       desc: 'Flag AI-generated ID photos, manipulated document scans, and forged bank statement PDFs during customer onboarding and account verification.',
       badge: 'KYC & BANKING',
       attackPattern: 'An applicant submits a synthetic diffusion portrait on a forged utility bill. Both pass basic template checks because the document never existed.',
-      link: '/verify/certificate',
+      link: '/verify/kyc',
       actionText: 'Review Identity Documents'
     },
     {
@@ -90,7 +90,7 @@ export const LandingPage: React.FC = () => {
       desc: 'Screen images, video stills, and breaking news claims for synthetic generation before publication, preventing viral social hoaxes.',
       badge: 'JOURNALISM',
       attackPattern: 'A fabricated image of an explosion or political event is seeded on social media during a breaking news cycle to manipulate public sentiment.',
-      link: '/verify/image',
+      link: '/verify/video',
       actionText: 'Analyze Breaking Media'
     }
   ];
@@ -170,22 +170,30 @@ export const LandingPage: React.FC = () => {
             {/* Left Column: Headline & Action Buttons */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Pill Category Badges */}
+              {/* Pill Category Badges with Direct Engine Links */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
+                <Link to="/verify/image" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 hover:bg-red-100/80 border border-red-200 shadow-2xs transition-all">
                   <Sparkles className="w-3.5 h-3.5 text-[#DC052D]" />
-                  <span>AI Image Detection</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#001F4D] bg-slate-100 border border-slate-200 shadow-2xs">
-                  <span>PDF Document Detection</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
-                  <span>Deepfake Radar</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-50 border border-amber-200 shadow-2xs">
-                  <span className="text-[#FFCC00]">★</span>
-                  <span>100% Free Forever</span>
-                </span>
+                  <span>AI Images</span>
+                </Link>
+                <Link to="/verify/certificate" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#001F4D] bg-slate-100 hover:bg-slate-200/80 border border-slate-200 shadow-2xs transition-all">
+                  <span>PDF Documents</span>
+                </Link>
+                <Link to="/verify/video" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 hover:bg-red-100/80 border border-red-200 shadow-2xs transition-all">
+                  <span>Deepfake Video</span>
+                </Link>
+                <Link to="/verify/voice" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100/80 border border-amber-200 shadow-2xs transition-all">
+                  <span>Voice Clones</span>
+                </Link>
+                <Link to="/verify/text" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-sky-900 bg-sky-50 hover:bg-sky-100/80 border border-sky-200 shadow-2xs transition-all">
+                  <span>AI Text & LLM</span>
+                </Link>
+                <Link to="/verify/invoice" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100/80 border border-amber-200 shadow-2xs transition-all">
+                  <span>Invoices & Receipts</span>
+                </Link>
+                <Link to="/verify/kyc" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 hover:bg-red-100/80 border border-red-200 shadow-2xs transition-all">
+                  <span>KYC ID Cards</span>
+                </Link>
               </div>
 
               {/* Main Enterprise Headline with Bayern Munich Gradient */}

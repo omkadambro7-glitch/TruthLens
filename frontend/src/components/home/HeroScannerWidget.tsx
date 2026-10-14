@@ -43,7 +43,7 @@ const CASES: ScanCase[] = [
     sourceCheck: 'Digital PDF Re-rendered with Altered Font Kern',
     metadataCheck: 'Producer: PyMuPDF / Altered 14 mins post-creation',
     indicatorCheck: 'Invoice total artificially inflated by $184.20',
-    link: '/verify/certificate'
+    link: '/verify/invoice'
   },
   {
     id: 'portrait',
