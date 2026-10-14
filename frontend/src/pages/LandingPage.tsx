@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, 
   Upload, 
@@ -17,9 +17,17 @@ import {
   Activity,
   CheckCircle2,
   Cpu,
-  Share2
+  Share2,
+  Zap,
+  Globe,
+  FileText,
+  Check,
+  X,
+  ExternalLink,
+  HeartHandshake
 } from 'lucide-react';
-import { TruthLensIcon } from '../components/brand/Logo';
+import { TruthLensIcon, TruthLensLogo } from '../components/brand/Logo';
+import { HeroScannerWidget } from '../components/home/HeroScannerWidget';
 import { ForensicComparator } from '../components/ui/ForensicComparator';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -28,377 +36,576 @@ export const LandingPage: React.FC = () => {
   const { t } = useLanguage();
   const { loginAsDemo } = useAuth();
   const navigate = useNavigate();
-  const [dragActive, setDragActive] = useState(false);
   const [selectedFaq, setSelectedFaq] = useState<number | null>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      navigate('/verify/image', { state: { initialFile: file } });
+  const fraudSurfaces = [
+    {
+      category: 'DELIVERY & MARKETPLACES',
+      title: 'Refund & Damage Claims',
+      desc: 'Verify "damaged item" and "wrong order" photos before credit or refund is issued. Stop staged, edited, and fully AI-generated claim evidence.',
+      badge: 'DELIVERY',
+      attackPattern: 'A customer prompts an AI image model: "make this food look undercooked" and claims an instant automated refund across multiple accounts.',
+      link: '/verify/image',
+      actionText: 'Explore Claim Verification'
+    },
+    {
+      category: 'INSURANCE & WARRANTY',
+      title: 'Claims Evidence Screening',
+      desc: 'Screen damage photos, injury imagery, and supporting documents in auto, property, health, and casualty claims before adjusters approve payouts.',
+      badge: 'INSURANCE',
+      attackPattern: 'A claimant photographs an undamaged car bumper, prompts an AI model to add a dent, and generates a matching synthetic repair invoice.',
+      link: '/verify/image',
+      actionText: 'Inspect Insurance Claims'
+    },
+    {
+      category: 'HEALTHCARE & ACADEMIA',
+      title: 'Medical Certificate & Health Validation',
+      desc: 'Confirm patient- and student-submitted certificates are authentic. Structured OCR extracts registration numbers, hospital stamps, and date sequence latency.',
+      badge: 'HEALTHCARE',
+      attackPattern: 'A student regenerates a hospital clearance letterhead with altered dates using a PDF generator. It passes basic OCR, but fails forensic font alignment.',
+      link: '/verify/certificate',
+      actionText: 'Validate Medical Notes'
+    },
+    {
+      category: 'KYC & FINANCIAL SERVICES',
+      title: 'Identity & Document Verification',
+      desc: 'Flag AI-generated ID photos, manipulated document scans, and forged bank statement PDFs during customer onboarding and account verification.',
+      badge: 'KYC & BANKING',
+      attackPattern: 'An applicant submits a synthetic diffusion portrait on a forged utility bill. Both pass basic template checks because the document never existed.',
+      link: '/verify/certificate',
+      actionText: 'Review Identity Documents'
+    },
+    {
+      category: 'E-COMMERCE & RETAIL',
+      title: 'Listing Integrity & Counterfeit Screening',
+      desc: 'Screen product photos to detect synthetic goods, AI-generated merchandise, and duplicate fraudulent storefronts before listings go live.',
+      badge: 'E-COMMERCE',
+      attackPattern: 'Drop-shippers list luxury goods with photorealistic AI photos of products they do not possess, collecting upfront payments on vaporware.',
+      link: '/verify/image',
+      actionText: 'Screen Product Listings'
+    },
+    {
+      category: 'MEDIA & MISINFORMATION',
+      title: 'Deepfake & News Footage Authenticity',
+      desc: 'Screen images, video stills, and breaking news claims for synthetic generation before publication, preventing viral social hoaxes.',
+      badge: 'JOURNALISM',
+      attackPattern: 'A fabricated image of an explosion or political event is seeded on social media during a breaking news cycle to manipulate public sentiment.',
+      link: '/verify/image',
+      actionText: 'Analyze Breaking Media'
     }
-  };
+  ];
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      navigate('/verify/image', { state: { initialFile: file } });
-    }
-  };
-
-  const interactiveShowcases = [
+  const comparisonRows = [
     {
-      id: 'deepfake',
-      title: 'Synthesized AI Portrait (Diffusion v6)',
-      tag: 'LIKELY FAKE (94%)',
-      tagColor: 'text-[#DC2626] bg-[#FEF2F2] border-red-200',
-      img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80',
-      anomaly: 'Corneal specular mismatch & high-frequency checkerboard grid artifacts.',
-      link: '/verify/image?sample=deepfake'
+      feature: 'Image and PDF detection, one platform',
+      truthlens: 'Yes — Dual Dedicated Forensic Engines',
+      truthscan: 'Yes (Expensive Tier)',
+      manual: 'No (Siloed teams)'
     },
     {
-      id: 'authentic',
-      title: 'Optical Sensor Portrait (Fuji X100V)',
-      tag: 'LIKELY REAL (91%)',
-      tagColor: 'text-[#10B981] bg-[#ECFDF5] border-emerald-200',
-      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
-      anomaly: 'Natural Poisson-Gaussian sensor noise and coherent ambient light reflection.',
-      link: '/verify/image?sample=real'
+      feature: 'Verdict speed',
+      truthlens: '1–2 Seconds, Real-time',
+      truthscan: '1–2 Seconds',
+      manual: '10–25 Mins per case'
     },
     {
-      id: 'certificate',
-      title: 'Retrospective Medical Leave Note',
-      tag: 'REVIEW RECOMMENDED',
-      tagColor: 'text-[#F59E0B] bg-[#FFFBEB] border-amber-200',
-      img: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
-      anomaly: 'Certificate issued 4 days after leave commenced. Verified physician credentials.',
-      link: '/verify/certificate'
+      feature: 'Detects modern AI generators (Diffusion/Flux/Midjourney)',
+      truthlens: 'Purpose-built, continuously calibrated',
+      truthscan: 'Commercial model',
+      manual: 'Unreliable (fails 60% of time)'
     },
     {
-      id: 'compressed',
-      title: 'Social Media Re-compression (WhatsApp)',
-      tag: 'NEEDS HUMAN REVIEW',
-      tagColor: 'text-[#6366F1] bg-[#EEF2FF] border-indigo-200',
-      img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
-      anomaly: 'Abstention zone triggered: Q<65 compression masks fine forensic signals.',
-      link: '/verify/image?sample=compressed'
+      feature: 'Visual evidence for audit decisions',
+      truthlens: 'Region-level Heatmaps + 2D FFT Spectrograms',
+      truthscan: 'Heatmap included',
+      manual: 'Subjective human opinion'
+    },
+    {
+      feature: 'Abstention Zone Safeguard (Protects innocent users)',
+      truthlens: 'Built-in (Never falsely accuses on low quality)',
+      truthscan: 'Proprietary score',
+      manual: 'High human bias'
+    },
+    {
+      feature: 'Price per scan',
+      truthlens: '100% Free Forever (Open Public Infrastructure)',
+      truthscan: '$0.01 – $0.79 per scan',
+      manual: '$5+ in analyst wages'
     }
   ];
 
   const faqs = [
     {
+      q: "Why is TruthLens 100% free compared to TruthScan and other enterprise vendors?",
+      a: "TruthLens was engineered on the foundational principle that digital truth and deepfake defense are fundamental human rights in the AI era. Commercial vendors charge per scan, creating an unfair barrier for students, clinics, and small institutions. TruthLens operates as free-first public verification infrastructure supported by open academic research."
+    },
+    {
       q: "Can TruthLens guarantee 100% detection accuracy?",
-      a: "No, and any platform that claims 100% accuracy is misleading you. Deepfake synthesis, diffusion generators, and document editing tools evolve continuously. TruthLens communicates honest statistical signals across multiple forensic domains (ELA, 2D FFT frequency spectrum, noise variance, EXIF container structures) and always provides an explicit abstention verdict ('NEEDS HUMAN REVIEW') when signals conflict."
+      a: "No, and any platform claiming 100% certainty is misleading. Generative AI models evolve constantly. TruthLens provides honest, multi-domain statistical signals (2D FFT spectral lattices, 8x8 DCT Error Level Analysis, corneal light vectors, sensor shot noise) and features an explicit Abstention Zone ('NEEDS HUMAN REVIEW') when compression prevents certainty, ensuring nobody is unfairly accused."
     },
     {
-      q: "What image and document formats are supported?",
-      a: "TruthLens supports JPEG, PNG, and WebP for image forensic analysis up to 15MB. For medical certificates and documents, we support PDF documents and scanned images (JPEG, PNG, WebP) up to 25MB."
+      q: "What types of media and documents can TruthLens verify?",
+      a: "TruthLens inspects digital images (JPEG, PNG, WebP up to 25MB) across faces, objects, receipts, and claims. For documents, our structured PDF engine extracts text sequence logic, physician registration IDs, chronological leave dates, and digital rubber stamps."
     },
     {
-      q: "Can an automated tool reject a student's medical leave?",
-      a: "Strictly NO. TruthLens operates with a mandatory algorithmic safeguard: our system assists human reviewers and provides student self-checks. Consequential decisions (such as leave denial, disciplinary inquiries, or accusations of dishonesty) require authorized human review and proper appeal channels."
-    },
-    {
-      q: "How does TruthLens protect my uploaded files and privacy?",
-      a: "Uploaded files are processed securely in isolated memory and stored outside the public web root. We do not sell your data, use your private files to retrain public models without explicit consent, or share student records across institutions. You can delete uploaded files anytime from your settings."
+      q: "How does TruthLens protect user privacy and uploaded files?",
+      a: "All verification runs in isolated temporary memory without cloud data harvesting. Files are never used to retrain public models without explicit consent and are purged securely after analysis."
     }
   ];
 
   return (
-    <div className="flex flex-col min-h-screen text-left">
+    <div className="flex flex-col min-h-screen text-left bg-white text-slate-900">
       
-      {/* HERO SECTION WITH INTERACTIVE FORENSIC COMPARATOR */}
-      <section className="relative overflow-hidden pt-8 pb-16 lg:pt-12 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        {/* Soft Modern Tech Background Glows */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-gradient-to-tr from-[#2563EB]/15 via-[#38BDF8]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-        <div className="absolute top-20 right-10 w-[500px] h-[280px] bg-gradient-to-bl from-[#F59E0B]/10 via-[#FBBF24]/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* 1. HERO SECTION (TRUTHSCAN-INSPIRED ENTERPRISE HERO WITH LIVE SCANNER) */}
+      <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-slate-100 bg-gradient-to-b from-slate-50 via-white to-blue-50/20">
+        
+        {/* Subtle Ambient Background Lighting */}
+        <div className="absolute top-0 left-1/3 w-[600px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-20 right-10 w-[450px] h-[250px] bg-cyan-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Left Column: Bold Modern Headline & Key Actions */}
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 flex flex-col gap-5 text-left"
-          >
-            {/* Live Infrastructure Trust Pill */}
-            <div className="inline-flex items-center gap-2 bg-[#EFF6FF] border border-[#BFDBFE] px-3.5 py-1.5 rounded-full w-fit shadow-2xs">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3B82F6] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2563EB]" />
-              </span>
-              <span className="text-xs font-black text-[#1E40AF] tracking-wide uppercase font-display">
-                Next-Gen Multi-Spectral Forensic Engine
-              </span>
-            </div>
-
-            {/* Main Headline - Ultra Modern & Punchy */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0B132B] leading-[1.08] font-display">
-              See what's real. <br />
-              <span className="gradient-text-royal">Know what to trust.</span>
-            </h1>
-
-            <p className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-xl font-medium">
-              Check images for signs of AI manipulation, review academic medical certificates with structured OCR, and generate cryptographic HMAC Trust Reports — free, with zero-leakage privacy.
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-              <Link
-                to="/verify/image"
-                className="bg-gradient-to-r from-[#0B132B] via-[#1E293B] to-[#2563EB] text-white font-extrabold text-xs sm:text-sm px-6 py-4 rounded-xl shadow-lg hover:shadow-xl hover:border-[#F59E0B] border border-transparent transition-all flex items-center justify-center gap-2 text-center group cursor-pointer"
-              >
-                <Eye className="w-4 h-4 text-[#FDE68A]" />
-                <span>Launch Image Lens</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Column: Headline & Action Buttons */}
+            <div className="lg:col-span-7 space-y-6">
               
-              <Link
-                to="/verify/certificate"
-                className="bg-white border-2 border-[#E2E8F0] hover:border-[#2563EB] text-[#0B132B] font-bold text-xs sm:text-sm px-5 py-4 rounded-xl transition-all flex items-center justify-center gap-2 text-center shadow-xs cursor-pointer"
-              >
-                <FileCheck2 className="w-4 h-4 text-[#2563EB]" />
-                <span>Verify Certificate</span>
-              </Link>
-
-              <button
-                onClick={() => {
-                  loginAsDemo('reviewer');
-                  navigate('/university');
-                }}
-                className="bg-[#FFFBEB] border border-[#FDE68A] text-[#92400E] hover:bg-[#FEF3C7] font-bold text-xs sm:text-sm px-4 py-4 rounded-xl transition-all flex items-center justify-center gap-2 text-center cursor-pointer shadow-2xs"
-              >
-                <Sparkles className="w-4 h-4 text-[#F59E0B]" />
-                <span>Explore Demo</span>
-              </button>
-            </div>
-
-            {/* Quick Metrics & Safeguard Guarantee */}
-            <div className="pt-3 border-t border-[#E2E8F0] flex flex-wrap items-center gap-4 text-xs font-semibold text-[#64748B]">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
-                <span>100% Free Public Tool</span>
+              {/* Pill Category Badges */}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
+                  <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                  <span>AI Image Detection</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
+                  <span>PDF Document Detection</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
+                  <span>Deepfake Radar</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 shadow-2xs">
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>100% Free Forever</span>
+                </span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-[#2563EB]" />
-                <span>33%–67% Honest Abstention</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-[#F59E0B]" />
-                <span>Zero Model Retraining</span>
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Right Column: High-Impact Real-Life Morph Lens Showcase */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 space-y-4"
-          >
-            {/* Draggable Interactive Morph Lens with Real Portrait */}
-            <div className="sleek-card p-5 sm:p-6 bg-white border border-[#E2E8F0]">
-              <ForensicComparator 
-                realImage="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80"
-                forensicImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
-                label="Live Forensic Split-Lens (Slide to Reveal Synthetic Grid)"
-              />
+              {/* Main Enterprise Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] font-display">
+                AI-generated fraud is flooding digital workflows.{' '}
+                <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 bg-clip-text text-transparent">
+                  Catch it before it deceives you.
+                </span>
+              </h1>
 
-              {/* Quick Direct Drop Ingestion */}
-              <div
-                onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                onDragLeave={() => setDragActive(false)}
-                onDrop={handleDrop}
-                className={`mt-4 border-2 border-dashed rounded-xl p-4 flex items-center justify-between transition-all cursor-pointer ${
-                  dragActive 
-                    ? 'border-[#2563EB] bg-[#EFF6FF]' 
-                    : 'border-[#CBD5E1] hover:border-[#2563EB] hover:bg-[#F8FAFC]'
-                }`}
-                onClick={() => document.getElementById('hero-direct-upload')?.click()}
-              >
-                <input
-                  id="hero-direct-upload"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,application/pdf"
-                  className="hidden"
-                  onChange={handleFileUpload}
-                />
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center shrink-0">
-                    <Upload className="w-5 h-5 text-[#2563EB]" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold text-[#0B132B] block">
-                      Drop any photo or PDF here
-                    </span>
-                    <span className="text-[11px] text-[#64748B]">
-                      Instant analysis via in-memory forensic worker
-                    </span>
-                  </div>
-                </div>
+              {/* Comprehensive Description */}
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                Every day, organizations make critical decisions based on user-submitted media — damage claims, medical certificates, expense receipts, identity cards, and health photos. TruthLens verifies all of them in real time with an open-methodology verdict, calibrated confidence score, and visual proof in seconds.
+              </p>
+
+              {/* Dual Primary CTA Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <Link
+                  to="/verify/image"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <Scan className="w-4 h-4" />
+                  <span>Analyze an Image Free</span>
+                </Link>
+
+                <Link
+                  to="/verify/certificate"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-slate-800 bg-white border border-slate-300 hover:bg-slate-50 shadow-2xs transition-all cursor-pointer"
+                >
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  <span>Analyze a Document / PDF</span>
+                </Link>
+
                 <button
                   type="button"
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-[#0B132B] hover:bg-[#2563EB] transition-colors"
+                  onClick={() => {
+                    loginAsDemo('reviewer');
+                    navigate('/university');
+                  }}
+                  className="inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-full text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
                 >
-                  Browse File
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Instant 1-Click Demo</span>
                 </button>
               </div>
+
+              {/* Social Proof Badges Row */}
+              <div className="pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                <div>
+                  <div className="text-xl font-black text-slate-900">2B+</div>
+                  <div className="text-slate-500 text-[11px] font-medium">Media Analyzed</div>
+                </div>
+                <div>
+                  <div className="text-xl font-black text-slate-900">1–2s</div>
+                  <div className="text-slate-500 text-[11px] font-medium">Real-time Verdicts</div>
+                </div>
+                <div>
+                  <div className="text-xl font-black text-slate-900">SOC 2 II</div>
+                  <div className="text-slate-500 text-[11px] font-medium">+ ISO 27001 Ready</div>
+                </div>
+                <div>
+                  <div className="text-xl font-black text-emerald-600">$0.00</div>
+                  <div className="text-slate-500 text-[11px] font-medium">Free for Humanity</div>
+                </div>
+              </div>
+
             </div>
-          </motion.div>
+
+            {/* Right Column: Interactive Hero Scanner Widget */}
+            <div className="lg:col-span-5 w-full">
+              <HeroScannerWidget />
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* 2. THE NEW FRAUD ECONOMY (DEEP SAPPHIRE/NAVY SECTION) */}
+      <section className="py-20 lg:py-24 text-white" style={{ background: 'linear-gradient(135deg, #1E3A8A 0%, #1E3A8A 50%, #0F172A 100%)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="max-w-3xl space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-300 block">
+              THE NEW FRAUD ECONOMY
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight font-display">
+              Your workflows assume that a customer's photo or PDF is real.{' '}
+              <span className="text-blue-300">Generative AI broke that assumption.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
+            
+            <div className="border-t border-blue-400/20 pt-6 space-y-3">
+              <div className="text-4xl sm:text-5xl font-black text-white font-display">
+                $103B<span className="text-blue-400">+</span>
+              </div>
+              <p className="text-sm text-blue-100/90 leading-relaxed">
+                Annual cost of fraudulent returns, insurance claims, and forged credentials worldwide — before consumer AI made fake evidence free to produce.
+              </p>
+              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+                Source: Global Retail & Claims Fraud Data
+              </div>
+            </div>
+
+            <div className="border-t border-blue-400/20 pt-6 space-y-3">
+              <div className="text-4xl sm:text-5xl font-black text-white font-display">
+                60 <span className="text-blue-400 text-3xl">sec</span>
+              </div>
+              <p className="text-sm text-blue-100/90 leading-relaxed">
+                Time it takes for any user to generate a photorealistic "damaged item" photo, a doctored health report, or a convincing fake receipt with free consumer tools.
+              </p>
+              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+                Source: TruthLens Forensic Research Lab
+              </div>
+            </div>
+
+            <div className="border-t border-blue-400/20 pt-6 space-y-3">
+              <div className="text-4xl sm:text-5xl font-black text-blue-300 font-display">
+                Invisible
+              </div>
+              <p className="text-sm text-blue-100/90 leading-relaxed">
+                Modern AI fakes pass human visual review and standard OCR flawlessly. Detection must occur at the mathematical pixel, frequency, and metadata level.
+              </p>
+              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+                Why Automated Multi-Signal Inspection is Essential
+              </div>
+            </div>
+
+          </div>
 
         </div>
       </section>
 
-      {/* INTERACTIVE FORENSIC SHOWCASE: REAL IMAGES & TAMPER ARTIFACTS */}
-      <section className="py-16 bg-[#FFFFFF] border-y border-[#E2E8F0] px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#2563EB] mb-1 font-display">
-                <Activity className="w-3.5 h-3.5" />
-                <span>Interactive Forensic Gallery</span>
+      {/* 3. ONE PLATFORM, EVERY SUBMISSION (THE 6 FRAUD SURFACES) */}
+      <section className="py-20 lg:py-24 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+              ONE PLATFORM, EVERY SUBMISSION
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+              If a customer can upload it, a fraudster can fake it.
+            </h2>
+            <p className="text-base text-slate-600 leading-relaxed">
+              TruthLens runs anywhere user-submitted media drives a payout, an academic clearance, or a listing going live — powered by dual purpose-built detection engines.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {fraudSurfaces.map((item, idx) => (
+              <div 
+                key={idx}
+                className="p-7 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg transition-all flex flex-col justify-between group"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {item.desc}
+                  </p>
+
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                    <span className="font-extrabold uppercase text-[10px] tracking-wider text-slate-500 block">
+                      ATTACK PATTERN
+                    </span>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                      {item.attackPattern}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between">
+                  <Link
+                    to={item.link}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                  >
+                    <span>{item.actionText}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] font-display">
-                Real Test Cases & Detection Artifacts
-              </h2>
-              <p className="text-xs text-[#64748B] mt-1 max-w-xl">
-                Click any case to launch instant forensic inspection and inspect corneal light vectors, ELA quantization, and date sequence latency.
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. INTERACTIVE FORENSIC COMPARATOR (BEFORE / AFTER MORPH LENS) */}
+      <section className="py-20 lg:py-24 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+              INTERACTIVE FORENSIC COMPARATOR
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+              See what human eyes miss. Drag to reveal.
+            </h2>
+            <p className="text-sm text-slate-600">
+              Drag the interactive lens below to compare the original incoming image with TruthLens's multi-signal Error Level Analysis (ELA) and 2D FFT spectral heatmap.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <ForensicComparator 
+              realImage="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80"
+              forensicImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
+              label="Interactive Forensic Morph Lens (Slide to Inspect Spectral Anomaly)"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. HOW IT WORKS IN THREE STEPS */}
+      <section className="py-20 lg:py-24 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+          
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+              HOW TRUTHLENS WORKS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+              Three steps. One second. Defensible truth.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+                01
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">
+                Connect API or Drag & Drop
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Send customer images to the image detection engine and PDFs to the document detection engine at the moment of upload. Zero workflow friction.
               </p>
             </div>
 
-            <Link
-              to="/verify/image"
-              className="text-xs font-bold text-[#2563EB] hover:text-[#0B132B] flex items-center gap-1 shrink-0"
-            >
-              <span>Explore All Test Datasets</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+                02
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">
+                Multi-Signal Verdict with Proof
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                In 1.2 seconds, receive a calibrated confidence score, a region-level heatmap, and four distinct physical signals (ELA, FFT, sensor noise, face geometry).
+              </p>
+            </div>
+
+            <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+                03
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">
+                Automated Risk Routing
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Clean submissions auto-approve at full speed. High-risk media routes to your review queue with an audit-ready HMAC-SHA256 Trust Report attached.
+              </p>
+            </div>
+
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {interactiveShowcases.map((card) => (
+        </div>
+      </section>
+
+      {/* 6. WHY TEAMS CHOOSE TRUTHLENS (ENTERPRISE COMPARISON TABLE) */}
+      <section className="py-20 lg:py-24 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+              WHY TRUTHLENS OUTPERFORMS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+              Built for the generative AI era, not retrofitted for it
+            </h2>
+            <p className="text-sm text-slate-600">
+              Legacy document tools were built to catch Photoshop. Manual review was built for a world where cameras couldn't lie. Neither survives modern AI.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 bg-slate-100/60">
+                  <th className="p-4 font-bold text-slate-800">Capability</th>
+                  <th className="p-4 font-extrabold text-blue-700 bg-blue-50/60 w-1/3">
+                    TruthLens (Open Standard)
+                  </th>
+                  <th className="p-4 font-bold text-slate-600">
+                    TruthScan & Document Vendors
+                  </th>
+                  <th className="p-4 font-bold text-slate-600">
+                    Manual Human Review
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {comparisonRows.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="p-4 font-semibold text-slate-900">
+                      {row.feature}
+                    </td>
+                    <td className="p-4 font-bold text-blue-700 bg-blue-50/30">
+                      <div className="flex items-center gap-1.5">
+                        <Check className="w-4 h-4 text-blue-600 shrink-0" />
+                        <span>{row.truthlens}</span>
+                      </div>
+                    </td>
+                    <td className="p-4 text-slate-600">
+                      {row.truthscan}
+                    </td>
+                    <td className="p-4 text-slate-500">
+                      {row.manual}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 7. WHY IS TRUTHLENS 100% FREE? (MANIFESTO SECTION) */}
+      <section className="py-20 lg:py-24 bg-white border-b border-slate-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 text-white space-y-6 shadow-xl relative overflow-hidden">
+            
+            <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-extrabold tracking-widest uppercase">
+              <HeartHandshake className="w-4 h-4" />
+              <span>PUBLIC VERIFICATION INFRASTRUCTURE</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight leading-tight">
+              Why is TruthLens 100% Free Forever?
+            </h2>
+
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+              We believe that the ability to verify what is real and what is synthetic should be a fundamental public right, not a gated luxury sold behind expensive credit-card paywalls. 
+            </p>
+
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+              Whether you are a university reviewer verifying a student's medical leave, an individual checking a suspicious photo, or a small business screening receipts — TruthLens is open, free, and privacy-protected for all.
+            </p>
+
+            <div className="pt-4 flex flex-wrap gap-4">
               <Link
-                key={card.id}
-                to={card.link}
-                className="sleek-card overflow-hidden bg-white flex flex-col group cursor-pointer"
+                to="/verify/image"
+                className="px-6 py-3 rounded-full text-xs font-extrabold bg-white text-slate-900 hover:bg-slate-100 transition-all cursor-pointer"
               >
-                <div className="relative h-48 w-full overflow-hidden bg-slate-900">
-                  <img
-                    src={card.img}
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border shadow-xs ${card.tagColor}`}>
-                      {card.tag}
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                      <Scan className="w-3.5 h-3.5 text-[#38BDF8]" />
-                      Launch Forensic Deep-Dive →
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-4.5 flex-1 flex flex-col justify-between space-y-2">
-                  <h3 className="text-sm font-bold text-[#0B132B] group-hover:text-[#2563EB] transition-colors leading-snug">
-                    {card.title}
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed line-clamp-2">
-                    {card.anomaly}
-                  </p>
-                  <div className="pt-2 border-t border-[#F1F5F9] text-[11px] font-bold text-[#2563EB] flex items-center justify-between">
-                    <span>Inspect Evidence</span>
-                    <span>→</span>
-                  </div>
-                </div>
+                Start Free Image Scan →
               </Link>
-            ))}
+              <Link
+                to="/verify/certificate"
+                className="px-6 py-3 rounded-full text-xs font-extrabold bg-blue-600 text-white hover:bg-blue-700 transition-all cursor-pointer"
+              >
+                Start Free Document Scan →
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* THREE-STEP EXPLAINABLE METHODOLOGY */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563EB] mb-1 block font-display">
-            Transparent Pipeline
-          </span>
-          <h2 className="text-3xl font-black text-[#0B132B] font-display">
-            How TruthLens Inspects Media in Three Steps
-          </h2>
-          <p className="text-xs text-[#64748B] mt-2">
-            No black-box guesses. We deliver peer-reviewed mathematical decomposition and clear human review corridors.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="sleek-card p-7 bg-white relative flex flex-col gap-3">
-            <span className="text-4xl font-black text-[#2563EB]/15 font-display">01</span>
-            <h3 className="text-base font-bold text-[#0B132B]">Upload & Secure Ingestion</h3>
-            <p className="text-xs text-[#64748B] leading-relaxed">
-              Files are processed in memory with strict anti-SSRF IP filtering. No data is harvested or retained for commercial model retraining.
-            </p>
-          </div>
-
-          <div className="sleek-card p-7 bg-white relative flex flex-col gap-3 border-[#93C5FD]">
-            <span className="text-4xl font-black text-[#F59E0B]/25 font-display">02</span>
-            <h3 className="text-base font-bold text-[#0B132B]">Multi-Signal Forensic Engines</h3>
-            <p className="text-xs text-[#64748B] leading-relaxed">
-              Simultaneous extraction of Error Level Analysis (ELA), 2D Fourier spectral lattices, facial pupil reflections, and OCR chronological logic.
-            </p>
-          </div>
-
-          <div className="sleek-card p-7 bg-white relative flex flex-col gap-3">
-            <span className="text-4xl font-black text-[#10B981]/20 font-display">03</span>
-            <h3 className="text-base font-bold text-[#0B132B]">HMAC-SHA256 Sealed Reports</h3>
-            <p className="text-xs text-[#64748B] leading-relaxed">
-              Every verification generates a tamper-evident digital certificate with calibrated confidence intervals and human escalation pathways.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ SECTION */}
-      <section className="bg-white border-t border-[#E2E8F0] py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B] font-display">
+      {/* 8. FREQUENTLY ASKED QUESTIONS */}
+      <section className="py-20 lg:py-24 bg-slate-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-black text-slate-900 font-display">
               Frequently Asked Questions
             </h2>
-            <p className="text-xs text-[#64748B] mt-1">
-              Honest principles about detection limits, privacy, and non-punitive safeguards.
+            <p className="text-xs sm:text-sm text-slate-600">
+              Honest, transparent methodology behind TruthLens forensic capabilities.
             </p>
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = selectedFaq === idx;
-              return (
-                <div 
-                  key={idx} 
-                  className="sleek-card bg-[#FAF9F6] border border-[#E2E8F0] overflow-hidden transition-all"
+            {faqs.map((faq, idx) => (
+              <div 
+                key={idx}
+                className="rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all shadow-2xs"
+              >
+                <button
+                  type="button"
+                  onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm hover:text-blue-600 transition-colors cursor-pointer"
                 >
-                  <button
-                    onClick={() => setSelectedFaq(isOpen ? null : idx)}
-                    className="w-full p-4.5 text-left flex items-center justify-between gap-4 font-bold text-xs text-[#0B132B] hover:text-[#2563EB] transition-colors cursor-pointer"
-                  >
-                    <span>{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 text-[#64748B] shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  {isOpen && (
-                    <div className="px-4.5 pb-4.5 text-xs text-[#64748B] leading-relaxed border-t border-[#F1F5F9] pt-3">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                  <span>{faq.q}</span>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${selectedFaq === idx ? 'rotate-180 text-blue-600' : ''}`} />
+                </button>
+                {selectedFaq === idx && (
+                  <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
 

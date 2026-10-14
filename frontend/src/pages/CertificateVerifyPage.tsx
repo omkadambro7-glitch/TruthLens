@@ -14,12 +14,13 @@ import {
   Send,
   Sparkles,
   Info,
-  BookOpen,
-  Cpu
+  Check,
+  XCircle,
+  FileSpreadsheet,
+  Share2
 } from 'lucide-react';
 import { CertificateVerificationResult } from '../types';
 import { useLanguage } from '../context/LanguageContext';
-import { CertificatePlainSummary } from '../components/forensics/CertificatePlainSummary';
 import { SAMPLE_CERTIFICATE_CASES, getApiBaseUrl } from '../utils/apiClient';
 
 export const CertificateVerifyPage: React.FC = () => {
@@ -28,7 +29,6 @@ export const CertificateVerifyPage: React.FC = () => {
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [studentMode, setStudentMode] = useState<boolean>(false);
   const [result, setResult] = useState<CertificateVerificationResult | null>(null);
-  const [certTab, setCertTab] = useState<'plain' | 'advanced'>('plain');
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false);
 
   const loadSampleCertificate = (key: 'latency' | 'authentic' | 'missing') => {
@@ -65,7 +65,6 @@ export const CertificateVerifyPage: React.FC = () => {
         const data: CertificateVerificationResult = await response.json();
         setResult(data);
       } catch {
-        // Fallback simulation for offline/static deployment
         setTimeout(() => {
           setResult({
             ...SAMPLE_CERTIFICATE_CASES.latency,
@@ -73,7 +72,7 @@ export const CertificateVerifyPage: React.FC = () => {
             job_id: `cert-${Date.now()}`
           });
           setIsVerifying(false);
-        }, 800);
+        }, 750);
         return;
       } finally {
         setIsVerifying(false);
@@ -90,88 +89,88 @@ export const CertificateVerifyPage: React.FC = () => {
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-8 text-left">
       
       {/* Header and Student Mode Toggle */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E5DC] pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#101B35]">
-            <span className="text-[#737D90]">Home</span>
-            <span className="text-[#D8D4C7]">/</span>
-            <span className="text-[#233F8C]">{t('nav.verify_certificate')}</span>
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
+            <span className="text-slate-500">Document Engine</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-blue-600">PDF & Medical Pre-Check</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#101B35] font-serif-display tracking-tight">
-            {t('cert.title')}
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+            Document & Medical Certificate Forensic Engine
           </h1>
-          <p className="text-xs sm:text-sm text-[#687386] max-w-2xl leading-relaxed">
-            {t('cert.subtitle')}
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+            Forensic analysis of medical leave certificates, hospital clearances, and expense PDFs. Structured OCR credential extraction, date sequence consistency, and physical rubber stamp inspection.
           </p>
         </div>
 
         {/* Student Self-Check Toggle */}
-        <div className="flex items-center gap-3 bg-[#FBF8EE] border border-[#E6D5A2] px-4 py-2 rounded-xl w-fit">
-          <label htmlFor="student-mode-toggle" className="text-xs font-bold text-[#101B35] cursor-pointer">
-            {t('cert.student_mode')}
+        <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl w-fit">
+          <label htmlFor="student-mode-toggle" className="text-xs font-bold text-slate-800 cursor-pointer">
+            Student Pre-Submission Self-Check
           </label>
           <input
             id="student-mode-toggle"
             type="checkbox"
             checked={studentMode}
             onChange={(e) => setStudentMode(e.target.checked)}
-            className="w-4 h-4 rounded text-[#233F8C] focus:ring-[#233F8C] cursor-pointer"
+            className="w-4 h-4 rounded text-blue-600 focus:ring-blue-600 cursor-pointer"
           />
         </div>
       </div>
 
       {/* Mandatory Safeguard Banner */}
-      <div className="bg-[#EDF7F1] border border-[#A3D9B8] p-4 sm:p-5 rounded-2xl flex items-start gap-3">
-        <ShieldCheck className="w-5 h-5 text-[#1E824C] shrink-0 mt-0.5" />
-        <p className="text-xs text-[#1E824C] leading-relaxed font-medium">
-          {t('cert.safeguard_notice')}
+      <div className="bg-emerald-50 border border-emerald-200 p-4 sm:p-5 rounded-2xl flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+        <p className="text-xs text-emerald-900 leading-relaxed font-medium">
+          Mandatory Algorithmic Safeguard: TruthLens functions as an objective document-integrity pre-check assistant, never an automated punitive decision system. Leave is never automatically rejected. All final actions require authorized human review.
         </p>
       </div>
 
       {/* Upload Zone & Sample Test Cases */}
-      <div className="royal-card p-6 sm:p-8 bg-white border border-[#E8E5DC] space-y-6">
-        <label className="border-2 border-dashed border-[#D8D4C7] hover:border-[#C6A45C] hover:bg-[#FAF9F6] rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
+      <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6">
+        <label className="border-2 border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
           <input
             type="file"
             accept="application/pdf,image/jpeg,image/png,image/webp"
             className="hidden"
             onChange={handleFileChange}
           />
-          <div className="w-13 h-13 rounded-2xl bg-[#EEF3FF] border border-[#C5D5F9] text-[#233F8C] flex items-center justify-center mb-3">
-            <FileText className="w-6 h-6 text-[#233F8C]" />
+          <div className="w-13 h-13 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mb-3">
+            <FileText className="w-6 h-6" />
           </div>
-          <span className="text-sm font-bold text-[#101B35] block mb-1">
-            {t('cert.upload_title')}
+          <span className="text-sm font-bold text-slate-900 block mb-1">
+            Upload PDF Document or Medical Certificate Scan
           </span>
-          <span className="text-xs text-[#687386] block max-w-md leading-relaxed">
-            {t('cert.upload_sub')}
+          <span className="text-xs text-slate-500 block max-w-md leading-relaxed">
+            Upload PDF scan, JPEG, PNG, or WebP up to 25MB. Evaluates physician registration, date chronology, leave duration, and physical stamp presence.
           </span>
         </label>
 
         {/* Quick Sample Selector */}
         <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-          <span className="font-bold text-[#101B35] flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#C6A45C]" />
-            <span>{t('cert.sample_certs')}</span>
+          <span className="font-bold text-slate-900 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <span>Or test with verified academic test cases:</span>
           </span>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => loadSampleCertificate('latency')}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#A88234] bg-[#FBF8EE] border border-[#E6D5A2] hover:bg-[#F5EFD7] transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors cursor-pointer"
             >
-              1. Date Latency Case
+              1. Date Latency (Retrospective Clinic Visit)
             </button>
             <button
               onClick={() => loadSampleCertificate('authentic')}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#1E824C] bg-[#EDF7F1] border border-[#A3D9B8] hover:bg-green-100 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors cursor-pointer"
             >
               2. Authentic Hospital Clearance
             </button>
             <button
               onClick={() => loadSampleCertificate('missing')}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#DC2626] bg-[#FEF2F2] border border-red-200 hover:bg-red-100 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold text-red-700 bg-red-50 border border-red-200 hover:bg-red-100 transition-colors cursor-pointer"
             >
-              3. Missing Reg. Number
+              3. Missing Physician Council Reg. No.
             </button>
           </div>
         </div>
@@ -179,10 +178,10 @@ export const CertificateVerifyPage: React.FC = () => {
 
       {/* Loading State */}
       {isVerifying && (
-        <div className="royal-card p-12 bg-white border border-[#E8E5DC] text-center space-y-3">
-          <div className="w-10 h-10 border-3 border-[#233F8C] border-t-transparent rounded-full animate-spin mx-auto" />
-          <h4 className="text-sm font-bold text-[#101B35]">Extracting OCR credentials and verifying date logic...</h4>
-          <p className="text-xs text-[#687386]">Matching physician council registry format and physical stamp ink contours.</p>
+        <div className="p-12 rounded-2xl bg-white border border-slate-200 text-center space-y-3 shadow-sm">
+          <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <h4 className="text-sm font-bold text-slate-900">Extracting OCR credentials and verifying date logic...</h4>
+          <p className="text-xs text-slate-500">Matching physician council registry format and physical stamp ink contours.</p>
         </div>
       )}
 
@@ -194,173 +193,109 @@ export const CertificateVerifyPage: React.FC = () => {
           transition={{ duration: 0.4 }}
           className="space-y-6"
         >
-          {/* Tab Selector: Plain Explanation vs Detailed Audit */}
-          <div className="flex items-center justify-between bg-white p-1.5 rounded-2xl border border-[#E8E5DC] shadow-2xs">
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setCertTab('plain')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                  certTab === 'plain'
-                    ? 'bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white shadow-xs'
-                    : 'text-[#687386] hover:text-[#101B35] hover:bg-[#FAF9F6]'
-                }`}
-              >
-                <BookOpen className="w-3.5 h-3.5 text-[#E6D5A2]" />
-                <span>💡 Seedha Jawab (Document Analysis)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setCertTab('advanced')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                  certTab === 'advanced'
-                    ? 'bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white shadow-xs'
-                    : 'text-[#687386] hover:text-[#101B35] hover:bg-[#FAF9F6]'
-                }`}
-              >
-                <Cpu className="w-3.5 h-3.5" />
-                <span>📋 Detailed Credential Audit</span>
-              </button>
+          {/* Main Assessment Header */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 block mb-1">
+                Document Pre-Check Assessment
+              </span>
+              <div className="flex items-center gap-3">
+                <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${
+                  result.risk_category === 'Low apparent integrity risk' 
+                    ? 'text-emerald-800 bg-emerald-50 border-emerald-200' 
+                    : result.risk_category === 'Review recommended'
+                    ? 'text-amber-800 bg-amber-50 border-amber-200'
+                    : 'text-red-700 bg-red-50 border-red-200'
+                }`}>
+                  {result.risk_category}
+                </span>
+                <span className="text-xs text-slate-500">
+                  OCR Extraction Confidence: <strong className="text-slate-900">{result.ocr_confidence}</strong>
+                </span>
+              </div>
             </div>
 
-            <span className="text-[11px] font-semibold text-[#737D90] hidden sm:block pr-3">
-              Extraction Confidence: <strong className="text-[#101B35]">{result.ocr_confidence}</strong>
-            </span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleSubmitToReview}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer w-fit"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Queue into University Portal</span>
+              </button>
+            </div>
           </div>
 
-          {certTab === 'plain' ? (
-            <div className="space-y-5">
-              <CertificatePlainSummary 
-                result={result} 
-                onSubmitToReview={handleSubmitToReview} 
-              />
-
-              {submissionSuccess && (
-                <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs font-bold text-green-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
-                </div>
-              )}
-
-              {/* Quick toggle to detailed audit */}
-              <div className="p-4 rounded-xl bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div className="space-y-0.5">
-                  <span className="font-bold text-[#101B35] block">University Dean ya Clinic Reviewer hain?</span>
-                  <span className="text-[#687386]">Doctor council registry match, OCR confidence matrix aur raw text logs dekhne ke liye Detailed Audit kholein.</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setCertTab('advanced')}
-                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#FAF9F6] border border-[#D8D4C7] hover:border-[#101B35] text-[#101B35] transition-all shrink-0 cursor-pointer"
-                >
-                  View Detailed Credential Audit →
-                </button>
-              </div>
+          {submissionSuccess && (
+            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
             </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Main Assessment Header */}
-              <div className="royal-card p-6 sm:p-7 bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#737D90] block mb-1">
-                    Document Pre-Check Assessment
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${
-                      result.risk_category === 'Low apparent integrity risk' 
-                        ? 'text-[#1E824C] bg-[#EDF7F1] border-[#A3D9B8]' 
-                        : result.risk_category === 'Review recommended'
-                        ? 'text-[#A88234] bg-[#FBF8EE] border-[#E6D5A2]'
-                        : 'text-[#DC2626] bg-[#FEF2F2] border-red-200'
-                    }`}>
-                      {result.risk_category}
-                    </span>
-                    <span className="text-xs text-[#687386]">
-                      OCR Extraction Confidence: <strong className="text-[#101B35]">{result.ocr_confidence}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleSubmitToReview}
-                  className="flex items-center gap-2 bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs hover:border-[#C6A45C] border border-transparent transition-all cursor-pointer w-fit"
-                >
-                  <Send className="w-3.5 h-3.5 text-[#E6D5A2]" />
-                  <span>{t('cert.submit_review')}</span>
-                </button>
-              </div>
-
-              {submissionSuccess && (
-                <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs font-bold text-green-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
-                </div>
-              )}
+          )}
 
           {/* Structured Credential Extraction Grid */}
-          <div className="royal-card p-6 sm:p-7 bg-white border border-[#E8E5DC] space-y-5">
-            <h3 className="text-base font-bold text-[#101B35] font-sans pb-3 border-b border-[#F1EFE8]">
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5">
+            <h3 className="text-base font-bold text-slate-900 font-sans pb-3 border-b border-slate-100">
               Extracted Certificate Credentials
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-xs">
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.doctor_name')}</span>
-                <span className="font-extrabold text-[#101B35]">{result.doctor_name || 'Not detected'}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Practicing Physician</span>
+                <span className="font-extrabold text-slate-900">{result.doctor_name || 'Not detected'}</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.reg_number')}</span>
-                <span className="font-extrabold text-[#101B35]">{result.registration_number || 'Not provided'}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Medical Council Reg. No.</span>
+                <span className="font-extrabold text-slate-900">{result.registration_number || 'Not provided'}</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.hospital_name')}</span>
-                <span className="font-extrabold text-[#101B35]">{result.hospital_name || 'Not detected'}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Hospital / Medical Center</span>
+                <span className="font-extrabold text-slate-900">{result.hospital_name || 'Not detected'}</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.patient_name')}</span>
-                <span className="font-extrabold text-[#101B35]">{result.patient_name || 'Not detected'}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Patient Name</span>
+                <span className="font-extrabold text-slate-900">{result.patient_name || 'Not detected'}</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.issue_date')}</span>
-                <span className="font-extrabold text-[#101B35]">{result.issue_date || 'Not detected'}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Issue Date</span>
+                <span className="font-extrabold text-slate-900">{result.issue_date || 'Not detected'}</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">{t('cert.leave_period')}</span>
-                <span className="font-extrabold text-[#101B35]">
-                  {result.leave_start} to {result.leave_end} ({result.duration_days} {t('cert.days')})
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Leave Period & Duration</span>
+                <span className="font-extrabold text-slate-900">
+                  {result.leave_start} to {result.leave_end} ({result.duration_days} Days)
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC] flex items-center justify-between">
-                <span className="text-[11px] font-semibold text-[#737D90]">{t('cert.signature_detected')}</span>
-                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded ${result.signature_detected ? 'text-[#1E824C] bg-[#EDF7F1]' : 'text-red-700 bg-red-50'}`}>
-                  {result.signature_detected ? t('cert.detected') : t('cert.not_detected')}
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                <span className="text-[11px] font-semibold text-slate-500">Physician Wet-Ink Signature</span>
+                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded ${result.signature_detected ? 'text-emerald-800 bg-emerald-50' : 'text-red-700 bg-red-50'}`}>
+                  {result.signature_detected ? 'Detected' : 'Not Detected'}
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC] flex items-center justify-between">
-                <span className="text-[11px] font-semibold text-[#737D90]">{t('cert.stamp_detected')}</span>
-                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded ${result.stamp_detected ? 'text-[#1E824C] bg-[#EDF7F1]' : 'text-red-700 bg-red-50'}`}>
-                  {result.stamp_detected ? t('cert.detected') : t('cert.not_detected')}
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                <span className="text-[11px] font-semibold text-slate-500">Hospital Clinic Stamp</span>
+                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded ${result.stamp_detected ? 'text-emerald-800 bg-emerald-50' : 'text-red-700 bg-red-50'}`}>
+                  {result.stamp_detected ? 'Detected' : 'Not Detected'}
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
-                <span className="text-[11px] font-semibold text-[#737D90] block mb-1">Physician Registry Lookup</span>
-                <span className="font-medium text-[#101B35] text-[11px]">{result.registry_status}</span>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[11px] font-semibold text-slate-500 block mb-1">Physician Registry Lookup</span>
+                <span className="font-medium text-slate-900 text-[11px]">{result.registry_status}</span>
               </div>
             </div>
 
             {/* Integrity Flags */}
-            <div className="pt-4 border-t border-[#F1EFE8] space-y-3">
-              <h4 className="text-xs font-bold text-[#101B35] uppercase tracking-wide">
-                {t('cert.integrity_checks')}
+            <div className="pt-4 border-t border-slate-100 space-y-3">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wide">
+                Integrity Checks & Forensic Observations
               </h4>
               <div className="space-y-2">
                 {result.integrity_flags.map((flag, idx) => (
@@ -368,14 +303,14 @@ export const CertificateVerifyPage: React.FC = () => {
                     key={idx}
                     className={`p-3.5 rounded-xl border flex items-start gap-2.5 text-xs ${
                       flag.passed 
-                        ? 'bg-[#EDF7F1] border-[#A3D9B8] text-[#1E824C]' 
+                        ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900' 
                         : flag.severity === 'high'
-                        ? 'bg-[#FEF2F2] border-red-200 text-[#DC2626]'
-                        : 'bg-[#FBF8EE] border-[#E6D5A2] text-[#A88234]'
+                        ? 'bg-red-50/70 border-red-200 text-red-800'
+                        : 'bg-amber-50/70 border-amber-200 text-amber-900'
                     }`}
                   >
                     {flag.passed ? (
-                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-green-600" />
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
                     ) : (
                       <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
                     )}
@@ -387,11 +322,23 @@ export const CertificateVerifyPage: React.FC = () => {
                 ))}
               </div>
             </div>
+
+            {/* Suggested Non-Punitive Actions */}
+            {result.suggested_review_actions && result.suggested_review_actions.length > 0 && (
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                <span className="text-xs font-bold text-slate-900 uppercase tracking-wider block">
+                  Recommended Non-Punitive Review Actions
+                </span>
+                <ul className="list-disc pl-5 text-xs text-slate-600 space-y-1">
+                  {result.suggested_review_actions.map((act, i) => (
+                    <li key={i}>{act}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        </div>
+        </motion.div>
       )}
-    </motion.div>
-  )}
 
     </div>
   );
