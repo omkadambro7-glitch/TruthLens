@@ -156,12 +156,12 @@ export const LandingPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen text-left bg-white text-slate-900">
       
-      {/* 1. HERO SECTION (TRUTHSCAN-INSPIRED ENTERPRISE HERO WITH LIVE SCANNER) */}
-      <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-slate-100 bg-gradient-to-b from-slate-50 via-white to-blue-50/20">
+      {/* 1. HERO SECTION (BAYERN MUNICH AESTHETIC WITH INTERACTIVE SCANNER) */}
+      <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-slate-100 bg-gradient-to-b from-red-50/30 via-white to-slate-50/50">
         
-        {/* Subtle Ambient Background Lighting */}
-        <div className="absolute top-0 left-1/3 w-[600px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-        <div className="absolute top-20 right-10 w-[450px] h-[250px] bg-cyan-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
+        {/* Bayern Munich Crimson & Navy Ambient Background Glows */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-[#DC052D]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-20 right-10 w-[450px] h-[250px] bg-[#001F4D]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -172,26 +172,26 @@ export const LandingPage: React.FC = () => {
               
               {/* Pill Category Badges */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
+                  <Sparkles className="w-3.5 h-3.5 text-[#DC052D]" />
                   <span>AI Image Detection</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#001F4D] bg-slate-100 border border-slate-200 shadow-2xs">
                   <span>PDF Document Detection</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
                   <span>Deepfake Radar</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 shadow-2xs">
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-50 border border-amber-200 shadow-2xs">
+                  <span className="text-[#FFCC00]">★</span>
                   <span>100% Free Forever</span>
                 </span>
               </div>
 
-              {/* Main Enterprise Headline */}
+              {/* Main Enterprise Headline with Bayern Munich Gradient */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] font-display">
                 AI-generated fraud is flooding digital workflows.{' '}
-                <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#DC052D] via-[#B80022] to-[#001F4D] bg-clip-text text-transparent">
                   Catch it before it deceives you.
                 </span>
               </h1>
@@ -201,11 +201,11 @@ export const LandingPage: React.FC = () => {
                 Every day, organizations make critical decisions based on user-submitted media — damage claims, medical certificates, expense receipts, identity cards, and health photos. TruthLens verifies all of them in real time with an open-methodology verdict, calibrated confidence score, and visual proof in seconds.
               </p>
 
-              {/* Dual Primary CTA Action Buttons */}
+              {/* Dual Primary CTA Action Buttons - Bayern Crimson */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <Link
                   to="/verify/image"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] shadow-md hover:shadow-lg transition-all cursor-pointer"
                 >
                   <Scan className="w-4 h-4" />
                   <span>Analyze an Image Free</span>
@@ -213,9 +213,9 @@ export const LandingPage: React.FC = () => {
 
                 <Link
                   to="/verify/certificate"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-slate-800 bg-white border border-slate-300 hover:bg-slate-50 shadow-2xs transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-[#001F4D] bg-white border border-slate-300 hover:border-[#DC052D] hover:bg-slate-50 shadow-2xs transition-all cursor-pointer"
                 >
-                  <FileText className="w-4 h-4 text-blue-600" />
+                  <FileText className="w-4 h-4 text-[#DC052D]" />
                   <span>Analyze a Document / PDF</span>
                 </Link>
 
@@ -225,7 +225,7 @@ export const LandingPage: React.FC = () => {
                     loginAsDemo('reviewer');
                     navigate('/university');
                   }}
-                  className="inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-full text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-full text-xs font-bold text-slate-600 hover:text-[#DC052D] transition-colors cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>Instant 1-Click Demo</span>
@@ -247,7 +247,7 @@ export const LandingPage: React.FC = () => {
                   <div className="text-slate-500 text-[11px] font-medium">+ ISO 27001 Ready</div>
                 </div>
                 <div>
-                  <div className="text-xl font-black text-emerald-600">$0.00</div>
+                  <div className="text-xl font-black text-[#DC052D]">$0.00</div>
                   <div className="text-slate-500 text-[11px] font-medium">Free for Humanity</div>
                 </div>
               </div>
@@ -265,54 +265,54 @@ export const LandingPage: React.FC = () => {
 
       </section>
 
-      {/* 2. THE NEW FRAUD ECONOMY (DEEP SAPPHIRE/NAVY SECTION) */}
-      <section className="py-20 lg:py-24 text-white" style={{ background: 'linear-gradient(135deg, #1E3A8A 0%, #1E3A8A 50%, #0F172A 100%)' }}>
+      {/* 2. THE NEW FRAUD ECONOMY (BAYERN MIDNIGHT NAVY & CRIMSON SECTION) */}
+      <section className="py-20 lg:py-24 text-white" style={{ background: 'linear-gradient(135deg, #001433 0%, #001F4D 50%, #7D0014 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-300 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#FFCC00] block">
               THE NEW FRAUD ECONOMY
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight font-display">
               Your workflows assume that a customer's photo or PDF is real.{' '}
-              <span className="text-blue-300">Generative AI broke that assumption.</span>
+              <span className="text-red-300">Generative AI broke that assumption.</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
             
-            <div className="border-t border-blue-400/20 pt-6 space-y-3">
+            <div className="border-t border-white/20 pt-6 space-y-3">
               <div className="text-4xl sm:text-5xl font-black text-white font-display">
-                $103B<span className="text-blue-400">+</span>
+                $103B<span className="text-[#FFCC00]">+</span>
               </div>
-              <p className="text-sm text-blue-100/90 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 Annual cost of fraudulent returns, insurance claims, and forged credentials worldwide — before consumer AI made fake evidence free to produce.
               </p>
-              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-red-300 font-bold">
                 Source: Global Retail & Claims Fraud Data
               </div>
             </div>
 
-            <div className="border-t border-blue-400/20 pt-6 space-y-3">
+            <div className="border-t border-white/20 pt-6 space-y-3">
               <div className="text-4xl sm:text-5xl font-black text-white font-display">
-                60 <span className="text-blue-400 text-3xl">sec</span>
+                60 <span className="text-[#FFCC00] text-3xl">sec</span>
               </div>
-              <p className="text-sm text-blue-100/90 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 Time it takes for any user to generate a photorealistic "damaged item" photo, a doctored health report, or a convincing fake receipt with free consumer tools.
               </p>
-              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-red-300 font-bold">
                 Source: TruthLens Forensic Research Lab
               </div>
             </div>
 
-            <div className="border-t border-blue-400/20 pt-6 space-y-3">
-              <div className="text-4xl sm:text-5xl font-black text-blue-300 font-display">
+            <div className="border-t border-white/20 pt-6 space-y-3">
+              <div className="text-4xl sm:text-5xl font-black text-[#FFCC00] font-display">
                 Invisible
               </div>
-              <p className="text-sm text-blue-100/90 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 Modern AI fakes pass human visual review and standard OCR flawlessly. Detection must occur at the mathematical pixel, frequency, and metadata level.
               </p>
-              <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-red-300 font-bold">
                 Why Automated Multi-Signal Inspection is Essential
               </div>
             </div>
@@ -327,7 +327,7 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#DC052D] block">
               ONE PLATFORM, EVERY SUBMISSION
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -342,16 +342,16 @@ export const LandingPage: React.FC = () => {
             {fraudSurfaces.map((item, idx) => (
               <div 
                 key={idx}
-                className="p-7 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg transition-all flex flex-col justify-between group"
+                className="p-7 rounded-2xl border border-slate-200 bg-white hover:border-[#DC052D]/40 hover:shadow-lg transition-all flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-50 text-[#DC052D] border border-red-200">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#DC052D] transition-colors">
                     {item.title}
                   </h3>
 
@@ -372,7 +372,7 @@ export const LandingPage: React.FC = () => {
                 <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between">
                   <Link
                     to={item.link}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#DC052D] hover:text-[#990000] transition-colors"
                   >
                     <span>{item.actionText}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -390,7 +390,7 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#DC052D] block">
               INTERACTIVE FORENSIC COMPARATOR
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -417,7 +417,7 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#DC052D] block">
               HOW TRUTHLENS WORKS
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -428,7 +428,7 @@ export const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+              <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#DC052D] font-black text-lg">
                 01
               </div>
               <h3 className="text-xl font-bold text-slate-900">
@@ -440,7 +440,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+              <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#DC052D] font-black text-lg">
                 02
               </div>
               <h3 className="text-xl font-bold text-slate-900">
@@ -452,7 +452,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="p-8 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-black text-lg">
+              <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#DC052D] font-black text-lg">
                 03
               </div>
               <h3 className="text-xl font-bold text-slate-900">
@@ -473,7 +473,7 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#DC052D] block">
               WHY TRUTHLENS OUTPERFORMS
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -489,11 +489,11 @@ export const LandingPage: React.FC = () => {
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-100/60">
                   <th className="p-4 font-bold text-slate-800">Capability</th>
-                  <th className="p-4 font-extrabold text-blue-700 bg-blue-50/60 w-1/3">
+                  <th className="p-4 font-extrabold text-[#DC052D] bg-red-50/60 w-1/3">
                     TruthLens (Open Standard)
                   </th>
                   <th className="p-4 font-bold text-slate-600">
-                    TruthScan & Document Vendors
+                    TruthScan & Commercial Vendors
                   </th>
                   <th className="p-4 font-bold text-slate-600">
                     Manual Human Review
@@ -506,9 +506,9 @@ export const LandingPage: React.FC = () => {
                     <td className="p-4 font-semibold text-slate-900">
                       {row.feature}
                     </td>
-                    <td className="p-4 font-bold text-blue-700 bg-blue-50/30">
+                    <td className="p-4 font-bold text-[#DC052D] bg-red-50/30">
                       <div className="flex items-center gap-1.5">
-                        <Check className="w-4 h-4 text-blue-600 shrink-0" />
+                        <Check className="w-4 h-4 text-[#DC052D] shrink-0" />
                         <span>{row.truthlens}</span>
                       </div>
                     </td>
@@ -530,11 +530,11 @@ export const LandingPage: React.FC = () => {
       {/* 7. WHY IS TRUTHLENS 100% FREE? (MANIFESTO SECTION) */}
       <section className="py-20 lg:py-24 bg-white border-b border-slate-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 text-white space-y-6 shadow-xl relative overflow-hidden">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#001F4D] via-[#0A0F1D] to-[#7D0014] text-white space-y-6 shadow-xl relative overflow-hidden">
             
-            <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#DC052D]/20 rounded-full blur-3xl pointer-events-none" />
             
-            <div className="flex items-center gap-2 text-cyan-400 text-xs font-extrabold tracking-widest uppercase">
+            <div className="flex items-center gap-2 text-[#FFCC00] text-xs font-extrabold tracking-widest uppercase">
               <HeartHandshake className="w-4 h-4" />
               <span>PUBLIC VERIFICATION INFRASTRUCTURE</span>
             </div>
@@ -554,13 +554,13 @@ export const LandingPage: React.FC = () => {
             <div className="pt-4 flex flex-wrap gap-4">
               <Link
                 to="/verify/image"
-                className="px-6 py-3 rounded-full text-xs font-extrabold bg-white text-slate-900 hover:bg-slate-100 transition-all cursor-pointer"
+                className="px-6 py-3 rounded-full text-xs font-extrabold bg-white text-[#001F4D] hover:bg-slate-100 transition-all cursor-pointer shadow-sm"
               >
                 Start Free Image Scan →
               </Link>
               <Link
                 to="/verify/certificate"
-                className="px-6 py-3 rounded-full text-xs font-extrabold bg-blue-600 text-white hover:bg-blue-700 transition-all cursor-pointer"
+                className="px-6 py-3 rounded-full text-xs font-extrabold bg-[#DC052D] hover:bg-[#B3001D] text-white transition-all cursor-pointer shadow-sm"
               >
                 Start Free Document Scan →
               </Link>
@@ -592,10 +592,10 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm hover:text-blue-600 transition-colors cursor-pointer"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm hover:text-[#DC052D] transition-colors cursor-pointer"
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${selectedFaq === idx ? 'rotate-180 text-blue-600' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${selectedFaq === idx ? 'rotate-180 text-[#DC052D]' : ''}`} />
                 </button>
                 {selectedFaq === idx && (
                   <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">

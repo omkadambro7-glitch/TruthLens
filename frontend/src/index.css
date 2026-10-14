@@ -6,34 +6,36 @@
   --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  /* Modern High-End Tech Palette */
+  /* Bayern Munich Elite Palette: Rot & Weiß with Bavarian Blue & Championship Gold */
+  --color-bayern-red: #DC052D;
+  --color-bayern-dark-red: #990000;
+  --color-bayern-crimson: #7D0014;
+  --color-bayern-navy: #001F4D;
+  --color-bayern-blue: #0066B2;
+  --color-bayern-gold: #FFCC00;
+  
   --color-ivory: #FAF9F6;
   --color-surface: #FFFFFF;
   --color-surface-subtle: #F8FAFC;
   
-  --color-obsidian: #0B132B;
-  --color-navy: #0F172A;
-  --color-navy-card: #1E293B;
-  --color-royal-blue: #2563EB;
-  --color-royal-cyan: #06B6D4;
-  --color-gold: #F59E0B;
-  --color-gold-light: #FDE68A;
+  --color-obsidian: #0A0F1D;
+  --color-navy-card: #001F4D;
   
-  --color-text-main: #0F172A;
+  --color-text-main: #0A0F1D;
   --color-text-muted: #64748B;
   --color-border: #E2E8F0;
   --color-border-subtle: #F1F5F9;
   
   --color-success: #10B981;
   --color-warning: #F59E0B;
-  --color-danger: #EF4444;
+  --color-danger: #DC052D;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
-  background-color: var(--color-ivory);
+  background-color: #FAFAFA;
   color: var(--color-text-main);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -45,7 +47,7 @@ h1, h2, h3, h4, .font-display {
   letter-spacing: -0.025em;
 }
 
-/* Custom modern scrollbars */
+/* Custom Bayern scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -58,63 +60,87 @@ h1, h2, h3, h4, .font-display {
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #DC052D;
 }
 
-/* Modern Gradient Utilities */
-.gradient-royal {
-  background: linear-gradient(135deg, #0B132B 0%, #1E293B 50%, #2563EB 100%);
+.custom-sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.custom-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #DC052D;
 }
 
-.gradient-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FDE68A 100%);
+/* Bayern Munich Gradient Utilities */
+.gradient-bayern {
+  background: linear-gradient(135deg, #DC052D 0%, #990000 50%, #001F4D 100%);
 }
 
-.gradient-text-royal {
-  background: linear-gradient(135deg, #0B132B 0%, #2563EB 100%);
+.gradient-bayern-red {
+  background: linear-gradient(135deg, #DC052D 0%, #A3001D 100%);
+}
+
+.gradient-bayern-navy {
+  background: linear-gradient(135deg, #001F4D 0%, #0A0F1D 100%);
+}
+
+.gradient-text-bayern {
+  background: linear-gradient(135deg, #DC052D 0%, #B80022 50%, #001F4D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-red {
+  background: linear-gradient(135deg, #DC052D 0%, #990000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-gold {
-  background: linear-gradient(135deg, #D97706 0%, #F59E0B 60%, #FBBF24 100%);
+  background: linear-gradient(135deg, #F59E0B 0%, #FFCC00 60%, #FDE68A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-glow {
-  background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, rgba(245, 158, 11, 0.08) 50%, transparent 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(220, 5, 45, 0.15) 0%, rgba(0, 31, 77, 0.08) 50%, transparent 100%);
 }
 
-/* Sleek Cards & Microinteractions */
+/* Sleek Bayern Cards & Microinteractions */
 .sleek-card {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 4px 20px -2px rgba(10, 15, 29, 0.05), 0 2px 6px -1px rgba(10, 15, 29, 0.02);
   border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sleek-card:hover {
-  border-color: #93C5FD;
-  box-shadow: 0 16px 36px -4px rgba(37, 99, 235, 0.12), 0 6px 16px -2px rgba(15, 23, 42, 0.04);
+  border-color: #F87171;
+  box-shadow: 0 16px 36px -4px rgba(220, 5, 45, 0.12), 0 6px 16px -2px rgba(10, 15, 29, 0.04);
   transform: translateY(-2px);
 }
 
 .sleek-card-dark {
-  background: linear-gradient(145deg, #0B132B 0%, #1E293B 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 16px 40px -8px rgba(11, 19, 43, 0.5);
+  background: linear-gradient(145deg, #001433 0%, #001F4D 50%, #7D0014 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px -8px rgba(0, 31, 77, 0.6);
   border-radius: 24px;
   color: #FFFFFF;
 }
 
-/* Scanning line animation */
+/* Bayern Laser Sweep Animation */
 @keyframes laserSweep {
   0% {
     top: 0%;
     opacity: 0.9;
-    box-shadow: 0 0 18px rgba(6, 182, 212, 0.9), 0 0 32px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 18px rgba(220, 5, 45, 0.9), 0 0 32px rgba(0, 102, 178, 0.6);
   }
   50% {
     opacity: 1;
@@ -122,29 +148,12 @@ h1, h2, h3, h4, .font-display {
   100% {
     top: 98%;
     opacity: 0.9;
-    box-shadow: 0 0 18px rgba(6, 182, 212, 0.9), 0 0 32px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 18px rgba(220, 5, 45, 0.9), 0 0 32px rgba(0, 102, 178, 0.6);
   }
 }
 
 .animate-laser {
   animation: laserSweep 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-}
-
-/* Morph pulse */
-@keyframes morphPulse {
-  0% {
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  }
-  50% {
-    border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
-  }
-  100% {
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  }
-}
-
-.animate-morph {
-  animation: morphPulse 8s ease-in-out infinite;
 }
 
 /* Reduced motion support */

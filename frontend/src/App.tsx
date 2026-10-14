@@ -22,17 +22,17 @@ import { AboutPage, PrivacyPage, TermsPage, AccessibilityPage } from './pages/Po
 
 const PageFallback: React.FC = () => (
   <div className="max-w-md mx-auto py-24 px-4 text-center space-y-3">
-    <div className="w-8 h-8 border-3 border-[#2563EB] border-t-transparent rounded-full animate-spin mx-auto" />
-    <span className="text-xs text-[#64748B] font-bold block">Loading TruthLens interface...</span>
+    <div className="w-8 h-8 border-3 border-[#DC052D] border-t-transparent rounded-full animate-spin mx-auto" />
+    <span className="text-xs text-[#001F4D] font-bold block">Loading TruthLens interface...</span>
   </div>
 );
 
 const NotFoundPage: React.FC = () => (
   <div className="max-w-md mx-auto py-24 px-4 text-center space-y-4">
-    <h1 className="text-5xl font-black text-[#0B132B] font-display">404</h1>
-    <h2 className="text-xl font-bold text-[#0B132B]">Page Not Found</h2>
-    <p className="text-xs text-[#64748B]">The verification artifact or page you are looking for does not exist.</p>
-    <Link to="/" className="inline-block mt-4 text-xs font-bold text-white bg-gradient-to-r from-[#0B132B] via-[#1E293B] to-[#2563EB] px-5 py-3 rounded-xl shadow-xs hover:border-[#F59E0B] border border-transparent transition-all">
+    <h1 className="text-5xl font-black text-[#001F4D] font-display">404</h1>
+    <h2 className="text-xl font-bold text-[#001F4D]">Page Not Found</h2>
+    <p className="text-xs text-slate-500">The verification artifact or page you are looking for does not exist.</p>
+    <Link to="/" className="inline-block mt-4 text-xs font-bold text-white bg-gradient-to-r from-[#DC052D] to-[#990000] px-5 py-3 rounded-xl shadow-xs hover:shadow-md transition-all">
       Return to Scanner
     </Link>
   </div>
@@ -59,7 +59,9 @@ function AppContent() {
           onMobileClose={() => setMobileSidebarOpen(false)}
         />
 
-        <main className="flex-1 overflow-x-hidden min-w-0 pb-16">
+        <main className={`flex-1 overflow-x-hidden min-w-0 pb-16 transition-all duration-300 ${
+          sidebarOpen ? 'lg:pl-72' : 'lg:pl-20'
+        }`}>
           <Suspense fallback={<PageFallback />}>
             <Routes>
               <Route path="/" element={<LandingPage />} />

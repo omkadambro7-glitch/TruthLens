@@ -9,7 +9,8 @@ import {
   Eye, 
   Sparkles, 
   Search,
-  Sidebar as SidebarIcon
+  Sidebar as SidebarIcon,
+  ShieldAlert
 } from 'lucide-react';
 import { TruthLensLogo } from '../brand/Logo';
 import { useLanguage } from '../../context/LanguageContext';
@@ -34,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E2E8F0] h-16 transition-all">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 h-16 transition-all">
       <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
         
         {/* Left Section: Sidebar Toggle & Large Pinned Logo */}
@@ -42,22 +43,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile Sidebar Trigger */}
           <button
             onClick={onOpenMobileSidebar}
-            className="lg:hidden p-2 rounded-xl text-[#0B132B] hover:bg-[#F1F5F9] transition-colors cursor-pointer"
+            className="lg:hidden p-2 rounded-xl text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
             aria-label="Open Navigation Sidebar"
           >
-            <Menu className="w-5 h-5 text-[#0B132B]" />
+            <Menu className="w-5 h-5 text-slate-900" />
           </button>
 
           {/* Desktop Sidebar Toggle Icon */}
           <button
             onClick={onToggleSidebar}
-            className="hidden lg:flex p-2 rounded-xl text-[#64748B] hover:text-[#0B132B] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+            className="hidden lg:flex p-2 rounded-xl text-slate-500 hover:text-[#DC052D] hover:bg-red-50/50 transition-colors cursor-pointer"
             title="Toggle Sidebar Navigation"
           >
             <SidebarIcon className="w-5 h-5" />
           </button>
 
-          {/* Prominent Large Logo on the Far Left */}
+          {/* Prominent Large Logo on the Far Left with Bayern Red */}
           <Link to="/" className="flex items-center group cursor-pointer">
             <TruthLensLogo variant="horizontal" size={40} />
           </Link>
@@ -66,32 +67,32 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Center Section: Quick Search & Forensic Shortcuts */}
         <div className="hidden md:flex items-center flex-1 max-w-md mx-4">
           <div className="relative w-full">
-            <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-2.5" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
             <input
               type="text"
               readOnly
               onClick={() => navigate('/verify/image')}
               placeholder="Search forensic models, check certificate, or incident response..."
-              className="w-full pl-9 pr-12 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#93C5FD] text-xs text-[#0F172A] placeholder-[#94A3B8] transition-all cursor-pointer"
+              className="w-full pl-9 pr-12 py-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-[#DC052D] text-xs text-slate-900 placeholder-slate-400 transition-all cursor-pointer"
             />
-            <span className="absolute right-2.5 top-2 text-[10px] font-bold text-[#64748B] bg-white border border-[#E2E8F0] px-1.5 py-0.5 rounded shadow-2xs">
+            <span className="absolute right-2.5 top-2 text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-2xs">
               ⌘K
             </span>
           </div>
         </div>
 
-        {/* Right Section: Language Switcher, Demo Mode Pill, and Primary CTA */}
+        {/* Right Section: Language Switcher, Demo Mode Pill, and Bayern Red Primary CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
           
           {/* Clean Language Switcher Pill */}
-          <div className="flex items-center bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs font-bold text-[#64748B]">
-            <Globe className="w-3.5 h-3.5 ml-1 mr-1 text-[#2563EB]" />
+          <div className="flex items-center bg-slate-50 p-1 rounded-xl border border-slate-200 text-xs font-bold text-slate-600">
+            <Globe className="w-3.5 h-3.5 ml-1 mr-1 text-[#DC052D]" />
             <button
               onClick={() => setLanguage('en')}
               className={`px-2 py-1 rounded-lg transition-all cursor-pointer ${
                 language === 'en' 
-                  ? 'bg-white text-[#0B132B] font-extrabold shadow-2xs border border-[#E2E8F0]' 
-                  : 'hover:text-[#0B132B]'
+                  ? 'bg-white text-[#DC052D] font-extrabold shadow-2xs border border-slate-200' 
+                  : 'hover:text-[#DC052D]'
               }`}
             >
               EN
@@ -100,8 +101,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setLanguage('hi')}
               className={`px-2 py-1 rounded-lg transition-all cursor-pointer ${
                 language === 'hi' 
-                  ? 'bg-white text-[#0B132B] font-extrabold shadow-2xs border border-[#E2E8F0]' 
-                  : 'hover:text-[#0B132B]'
+                  ? 'bg-white text-[#DC052D] font-extrabold shadow-2xs border border-slate-200' 
+                  : 'hover:text-[#DC052D]'
               }`}
             >
               HI
@@ -110,8 +111,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setLanguage('mr')}
               className={`px-2 py-1 rounded-lg transition-all cursor-pointer ${
                 language === 'mr' 
-                  ? 'bg-white text-[#0B132B] font-extrabold shadow-2xs border border-[#E2E8F0]' 
-                  : 'hover:text-[#0B132B]'
+                  ? 'bg-white text-[#DC052D] font-extrabold shadow-2xs border border-slate-200' 
+                  : 'hover:text-[#DC052D]'
               }`}
             >
               MR
@@ -120,12 +121,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* 1-Click Demo Badge */}
           {isDemo ? (
-            <div className="flex items-center gap-1.5 bg-[#EFF6FF] border border-[#BFDBFE] text-[#1D4ED8] px-3 py-1 rounded-xl text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse" />
+            <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 text-[#990000] px-3 py-1 rounded-xl text-xs font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#DC052D] animate-pulse" />
               <span className="hidden sm:inline">Demo:</span> {user?.full_name?.split(' ')[0]}
               <button
                 onClick={logout}
-                className="ml-1 text-[10px] text-[#DC2626] hover:underline"
+                className="ml-1 text-[10px] text-red-600 hover:underline"
                 title="Exit Demo"
               >
                 ✕
@@ -134,38 +135,38 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={handleDemoClick}
-              className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE] hover:from-[#DBEAFE] hover:to-[#BFDBFE] text-[#1E40AF] px-3 py-1.5 rounded-xl border border-[#BFDBFE] text-xs font-bold transition-all cursor-pointer shadow-2xs"
+              className="hidden sm:flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 text-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               <span>Explore Demo</span>
             </button>
           )}
 
           {/* User Sign In or Avatar */}
           {isAuthenticated && user && !isDemo ? (
-            <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-[#E2E8F0] text-xs shadow-2xs">
-              <UserIcon className="w-3.5 h-3.5 text-[#2563EB]" />
-              <span className="font-bold text-[#0B132B] max-w-28 truncate">{user.full_name}</span>
-              <button onClick={logout} className="text-[#DC2626] ml-1 p-0.5">
+            <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-xs shadow-2xs">
+              <UserIcon className="w-3.5 h-3.5 text-[#DC052D]" />
+              <span className="font-bold text-slate-900 max-w-28 truncate">{user.full_name}</span>
+              <button onClick={logout} className="text-red-600 ml-1 p-0.5">
                 <LogOut className="w-3.5 h-3.5" />
               </button>
             </div>
           ) : !isDemo ? (
             <Link
               to="/login"
-              className="text-xs font-bold text-[#475569] hover:text-[#0B132B] px-3 py-1.5 rounded-xl transition-colors"
+              className="text-xs font-bold text-slate-600 hover:text-[#DC052D] px-3 py-1.5 rounded-xl transition-colors"
             >
               {t('nav.signin')}
             </Link>
           ) : null}
 
-          {/* Primary Quick Check Button */}
+          {/* Primary Quick Check Button - Bayern Crimson Gradient */}
           <Link
             to="/verify/image"
-            className="flex items-center gap-2 bg-gradient-to-r from-[#0B132B] via-[#1E293B] to-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xs hover:shadow-md hover:border-[#F59E0B] border border-transparent transition-all cursor-pointer"
+            className="flex items-center gap-2 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer"
           >
-            <Eye className="w-3.5 h-3.5 text-[#FDE68A]" />
-            <span className="hidden sm:inline">{t('nav.check_an_image')}</span>
+            <Eye className="w-3.5 h-3.5 text-[#FFCC00]" />
+            <span className="hidden sm:inline">Check an Image</span>
             <span className="sm:hidden">Scan</span>
           </Link>
         </div>

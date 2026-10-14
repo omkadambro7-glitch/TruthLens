@@ -178,8 +178,8 @@ export const ImageVerifyPage: React.FC = () => {
       {/* Header Bar */}
       <div className="space-y-2 border-b border-slate-200 pb-6">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#DC052D]" />
             <span>AI Image Detection Engine</span>
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200">
@@ -208,7 +208,7 @@ export const ImageVerifyPage: React.FC = () => {
                 type="button"
                 onClick={() => setInputTab('upload')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  inputTab === 'upload' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  inputTab === 'upload' ? 'bg-[#DC052D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
                 }`}
               >
                 <Upload className="w-3.5 h-3.5" />
@@ -218,7 +218,7 @@ export const ImageVerifyPage: React.FC = () => {
                 type="button"
                 onClick={() => setInputTab('url')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  inputTab === 'url' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  inputTab === 'url' ? 'bg-[#DC052D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
                 }`}
               >
                 <LinkIcon className="w-3.5 h-3.5" />
@@ -228,14 +228,14 @@ export const ImageVerifyPage: React.FC = () => {
 
             {/* Upload Zone */}
             {inputTab === 'upload' ? (
-              <label className="border-2 border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/20 rounded-2xl p-7 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
+              <label className="border-2 border-dashed border-slate-300 hover:border-[#DC052D] hover:bg-red-50/20 rounded-2xl p-7 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 text-[#DC052D] flex items-center justify-center mb-3">
                   <Upload className="w-6 h-6" />
                 </div>
                 <span className="text-sm font-bold text-slate-900 block mb-1">
@@ -257,13 +257,13 @@ export const ImageVerifyPage: React.FC = () => {
                     value={imageUrlInput}
                     onChange={(e) => setImageUrlInput(e.target.value)}
                     placeholder="https://example.com/photo-to-verify.jpg"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-hidden focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10 bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-hidden focus:border-[#DC052D] focus:ring-2 focus:ring-[#DC052D]/10 bg-white"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isAnalyzing}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
+                  className="w-full bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
                 >
                   Fetch & Verify Image
                 </button>
@@ -382,12 +382,12 @@ export const ImageVerifyPage: React.FC = () => {
                 {/* Hash & Verification Speed */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs pt-1">
                   <div className="flex items-center gap-2 font-mono text-slate-500 text-[11px] truncate max-w-sm">
-                    <Hash className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <Hash className="w-3.5 h-3.5 text-[#DC052D] shrink-0" />
                     <span className="truncate">{result.file_hash_sha256}</span>
                   </div>
                   <button
                     onClick={copyHashToClipboard}
-                    className="flex items-center gap-1.5 text-[11px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200 w-fit cursor-pointer transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] font-bold text-[#DC052D] bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg border border-red-200 w-fit cursor-pointer transition-colors"
                   >
                     {hashCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{hashCopied ? 'Hash Copied!' : 'Copy SHA-256 Digest'}</span>
@@ -399,7 +399,7 @@ export const ImageVerifyPage: React.FC = () => {
                   <Link
                     to={`/dashboard/reports/${result.job_id}`}
                     state={{ reportData: result }}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
+                    className="flex items-center gap-2 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
                   >
                     <Share2 className="w-3.5 h-3.5" />
                     <span>Download Tamper-Evident Report</span>
@@ -418,7 +418,7 @@ export const ImageVerifyPage: React.FC = () => {
                   type="button"
                   onClick={() => setActiveTab('overview')}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeTab === 'overview' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                    activeTab === 'overview' ? 'bg-[#001F4D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
                   }`}
                 >
                   Forensic Signals Matrix
@@ -427,7 +427,7 @@ export const ImageVerifyPage: React.FC = () => {
                   type="button"
                   onClick={() => setActiveTab('heatmap')}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeTab === 'heatmap' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                    activeTab === 'heatmap' ? 'bg-[#001F4D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
                   }`}
                 >
                   Region Saliency & Heatmap View
@@ -483,7 +483,7 @@ export const ImageVerifyPage: React.FC = () => {
           ) : (
             /* Empty State */
             <div className="p-12 rounded-2xl bg-white border border-slate-200 flex flex-col items-center justify-center text-center min-h-[360px] space-y-3 shadow-sm">
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-200 text-[#DC052D] flex items-center justify-center">
                 <Scan className="w-7 h-7" />
               </div>
               <h3 className="text-base font-bold text-slate-900">

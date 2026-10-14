@@ -94,7 +94,7 @@ export const CertificateVerifyPage: React.FC = () => {
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <span className="text-slate-500">Document Engine</span>
             <span className="text-slate-300">/</span>
-            <span className="text-blue-600">PDF & Medical Pre-Check</span>
+            <span className="text-[#DC052D]">PDF & Medical Pre-Check</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
             Document & Medical Certificate Forensic Engine
@@ -114,7 +114,7 @@ export const CertificateVerifyPage: React.FC = () => {
             type="checkbox"
             checked={studentMode}
             onChange={(e) => setStudentMode(e.target.checked)}
-            className="w-4 h-4 rounded text-blue-600 focus:ring-blue-600 cursor-pointer"
+            className="w-4 h-4 rounded text-[#DC052D] focus:ring-[#DC052D] cursor-pointer"
           />
         </div>
       </div>
@@ -129,14 +129,14 @@ export const CertificateVerifyPage: React.FC = () => {
 
       {/* Upload Zone & Sample Test Cases */}
       <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6">
-        <label className="border-2 border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
+        <label className="border-2 border-dashed border-slate-300 hover:border-[#DC052D] hover:bg-red-50/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
           <input
             type="file"
             accept="application/pdf,image/jpeg,image/png,image/webp"
             className="hidden"
             onChange={handleFileChange}
           />
-          <div className="w-13 h-13 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mb-3">
+          <div className="w-13 h-13 rounded-2xl bg-red-50 border border-red-200 text-[#DC052D] flex items-center justify-center mb-3">
             <FileText className="w-6 h-6" />
           </div>
           <span className="text-sm font-bold text-slate-900 block mb-1">
@@ -150,7 +150,7 @@ export const CertificateVerifyPage: React.FC = () => {
         {/* Quick Sample Selector */}
         <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <span className="font-bold text-slate-900 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <Sparkles className="w-3.5 h-3.5 text-[#DC052D]" />
             <span>Or test with verified academic test cases:</span>
           </span>
           <div className="flex flex-wrap gap-2">
@@ -179,7 +179,7 @@ export const CertificateVerifyPage: React.FC = () => {
       {/* Loading State */}
       {isVerifying && (
         <div className="p-12 rounded-2xl bg-white border border-slate-200 text-center space-y-3 shadow-sm">
-          <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-10 h-10 border-3 border-[#DC052D] border-t-transparent rounded-full animate-spin mx-auto" />
           <h4 className="text-sm font-bold text-slate-900">Extracting OCR credentials and verifying date logic...</h4>
           <p className="text-xs text-slate-500">Matching physician council registry format and physical stamp ink contours.</p>
         </div>
@@ -218,7 +218,7 @@ export const CertificateVerifyPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={handleSubmitToReview}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer w-fit"
+                className="flex items-center gap-2 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer w-fit"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Queue into University Portal</span>
