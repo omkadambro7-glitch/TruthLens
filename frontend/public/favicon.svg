@@ -1,0 +1,23 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fav-grad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stopColor="#116B67" />
+      <stop offset="0.6" stopColor="#4C51BF" />
+      <stop offset="1" stopColor="#7663D8" />
+    </linearGradient>
+    <linearGradient id="fav-coral" x1="20" y1="18" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stopColor="#FF806F" />
+      <stop offset="1" stopColor="#FF6B57" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="#FAF9F6"/>
+  <rect x="5" y="22" width="3" height="3" rx="0.75" fill="#116B67" opacity="0.5" />
+  <rect x="9" y="17" width="3.5" height="3.5" rx="0.75" fill="#116B67" opacity="0.65" />
+  <rect x="9" y="27" width="3.5" height="3.5" rx="0.75" fill="#116B67" opacity="0.65" />
+  <rect x="14" y="12" width="3.5" height="3.5" rx="0.75" fill="#188681" opacity="0.8" />
+  <rect x="14" y="32" width="3.5" height="3.5" rx="0.75" fill="#188681" opacity="0.8" />
+  <path d="M17 10C24 6 36 8 43 24C36 40 24 42 17 38" stroke="url(#fav-grad)" stroke-width="3.2" stroke-linecap="round" />
+  <circle cx="26" cy="24" r="10" stroke="rgba(118, 99, 216, 0.25)" stroke-width="2" />
+  <path d="M21 24.5L24.8 28.5L32 19" stroke="url(#fav-grad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="34.5" cy="16.5" r="2.5" fill="url(#fav-coral)" />
+</svg>

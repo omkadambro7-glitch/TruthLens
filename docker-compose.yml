@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: truthlens_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=TruthLens
+      - SECRET_KEY=truthlens_prod_secret_replace_in_production
+      - DATABASE_URL=sqlite+aiosqlite:///./truthlens.db
+      - UPLOAD_DIR=/app/storage/uploads
+      - ARTIFACTS_DIR=/app/storage/artifacts
+    volumes:
+      - truthlens_storage:/app/storage
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: truthlens_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  truthlens_storage:
