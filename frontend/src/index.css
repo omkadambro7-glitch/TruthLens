@@ -1,40 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-royal: 'Cinzel', serif;
-  --font-body: 'Plus Jakarta Sans', 'Manrope', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  /* Royal Palette - Real Madrid inspired */
+  /* Modern High-End Tech Palette */
   --color-ivory: #FAF9F6;
   --color-surface: #FFFFFF;
-  --color-surface-subtle: #F6F4EE;
+  --color-surface-subtle: #F8FAFC;
   
-  --color-navy: #101B35;
-  --color-navy-dark: #0A1124;
-  --color-navy-light: #1A2B52;
-  --color-royal-blue: #233F8C;
-  --color-royal-soft: #EEF3FF;
+  --color-obsidian: #0B132B;
+  --color-navy: #0F172A;
+  --color-navy-card: #1E293B;
+  --color-royal-blue: #2563EB;
+  --color-royal-cyan: #06B6D4;
+  --color-gold: #F59E0B;
+  --color-gold-light: #FDE68A;
   
-  --color-gold: #C6A45C;
-  --color-gold-light: #E6D5A2;
-  --color-gold-soft: #FBF8EE;
-  --color-gold-border: #DBC898;
+  --color-text-main: #0F172A;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
   
-  --color-text-main: #192338;
-  --color-text-muted: #687386;
-  --color-slate: #737D90;
-  --color-border: #E8E5DC;
-  --color-border-subtle: #F1EFE8;
-  
-  --color-success: #1E824C;
-  --color-success-bg: #EDF7F1;
-  --color-warning: #D97706;
-  --color-warning-bg: #FEF7EA;
-  --color-danger: #DC2626;
-  --color-danger-bg: #FEF2F2;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
 }
 
 body {
@@ -48,117 +40,111 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.font-serif-display {
+h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.025em;
 }
 
-.font-royal {
-  font-family: var(--font-royal);
-}
-
-/* Custom scrollbars */
+/* Custom modern scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-ivory);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8D4C7;
-  border-radius: 4px;
+  background: #CBD5E1;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8B2A0;
+  background: #94A3B8;
 }
 
-/* Gradients */
-.royal-gradient {
-  background: linear-gradient(135deg, #101B35 0%, #233F8C 100%);
+/* Modern Gradient Utilities */
+.gradient-royal {
+  background: linear-gradient(135deg, #0B132B 0%, #1E293B 50%, #2563EB 100%);
 }
 
-.royal-gradient-gold {
-  background: linear-gradient(135deg, #101B35 0%, #1A2B52 60%, #C6A45C 100%);
+.gradient-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FDE68A 100%);
 }
 
-.gold-gradient {
-  background: linear-gradient(135deg, #C6A45C 0%, #E6D5A2 100%);
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #B58F40 0%, #C6A45C 50%, #E6D5A2 100%);
+.gradient-text-royal {
+  background: linear-gradient(135deg, #0B132B 0%, #2563EB 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.royal-gradient-text {
-  background: linear-gradient(135deg, #101B35 0%, #233F8C 100%);
+.gradient-text-gold {
+  background: linear-gradient(135deg, #D97706 0%, #F59E0B 60%, #FBBF24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Cards & Elevations */
-.royal-card {
+.gradient-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, rgba(245, 158, 11, 0.08) 50%, transparent 100%);
+}
+
+/* Sleek Cards & Microinteractions */
+.sleek-card {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px -2px rgba(16, 27, 53, 0.04), 0 2px 6px -1px rgba(16, 27, 53, 0.02);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
   border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.royal-card:hover {
-  border-color: var(--color-gold-border);
-  box-shadow: 0 12px 32px -4px rgba(16, 27, 53, 0.08), 0 4px 12px -2px rgba(198, 164, 92, 0.12);
+.sleek-card:hover {
+  border-color: #93C5FD;
+  box-shadow: 0 16px 36px -4px rgba(37, 99, 235, 0.12), 0 6px 16px -2px rgba(15, 23, 42, 0.04);
   transform: translateY(-2px);
 }
 
-.royal-card-static {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px -2px rgba(16, 27, 53, 0.04), 0 2px 6px -1px rgba(16, 27, 53, 0.02);
-  border-radius: 20px;
+.sleek-card-dark {
+  background: linear-gradient(145deg, #0B132B 0%, #1E293B 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 40px -8px rgba(11, 19, 43, 0.5);
+  border-radius: 24px;
+  color: #FFFFFF;
 }
 
-.royal-card-gold {
-  background: #FFFFFF;
-  border: 1px solid rgba(198, 164, 92, 0.4);
-  box-shadow: 0 8px 30px -4px rgba(198, 164, 92, 0.12);
-  border-radius: 20px;
-}
-
-/* Scanning lens animation */
-@keyframes royalScanline {
+/* Scanning line animation */
+@keyframes laserSweep {
   0% {
-    top: 2%;
+    top: 0%;
     opacity: 0.9;
-    box-shadow: 0 0 16px rgba(198, 164, 92, 0.8), 0 0 32px rgba(35, 63, 140, 0.4);
+    box-shadow: 0 0 18px rgba(6, 182, 212, 0.9), 0 0 32px rgba(37, 99, 235, 0.5);
   }
   50% {
     opacity: 1;
   }
   100% {
-    top: 96%;
+    top: 98%;
     opacity: 0.9;
-    box-shadow: 0 0 16px rgba(198, 164, 92, 0.8), 0 0 32px rgba(35, 63, 140, 0.4);
+    box-shadow: 0 0 18px rgba(6, 182, 212, 0.9), 0 0 32px rgba(37, 99, 235, 0.5);
   }
 }
 
-.animate-scanline {
-  animation: royalScanline 2.4s ease-in-out infinite alternate;
+.animate-laser {
+  animation: laserSweep 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Shimmer */
-@keyframes shimmer {
+/* Morph pulse */
+@keyframes morphPulse {
   0% {
-    transform: translateX(-100%);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  50% {
+    border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
   }
   100% {
-    transform: translateX(100%);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   }
 }
 
-.animate-shimmer {
-  animation: shimmer 2s infinite;
+.animate-morph {
+  animation: morphPulse 8s ease-in-out infinite;
 }
 
 /* Reduced motion support */
