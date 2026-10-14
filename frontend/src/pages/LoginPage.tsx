@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { TruthLensLogo } from '../components/brand/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Lock, Mail, AlertCircle, Sparkles, GraduationCap, ShieldCheck, UserCheck } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { login, loginAsDemo } = useAuth();
+  const { user, login, loginAsDemo } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const qEmail = searchParams.get('email');
+    if (qEmail) {
+      setEmail(qEmail);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +28,16 @@ export const LoginPage: React.FC = () => {
     setErrorMsg(null);
     const result = await login(email, password);
     if (result.success) {
-      navigate('/university');
+      // Check stored user role for redirection
+      const savedUserStr = localStorage.getItem('truthlens_user');
+      const savedRole = savedUserStr ? JSON.parse(savedUserStr)?.role : 'individual';
+      if (savedRole === 'reviewer') {
+        navigate('/university');
+      } else if (savedRole === 'student') {
+        navigate('/verify/certificate');
+      } else {
+        navigate('/verify/image');
+      }
     } else {
       setErrorMsg(result.error || t('auth.error_invalid'));
       setLoading(false);

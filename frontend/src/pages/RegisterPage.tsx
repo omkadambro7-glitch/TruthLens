@@ -12,6 +12,7 @@ export const RegisterPage: React.FC = () => {
   const [role, setRole] = useState('individual');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const { register, loginAsDemo } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -20,9 +21,19 @@ export const RegisterPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg(null);
+    setSuccessMsg(null);
     const result = await register(fullName, email, password, role);
     if (result.success) {
-      navigate('/university');
+      setSuccessMsg('Account safalta-purvak ban gaya! Redirecting...');
+      setTimeout(() => {
+        if (role === 'reviewer') {
+          navigate('/university');
+        } else if (role === 'student') {
+          navigate('/verify/certificate');
+        } else {
+          navigate('/verify/image');
+        }
+      }, 500);
     } else {
       setErrorMsg(result.error || 'Registration could not be completed. You can also explore instantly with Demo Mode.');
       setLoading(false);
@@ -42,10 +53,27 @@ export const RegisterPage: React.FC = () => {
       </div>
 
       <div className="royal-card p-6 sm:p-8 bg-white border border-[#E8E5DC] space-y-4">
+        {successMsg && (
+          <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs text-green-700 flex items-start gap-2.5">
+            <Sparkles className="w-4 h-4 shrink-0 mt-0.5 text-green-600" />
+            <span className="leading-relaxed font-bold">{successMsg}</span>
+          </div>
+        )}
+
         {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-            <span className="leading-relaxed">{errorMsg}</span>
+          <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex flex-col gap-2">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+              <span className="leading-relaxed">{errorMsg}</span>
+            </div>
+            {errorMsg.includes('registered') && (
+              <Link 
+                to={`/login?email=${encodeURIComponent(email)}`}
+                className="ml-6 text-xs font-bold text-[#233F8C] underline hover:text-[#101B35]"
+              >
+                👉 Click here to Sign In with {email}
+              </Link>
+            )}
           </div>
         )}
 

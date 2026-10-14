@@ -13,10 +13,13 @@ import {
   Hash, 
   Send,
   Sparkles,
-  Info
+  Info,
+  BookOpen,
+  Cpu
 } from 'lucide-react';
 import { CertificateVerificationResult } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { CertificatePlainSummary } from '../components/forensics/CertificatePlainSummary';
 import { SAMPLE_CERTIFICATE_CASES, getApiBaseUrl } from '../utils/apiClient';
 
 export const CertificateVerifyPage: React.FC = () => {
@@ -25,6 +28,7 @@ export const CertificateVerifyPage: React.FC = () => {
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [studentMode, setStudentMode] = useState<boolean>(false);
   const [result, setResult] = useState<CertificateVerificationResult | null>(null);
+  const [certTab, setCertTab] = useState<'plain' | 'advanced'>('plain');
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false);
 
   const loadSampleCertificate = (key: 'latency' | 'authentic' | 'missing') => {
@@ -190,43 +194,109 @@ export const CertificateVerifyPage: React.FC = () => {
           transition={{ duration: 0.4 }}
           className="space-y-6"
         >
-          {/* Main Assessment Header */}
-          <div className="royal-card p-6 sm:p-7 bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-[#737D90] block mb-1">
-                Document Pre-Check Assessment
-              </span>
-              <div className="flex items-center gap-3">
-                <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${
-                  result.risk_category === 'Low apparent integrity risk' 
-                    ? 'text-[#1E824C] bg-[#EDF7F1] border-[#A3D9B8]' 
-                    : result.risk_category === 'Review recommended'
-                    ? 'text-[#A88234] bg-[#FBF8EE] border-[#E6D5A2]'
-                    : 'text-[#DC2626] bg-[#FEF2F2] border-red-200'
-                }`}>
-                  {result.risk_category}
-                </span>
-                <span className="text-xs text-[#687386]">
-                  OCR Extraction Confidence: <strong className="text-[#101B35]">{result.ocr_confidence}</strong>
-                </span>
-              </div>
+          {/* Tab Selector: Plain Explanation vs Detailed Audit */}
+          <div className="flex items-center justify-between bg-white p-1.5 rounded-2xl border border-[#E8E5DC] shadow-2xs">
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setCertTab('plain')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                  certTab === 'plain'
+                    ? 'bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white shadow-xs'
+                    : 'text-[#687386] hover:text-[#101B35] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-[#E6D5A2]" />
+                <span>💡 Seedha Jawab (Document Analysis)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCertTab('advanced')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                  certTab === 'advanced'
+                    ? 'bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white shadow-xs'
+                    : 'text-[#687386] hover:text-[#101B35] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <Cpu className="w-3.5 h-3.5" />
+                <span>📋 Detailed Credential Audit</span>
+              </button>
             </div>
 
-            <button
-              onClick={handleSubmitToReview}
-              className="flex items-center gap-2 bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs hover:border-[#C6A45C] border border-transparent transition-all cursor-pointer w-fit"
-            >
-              <Send className="w-3.5 h-3.5 text-[#E6D5A2]" />
-              <span>{t('cert.submit_review')}</span>
-            </button>
+            <span className="text-[11px] font-semibold text-[#737D90] hidden sm:block pr-3">
+              Extraction Confidence: <strong className="text-[#101B35]">{result.ocr_confidence}</strong>
+            </span>
           </div>
 
-          {submissionSuccess && (
-            <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs font-bold text-green-800 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-600" />
-              <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
+          {certTab === 'plain' ? (
+            <div className="space-y-5">
+              <CertificatePlainSummary 
+                result={result} 
+                onSubmitToReview={handleSubmitToReview} 
+              />
+
+              {submissionSuccess && (
+                <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs font-bold text-green-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-600" />
+                  <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
+                </div>
+              )}
+
+              {/* Quick toggle to detailed audit */}
+              <div className="p-4 rounded-xl bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="space-y-0.5">
+                  <span className="font-bold text-[#101B35] block">University Dean ya Clinic Reviewer hain?</span>
+                  <span className="text-[#687386]">Doctor council registry match, OCR confidence matrix aur raw text logs dekhne ke liye Detailed Audit kholein.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setCertTab('advanced')}
+                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#FAF9F6] border border-[#D8D4C7] hover:border-[#101B35] text-[#101B35] transition-all shrink-0 cursor-pointer"
+                >
+                  View Detailed Credential Audit →
+                </button>
+              </div>
             </div>
-          )}
+          ) : (
+            <div className="space-y-6">
+              {/* Main Assessment Header */}
+              <div className="royal-card p-6 sm:p-7 bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#737D90] block mb-1">
+                    Document Pre-Check Assessment
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${
+                      result.risk_category === 'Low apparent integrity risk' 
+                        ? 'text-[#1E824C] bg-[#EDF7F1] border-[#A3D9B8]' 
+                        : result.risk_category === 'Review recommended'
+                        ? 'text-[#A88234] bg-[#FBF8EE] border-[#E6D5A2]'
+                        : 'text-[#DC2626] bg-[#FEF2F2] border-red-200'
+                    }`}>
+                      {result.risk_category}
+                    </span>
+                    <span className="text-xs text-[#687386]">
+                      OCR Extraction Confidence: <strong className="text-[#101B35]">{result.ocr_confidence}</strong>
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSubmitToReview}
+                  className="flex items-center gap-2 bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs hover:border-[#C6A45C] border border-transparent transition-all cursor-pointer w-fit"
+                >
+                  <Send className="w-3.5 h-3.5 text-[#E6D5A2]" />
+                  <span>{t('cert.submit_review')}</span>
+                </button>
+              </div>
+
+              {submissionSuccess && (
+                <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-xs font-bold text-green-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-600" />
+                  <span>Case successfully queued into University Review Portal for authorized human evaluation.</span>
+                </div>
+              )}
 
           {/* Structured Credential Extraction Grid */}
           <div className="royal-card p-6 sm:p-7 bg-white border border-[#E8E5DC] space-y-5">
@@ -318,8 +388,10 @@ export const CertificateVerifyPage: React.FC = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
+    </motion.div>
+  )}
 
     </div>
   );
