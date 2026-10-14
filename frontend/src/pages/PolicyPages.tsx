@@ -5,19 +5,19 @@ export const AboutPage: React.FC = () => (
   <div className="max-w-4xl mx-auto px-4 py-12 text-left space-y-6">
     <div className="inline-flex items-center gap-2 bg-[#FAF6EE] border border-[#C5A059]/40 text-[#0B1B3D] px-3.5 py-1 rounded-full text-xs font-bold w-fit">
       <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-      <span>Mahira • Open Digital Authenticity Standard</span>
+      <span>Zenin • Open Digital Authenticity Standard</span>
     </div>
     <h1 className="text-3xl sm:text-4xl font-black text-[#0B1B3D] font-display">
-      About Mahira
+      About Zenin
     </h1>
     <p className="text-sm text-[#556987] leading-relaxed">
-      Mahira was founded with a singular, unambiguous mission: <em>Make trustworthy digital media verification accessible to everyone, for free.</em>
+      Zenin was founded with a singular, unambiguous mission: <em>Make trustworthy digital media verification accessible to everyone, for free.</em>
     </p>
 
     <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-3">
       <h3 className="font-bold text-base text-[#0B1B3D]">Core Methodology</h3>
       <p className="text-xs text-[#556987] leading-relaxed">
-        Modern generative AI has democratized synthetic generation, but commercial detection tools often charge exorbitant fees and make exaggerated claims of certainty. Mahira relies on peer-reviewed mathematical forensics—Error Level Analysis (ELA), 2D Fast Fourier Transform frequency analysis, acoustic vocoder rolloff profiling, and container metadata inspection.
+        Modern generative AI has democratized synthetic generation, but commercial detection tools often charge exorbitant fees and make exaggerated claims of certainty. Zenin relies on peer-reviewed mathematical forensics—Error Level Analysis (ELA), 2D Fast Fourier Transform frequency analysis, acoustic vocoder rolloff profiling, and container metadata inspection.
       </p>
     </div>
 
@@ -40,7 +40,7 @@ export const PrivacyPage: React.FC = () => (
       Privacy Policy & Safeguards
     </h1>
     <p className="text-sm text-[#556987] leading-relaxed">
-      Mahira treats uploaded images, medical certificates, student submissions, and victim evidence as sensitive, personal data.
+      Zenin treats uploaded images, medical certificates, student submissions, and victim evidence as sensitive, personal data.
     </p>
 
     <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-4 text-xs text-[#556987] leading-relaxed">
@@ -75,7 +75,7 @@ export const TermsPage: React.FC = () => (
     <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-4 text-xs text-[#556987] leading-relaxed">
       <div>
         <strong className="text-sm text-[#0B1B3D] block mb-1">1. Non-Disciplinary Determination Guarantee</strong>
-        <p>Mahira is an integrity pre-check and human assistance tool. Outputs may never be used as the sole automated basis for employment termination, academic expulsion, or legal sanctions without authorized human review and opportunity to contest.</p>
+        <p>Zenin is an integrity pre-check and human assistance tool. Outputs may never be used as the sole automated basis for employment termination, academic expulsion, or legal sanctions without authorized human review and opportunity to contest.</p>
       </div>
 
       <div>
@@ -93,7 +93,7 @@ export const AccessibilityPage: React.FC = () => (
     </h1>
     <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-4 text-xs text-[#556987] leading-relaxed">
       <p>
-        Mahira is committed to digital accessibility. We target WCAG 2.1 Level AA conformance across our application.
+        Zenin is committed to digital accessibility. We target WCAG 2.1 Level AA conformance across our application.
       </p>
       <ul className="list-disc pl-5 space-y-1.5 text-xs text-[#556987]">
         <li><strong>Color Contrast:</strong> Minimum 4.5:1 ratio for standard text and 3:1 for large display headers and interactive elements.</li>

@@ -120,7 +120,7 @@ export const LearnPage: React.FC = () => {
           <div className="p-4 bg-[#FAF9F6] border border-[#E8E5DC] rounded-xl space-y-2">
             <strong className="text-[#101B35] block">Student Safeguard Policy:</strong>
             <p>
-              Under our ethics framework, Mahira acts solely as a decision-support assistant. No automated system is authorized to penalize a student or declare fraud without human review and appeal rights.
+              Under our ethics framework, Zenin acts solely as a decision-support assistant. No automated system is authorized to penalize a student or declare fraud without human review and appeal rights.
             </p>
           </div>
         </div>

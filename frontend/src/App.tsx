@@ -28,7 +28,7 @@ import { AboutPage, PrivacyPage, TermsPage, AccessibilityPage } from './pages/Po
 const PageFallback: React.FC = () => (
   <div className="max-w-md mx-auto py-24 px-4 text-center space-y-3">
     <div className="w-8 h-8 border-3 border-[#C5A059] border-t-transparent rounded-full animate-spin mx-auto" />
-    <span className="text-xs text-[#556987] font-bold block">Loading Mahira interface...</span>
+    <span className="text-xs text-[#556987] font-bold block">Loading Zenin interface...</span>
   </div>
 );
 

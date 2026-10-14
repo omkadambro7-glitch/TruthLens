@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { MahiraIcon } from '../components/brand/Logo';
+import { ZeninIcon } from '../components/brand/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Lock, Mail, AlertCircle, Sparkles, GraduationCap, ShieldCheck, UserCheck } from 'lucide-react';
@@ -58,12 +58,12 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto py-16 px-4 w-full flex flex-col gap-6 text-left">
       <div className="text-center flex flex-col items-center gap-2">
-        <MahiraIcon size={48} />
+        <ZeninIcon size={52} />
         <h1 className="text-3xl font-black text-[#0B1B3D] font-display tracking-tight">
           {t('auth.signin_title')}
         </h1>
-        <p className="text-xs text-[#556987] max-w-xs">
-          Access the Mahira forensic intelligence desk & review records
+        <p className="text-xs sm:text-sm text-[#556987] max-w-xs">
+          Access the Zenin forensic intelligence desk & review records
         </p>
       </div>
 

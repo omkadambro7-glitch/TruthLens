@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MahiraLogo } from '../brand/Logo';
+import { ZeninLogo } from '../brand/Logo';
 import { ShieldCheck, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -14,8 +14,8 @@ export const Footer: React.FC = () => {
           
           {/* Brand Info */}
           <div className="md:col-span-2 flex flex-col gap-4">
-            <MahiraLogo variant="horizontal" size={36} />
-            <p className="text-xs text-[#556987] leading-relaxed max-w-sm mt-1">
+            <ZeninLogo variant="horizontal" size={42} />
+            <p className="text-xs sm:text-sm text-[#556987] leading-relaxed max-w-sm mt-1">
               Real-time multi-domain forensic verification across images, deepfake video, synthetic voice, and altered documents. 100% Free Public Standard for all humanity.
             </p>
             <div className="flex items-center gap-2 text-xs font-bold text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 px-3.5 py-1.5 rounded-full w-fit">
@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
               <li><Link to="/university" className="hover:text-[#C5A059] transition-colors">University Review Desk</Link></li>
               <li><Link to="/dashboard/reports/job-demo-deepfake-01" className="hover:text-[#C5A059] transition-colors">HMAC Audit Ledger</Link></li>
               <li><Link to="/sos" className="text-[#C5A059] hover:text-[#9A7B38] font-bold transition-colors">Victim SOS Helpline (1930)</Link></li>
-              <li><Link to="/learn" className="hover:text-[#C5A059] transition-colors">Mahira Defense Academy</Link></li>
+              <li><Link to="/learn" className="hover:text-[#C5A059] transition-colors">Zenin Defense Academy</Link></li>
             </ul>
           </div>
 
@@ -72,10 +72,10 @@ export const Footer: React.FC = () => {
         {/* Mandatory Disclaimer & Copyright */}
         <div className="mt-12 pt-8 border-t border-[#0B1B3D]/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
           <p className="max-w-2xl text-center md:text-left leading-relaxed">
-            <strong className="text-[#0B1B3D]">Mandatory Algorithmic Safeguard:</strong> Mahira produces empirical forensic probabilities and multi-signal indicators. No algorithm guarantees 100% certainty. Outputs do not constitute automated punitive determinations. Final actions require authorized human review.
+            <strong className="text-[#0B1B3D]">Mandatory Algorithmic Safeguard:</strong> Zenin produces empirical forensic probabilities and multi-signal indicators. No algorithm guarantees 100% certainty. Outputs do not constitute automated punitive determinations. Final actions require authorized human review.
           </p>
           <div className="text-center md:text-right whitespace-nowrap font-medium text-[#0B1B3D] font-mono text-[11px]">
-            © 2026 Mahira • Free Digital Verification Standard
+            © 2026 Zenin • Free Digital Verification Standard
           </div>
         </div>
       </div>

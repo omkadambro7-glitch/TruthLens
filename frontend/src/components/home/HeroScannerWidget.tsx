@@ -131,7 +131,7 @@ export const HeroScannerWidget: React.FC = () => {
             <span className="w-3 h-3 rounded-full bg-white/30 inline-block" />
             <span className="w-3 h-3 rounded-full bg-white/20 inline-block" />
             <span className="font-mono text-[10px] text-[#C5A059] font-bold ml-2 hidden sm:inline tracking-wider">
-              MAHIRA FORENSIC COCKPIT • ACTIVE v2.6
+              ZENIN FORENSIC COCKPIT • ACTIVE v2.6
             </span>
           </div>
 

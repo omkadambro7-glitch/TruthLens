@@ -388,7 +388,7 @@ export const ImageVerifyPage: React.FC = () => {
                   <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2.5">
                     <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
                     <span className="leading-relaxed">
-                      Abstention Zone Activated: Confidence falls within the 33%–67% uncertainty corridor due to re-compression. Mahira abstains from declaring a false-positive binary verdict.
+                      Abstention Zone Activated: Confidence falls within the 33%–67% uncertainty corridor due to re-compression. Zenin abstains from declaring a false-positive binary verdict.
                     </span>
                   </div>
                 )}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { MahiraIcon } from '../components/brand/Logo';
+import { ZeninIcon } from '../components/brand/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Lock, Mail, User, AlertCircle, Sparkles } from 'lucide-react';
@@ -43,7 +43,7 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto py-16 px-4 w-full flex flex-col gap-6 text-left">
       <div className="text-center flex flex-col items-center gap-2">
-        <MahiraIcon size={48} />
+        <ZeninIcon size={52} />
         <h1 className="text-3xl font-black text-[#0B1B3D] font-display tracking-tight">
           {t('auth.register_title')}
         </h1>

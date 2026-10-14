@@ -31,7 +31,7 @@ import {
   CreditCard,
   HeartHandshake
 } from 'lucide-react';
-import { MahiraIcon, MahiraLogo } from '../components/brand/Logo';
+import { ZeninIcon, ZeninLogo } from '../components/brand/Logo';
 import { HeroScannerWidget } from '../components/home/HeroScannerWidget';
 import { ForensicComparator } from '../components/ui/ForensicComparator';
 import { useLanguage } from '../context/LanguageContext';
@@ -103,37 +103,37 @@ export const LandingPage: React.FC = () => {
   const comparisonRows = [
     {
       feature: 'Comprehensive All-in-One Engine (Image, Video, Voice, Text, Invoices, KYC)',
-      mahira: 'Yes — 7 Dedicated Specialized Workstations',
+      zenin: 'Yes — 7 Dedicated Specialized Workstations',
       commercial: 'Fragmented Paywalled APIs',
       manual: 'Fragmented & Slow'
     },
     {
       feature: 'Scan Cost & Licensing',
-      mahira: '100% Free Forever (Open Public Infrastructure)',
+      zenin: '100% Free Forever (Open Public Infrastructure)',
       commercial: '$0.01 – $0.79 per scan',
       manual: '$5+ in analyst labor'
     },
     {
       feature: 'Processing Speed',
-      mahira: 'Instant 0.4s – 1.2s Real-time',
+      zenin: 'Instant 0.4s – 1.2s Real-time',
       commercial: '1.5s+ API latency',
       manual: '15 – 30 Minutes per file'
     },
     {
       feature: 'Visual Forensic Proof',
-      mahira: 'Heatmap Saliency + Audio Waveforms + Keyframe Scrubber',
+      zenin: 'Heatmap Saliency + Audio Waveforms + Keyframe Scrubber',
       commercial: 'Basic Heatmap only',
       manual: 'Subjective Eyeballing'
     },
     {
       feature: 'Abstention Zone for Low Quality Media',
-      mahira: 'Yes — Explicit "Needs Human Review" safeguard',
+      zenin: 'Yes — Explicit "Needs Human Review" safeguard',
       commercial: 'Binary Forced Output',
       manual: 'Inconsistent'
     },
     {
       feature: 'Data Privacy & Zero Retention',
-      mahira: 'Zero Data Harvesting — Files Purged from RAM in 60s',
+      zenin: 'Zero Data Harvesting — Files Purged from RAM in 60s',
       commercial: 'Stored in commercial data silos',
       manual: 'Unsecured email attachments'
     }
@@ -141,12 +141,12 @@ export const LandingPage: React.FC = () => {
 
   const faqs = [
     {
-      q: "Why is Mahira 100% free compared to expensive commercial alternatives?",
-      a: "Mahira was founded on the principle that digital authenticity and defense against synthetic deception are essential public goods. Commercial vendors charge per scan, creating high financial barriers for students, fraud victims, and public institutions. Mahira operates as free-first public verification infrastructure supported by open academic research."
+      q: "Why is Zenin 100% free compared to expensive commercial alternatives?",
+      a: "Zenin was founded on the principle that digital authenticity and defense against synthetic deception are essential public goods. Commercial vendors charge per scan, creating high financial barriers for students, fraud victims, and public institutions. Zenin operates as free-first public verification infrastructure supported by open academic research."
     },
     {
-      q: "Can Mahira guarantee 100% detection accuracy on all AI media?",
-      a: "No, and any platform claiming 100% infallible detection is misleading. Generative AI models evolve constantly. Mahira provides multi-domain physical and mathematical signals (spectral FFT lattice, 8x8 DCT Error Level Analysis, acoustic vocoder truncation, blink frequency cadence) and includes an explicit Abstention Zone ('NEEDS HUMAN REVIEW') whenever low resolution prevents reliable classification."
+      q: "Can Zenin guarantee 100% detection accuracy on all AI media?",
+      a: "No, and any platform claiming 100% infallible detection is misleading. Generative AI models evolve constantly. Zenin provides multi-domain physical and mathematical signals (spectral FFT lattice, 8x8 DCT Error Level Analysis, acoustic vocoder truncation, blink frequency cadence) and includes an explicit Abstention Zone ('NEEDS HUMAN REVIEW') whenever low resolution prevents reliable classification."
     },
     {
       q: "How does the Deepfake Video and Audio Voice Clone detection work?",
@@ -238,7 +238,7 @@ export const LandingPage: React.FC = () => {
               7 Specialized Engines. One Unified Standard.
             </h2>
             <p className="text-sm sm:text-base text-[#556987] leading-relaxed">
-              Every digital modality exhibits unique physical and mathematical signatures when manipulated. Mahira deploys specialized forensic detectors designed for each threat vector.
+              Every digital modality exhibits unique physical and mathematical signatures when manipulated. Zenin deploys specialized forensic detectors designed for each threat vector.
             </p>
           </div>
 
@@ -309,7 +309,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. COMPARISON MATRIX: MAHIRA VS COMMERCIAL PAYWALLS VS MANUAL */}
+      {/* 4. COMPARISON MATRIX: ZENIN VS COMMERCIAL PAYWALLS VS MANUAL */}
       <section className="py-24 border-b border-[#0B1B3D]/10 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
           
@@ -330,7 +330,7 @@ export const LandingPage: React.FC = () => {
               <thead className="bg-[#0B1B3D] text-[#FAFBFD] font-bold uppercase text-[10px] tracking-wider font-mono">
                 <tr>
                   <th className="py-4 px-6">Verification Dimension</th>
-                  <th className="py-4 px-6 text-[#C5A059] font-black">Mahira (Free Public Standard)</th>
+                  <th className="py-4 px-6 text-[#C5A059] font-black">Zenin (Free Public Standard)</th>
                   <th className="py-4 px-6 text-slate-300">Commercial Vendors</th>
                   <th className="py-4 px-6 text-slate-300">Manual Eyeball Review</th>
                 </tr>
@@ -341,7 +341,7 @@ export const LandingPage: React.FC = () => {
                     <td className="py-4 px-6 font-bold text-[#0B1B3D]">{row.feature}</td>
                     <td className="py-4 px-6 font-bold text-[#0B1B3D] flex items-center gap-1.5 bg-[#FAF6EE]/50">
                       <Check className="w-4 h-4 text-[#C5A059] shrink-0" />
-                      <span>{row.mahira}</span>
+                      <span>{row.zenin}</span>
                     </td>
                     <td className="py-4 px-6 text-[#64748B]">{row.commercial}</td>
                     <td className="py-4 px-6 text-[#64748B]">{row.manual}</td>

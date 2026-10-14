@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
-import { MahiraIcon, MahiraLogo } from '../brand/Logo';
+import { ZeninIcon, ZeninLogo } from '../brand/Logo';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       to: '/learn',
-      label: 'Mahira Defense Academy',
+      label: 'Zenin Defense Academy',
       icon: BookOpen,
       badge: 'Quizzes',
       badgeColor: 'bg-[#C5A059]/15 text-[#9A7B38] border-[#C5A059]/40',
@@ -164,18 +164,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const renderNavGroup = (chapterNumber: string, title: string, items: NavItem[]) => (
-    <div className="space-y-2 pt-5">
-      <div className="flex items-center justify-between px-3 mb-1">
-        <span className="text-[10px] font-mono font-bold tracking-widest text-[#0B1B3D] flex items-center gap-1.5 uppercase">
-          <span className="text-[#C5A059] font-black">{chapterNumber}</span>
+    <div className="space-y-2.5 pt-6">
+      <div className="flex items-center justify-between px-3.5 mb-1.5">
+        <span className="text-xs sm:text-[13px] font-mono font-bold tracking-widest text-[#0B1B3D] flex items-center gap-2 uppercase">
+          <span className="text-[#C5A059] font-black text-sm">{chapterNumber}</span>
           <span>// {title}</span>
         </span>
-        <span className="text-[9px] font-mono text-[#C5A059] font-bold bg-[#FAF6EE] px-2 py-0.5 rounded border border-[#C5A059]/30">
+        <span className="text-[11px] font-mono text-[#C5A059] font-bold bg-[#FAF6EE] px-2.5 py-0.5 rounded-lg border border-[#C5A059]/30">
           FREE
         </span>
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {items.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.to);
@@ -185,31 +185,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group relative ${
+              className={`flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-bold transition-all group relative ${
                 active
-                  ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-md border-l-4 border-[#C5A059]'
+                  ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-lg border-l-4 border-[#C5A059]'
                   : item.highlight
                   ? 'text-[#0B1B3D] bg-[#FAF6EE] hover:bg-[#F2ECE0] border border-[#C5A059]/50 shadow-xs'
                   : 'text-[#3E5274] hover:text-[#0B1B3D] hover:bg-[#F0F4FA] border border-transparent'
               }`}
             >
-              <div className={`p-2 rounded-xl shrink-0 transition-all ${
+              <div className={`p-2.5 rounded-xl shrink-0 transition-all ${
                 active 
                   ? 'bg-[#C5A059] text-[#0B1B3D]' 
                   : item.highlight
                   ? 'bg-[#0B1B3D] text-[#C5A059]'
                   : 'bg-[#FAFBFD] text-[#0B1B3D] group-hover:bg-[#0B1B3D] group-hover:text-[#C5A059] border border-[#0B1B3D]/10'
               }`}>
-                <Icon className="w-4 h-4" />
+                <Icon className="w-5 h-5" />
               </div>
 
               <div className="flex items-center justify-between flex-1 min-w-0">
                 <div className="flex flex-col min-w-0">
-                  <span className={`truncate leading-tight font-sans ${active ? 'text-white' : 'text-[#0B1B3D]'}`}>
+                  <span className={`truncate leading-snug text-sm sm:text-[15px] font-bold ${active ? 'text-white' : 'text-[#0B1B3D]'}`}>
                     {item.label}
                   </span>
                   {item.subtitle && (
-                    <span className={`text-[10px] truncate leading-tight mt-0.5 ${
+                    <span className={`text-xs truncate leading-normal mt-0.5 font-medium ${
                       active ? 'text-slate-300' : 'text-[#64748B]'
                     }`}>
                       {item.subtitle}
@@ -218,7 +218,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
 
                 {item.badge && (
-                  <span className={`text-[9px] uppercase font-mono font-bold px-1.5 py-0.5 rounded-md ml-2 shrink-0 border ${
+                  <span className={`text-[10px] sm:text-[11px] uppercase font-mono font-bold px-2 py-0.5 rounded-md ml-2 shrink-0 border ${
                     active 
                       ? 'bg-white/15 text-white border-white/30' 
                       : item.badgeColor || 'bg-white text-[#3E5274] border-slate-200'
@@ -247,26 +247,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className="fixed inset-0 bg-[#0B1B3D]/60 backdrop-blur-sm"
           />
 
-          {/* Bleach Editorial Drawer Panel */}
+          {/* Bleach Editorial Drawer Panel - WIDE, BIG, IMPACTFUL */}
           <motion.aside
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-            className="relative w-88 max-w-[92vw] h-full bg-[#FAFBFD] border-r border-[#0B1B3D]/15 text-[#0B1B3D] shadow-[0_20px_60px_rgba(11,27,61,0.25)] z-10 flex flex-col overflow-hidden"
+            className="relative w-[460px] sm:w-[500px] max-w-[94vw] h-full bg-[#FAFBFD] border-r border-[#0B1B3D]/15 text-[#0B1B3D] shadow-[0_24px_80px_rgba(11,27,61,0.28)] z-10 flex flex-col overflow-hidden"
           >
             {/* Top Navy Banner Accent with Gold Hairline */}
-            <div className="h-1 bg-gradient-to-r from-[#0B1B3D] via-[#C5A059] to-[#0B1B3D]" />
+            <div className="h-1.5 bg-gradient-to-r from-[#0B1B3D] via-[#C5A059] to-[#0B1B3D]" />
 
-            {/* Drawer Header */}
-            <div className="h-18 px-5 flex items-center justify-between border-b border-[#0B1B3D]/10 bg-white shrink-0 relative z-10">
-              <div className="flex items-center gap-3">
-                <MahiraIcon size={34} />
+            {/* Drawer Header - Big & Luxurious */}
+            <div className="h-22 px-6 flex items-center justify-between border-b border-[#0B1B3D]/10 bg-white shrink-0 relative z-10">
+              <div className="flex items-center gap-3.5">
+                <ZeninIcon size={42} />
                 <div className="flex flex-col">
-                  <span className="text-base font-black tracking-tight text-[#0B1B3D] font-display">
-                    Mahira<span className="text-[#C5A059]">.</span>
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0B1B3D] font-display">
+                    Zenin<span className="text-[#C5A059]">.</span>
                   </span>
-                  <span className="text-[10px] font-mono text-[#64748B] tracking-wider uppercase">
+                  <span className="text-xs font-mono font-bold text-[#64748B] tracking-wider uppercase">
                     Forensic Intelligence • 2026
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-xl bg-[#F0F4FA] hover:bg-[#E2E8F0] text-[#0B1B3D] transition-colors cursor-pointer border border-[#0B1B3D]/10"
+                className="p-2.5 rounded-2xl bg-[#F0F4FA] hover:bg-[#E2E8F0] text-[#0B1B3D] transition-colors cursor-pointer border border-[#0B1B3D]/10 active:scale-95"
                 title="Close Drawer"
               >
                 <X className="w-5 h-5" />
@@ -283,25 +283,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
 
             {/* Navigation Scroller */}
-            <div className="flex-1 py-4 px-4 overflow-y-auto space-y-1 relative z-10 custom-sidebar-scroll">
-              {/* Home Trigger */}
+            <div className="flex-1 py-5 px-5 overflow-y-auto space-y-1 relative z-10 custom-sidebar-scroll">
+              {/* Home Trigger - Big & Bold */}
               <Link
                 to="/"
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group ${
+                className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all group ${
                   location.pathname === '/'
-                    ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-md border-l-4 border-[#C5A059]'
+                    ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-lg border-l-4 border-[#C5A059]'
                     : 'text-[#3E5274] hover:text-[#0B1B3D] hover:bg-[#F0F4FA]'
                 }`}
               >
-                <div className={`p-2 rounded-xl shrink-0 ${
+                <div className={`p-2.5 rounded-xl shrink-0 ${
                   location.pathname === '/' ? 'bg-[#C5A059] text-[#0B1B3D]' : 'bg-[#FAFBFD] text-[#0B1B3D] group-hover:bg-[#0B1B3D] group-hover:text-[#C5A059] border border-[#0B1B3D]/10'
                 }`}>
-                  <Home className="w-4 h-4" />
+                  <Home className="w-5 h-5" />
                 </div>
                 <div className="flex items-center justify-between flex-1">
-                  <span className="font-display">Home & Live Cockpit</span>
-                  <span className="text-[9px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded">
+                  <span className="font-display text-base">Home & Live Cockpit</span>
+                  <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-md">
                     ACTIVE
                   </span>
                 </div>
@@ -313,43 +313,43 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
 
             {/* Drawer Footer Banner & Direct Authentication Actions */}
-            <div className="p-4 border-t border-[#0B1B3D]/10 bg-white relative z-10 shrink-0 space-y-3">
+            <div className="p-5 border-t border-[#0B1B3D]/10 bg-white relative z-10 shrink-0 space-y-3.5">
               {/* Direct Auth Shortcuts so user ALWAYS sees Sign In / Account */}
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <Link
                   to="/login"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F0F4FA] hover:bg-[#E2E8F0] border border-[#0B1B3D]/15 text-xs font-bold text-[#0B1B3D] transition-colors"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#F0F4FA] hover:bg-[#E2E8F0] border border-[#0B1B3D]/15 text-sm font-bold text-[#0B1B3D] transition-colors"
                 >
-                  <LogIn className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <LogIn className="w-4 h-4 text-[#C5A059]" />
                   <span>Sign In</span>
                 </Link>
                 <Link
                   to="/register"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold transition-colors"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-sm font-bold transition-colors"
                 >
-                  <UserPlus className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <UserPlus className="w-4 h-4 text-[#C5A059]" />
                   <span>Register</span>
                 </Link>
               </div>
 
               {/* Public Good Guarantee Box */}
-              <div className="p-3 rounded-2xl bg-[#FAF6EE] border border-[#C5A059]/30 space-y-1 text-left">
+              <div className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#C5A059]/30 space-y-1 text-left">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-[#9A7B38] uppercase tracking-wider flex items-center gap-1">
+                  <span className="text-xs font-mono font-bold text-[#9A7B38] uppercase tracking-wider flex items-center gap-1.5">
                     <span>★</span>
                     <span>100% Free Public Good</span>
                   </span>
-                  <span className="text-[9px] font-mono text-emerald-700 font-bold bg-emerald-100/60 px-1 rounded">SECURED</span>
+                  <span className="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100/70 px-1.5 py-0.5 rounded">SECURED</span>
                 </div>
-                <p className="text-[10px] text-[#556987] leading-relaxed">
+                <p className="text-xs text-[#556987] leading-relaxed">
                   Cryptographic digital authenticity standard. No paywalls, zero data harvesting.
                 </p>
               </div>
 
               {/* Secondary links */}
-              <div className="flex items-center justify-between text-[10px] text-[#64748B] px-1 font-medium">
+              <div className="flex items-center justify-between text-xs text-[#64748B] px-1 font-medium">
                 <Link to="/about" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">Methodology</Link>
                 <Link to="/privacy" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">Zero-Harvesting</Link>
                 <Link to="/accessibility" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">WCAG 2.1 AA</Link>

@@ -135,7 +135,7 @@ export const CertificateVerifyPage: React.FC = () => {
       <div className="bg-[#FAF6EE] border border-[#C5A059]/40 p-4 sm:p-5 rounded-2xl flex items-start gap-3">
         <ShieldCheck className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
         <p className="text-xs text-[#0B1B3D] leading-relaxed font-medium">
-          Mandatory Algorithmic Safeguard: Mahira functions as an objective document-integrity pre-check assistant, never an automated punitive decision system. Leave is never automatically rejected. All final actions require authorized human review.
+          Mandatory Algorithmic Safeguard: Zenin functions as an objective document-integrity pre-check assistant, never an automated punitive decision system. Leave is never automatically rejected. All final actions require authorized human review.
         </p>
       </div>
 
