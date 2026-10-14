@@ -1,31 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Manrope', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-royal: 'Cinzel', serif;
+  --font-body: 'Plus Jakarta Sans', 'Manrope', system-ui, sans-serif;
   
+  /* Royal Palette - Real Madrid inspired */
   --color-ivory: #FAF9F6;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #F5F3EF;
-  --color-teal: #116B67;
-  --color-teal-light: #188681;
-  --color-teal-soft: #E6F3F2;
-  --color-violet: #7663D8;
-  --color-violet-soft: #EFEFFC;
-  --color-coral: #FF806F;
-  --color-coral-soft: #FFF0EE;
-  --color-amber: #F2BD59;
-  --color-amber-soft: #FEF8EC;
-  --color-ink: #20252B;
-  --color-slate: #68717D;
-  --color-border: #E8E6DF;
-  --color-border-subtle: #F0EEE8;
+  --color-surface-subtle: #F6F4EE;
   
-  --color-success: #059669;
-  --color-success-bg: #ECFDF5;
+  --color-navy: #101B35;
+  --color-navy-dark: #0A1124;
+  --color-navy-light: #1A2B52;
+  --color-royal-blue: #233F8C;
+  --color-royal-soft: #EEF3FF;
+  
+  --color-gold: #C6A45C;
+  --color-gold-light: #E6D5A2;
+  --color-gold-soft: #FBF8EE;
+  --color-gold-border: #DBC898;
+  
+  --color-text-main: #192338;
+  --color-text-muted: #687386;
+  --color-slate: #737D90;
+  --color-border: #E8E5DC;
+  --color-border-subtle: #F1EFE8;
+  
+  --color-success: #1E824C;
+  --color-success-bg: #EDF7F1;
   --color-warning: #D97706;
-  --color-warning-bg: #FFFBEB;
+  --color-warning-bg: #FEF7EA;
   --color-danger: #DC2626;
   --color-danger-bg: #FEF2F2;
 }
@@ -35,100 +42,123 @@ body {
   padding: 0;
   font-family: var(--font-sans);
   background-color: var(--color-ivory);
-  color: var(--color-ink);
+  color: var(--color-text-main);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, .font-display {
+.font-serif-display {
   font-family: var(--font-display);
+}
+
+.font-royal {
+  font-family: var(--font-royal);
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-ivory);
 }
 ::-webkit-scrollbar-thumb {
-  background: #D5D2C8;
+  background: #D8D4C7;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #BBB7AB;
+  background: #B8B2A0;
 }
 
-/* Custom Gradients and Utilities */
-.brand-gradient {
-  background: linear-gradient(135deg, #116B67 0%, #7663D8 100%);
+/* Gradients */
+.royal-gradient {
+  background: linear-gradient(135deg, #101B35 0%, #233F8C 100%);
 }
 
-.brand-gradient-text {
-  background: linear-gradient(135deg, #116B67 0%, #7663D8 100%);
+.royal-gradient-gold {
+  background: linear-gradient(135deg, #101B35 0%, #1A2B52 60%, #C6A45C 100%);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #C6A45C 0%, #E6D5A2 100%);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #B58F40 0%, #C6A45C 50%, #E6D5A2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.brand-subtle-glow {
-  box-shadow: 0 10px 30px -10px rgba(17, 107, 103, 0.15), 0 20px 40px -15px rgba(118, 99, 216, 0.1);
+.royal-gradient-text {
+  background: linear-gradient(135deg, #101B35 0%, #233F8C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.card-elevation {
+/* Cards & Elevations */
+.royal-card {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px -2px rgba(32, 37, 43, 0.04), 0 2px 6px -1px rgba(32, 37, 43, 0.02);
+  box-shadow: 0 4px 20px -2px rgba(16, 27, 53, 0.04), 0 2px 6px -1px rgba(16, 27, 53, 0.02);
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.royal-card:hover {
+  border-color: var(--color-gold-border);
+  box-shadow: 0 12px 32px -4px rgba(16, 27, 53, 0.08), 0 4px 12px -2px rgba(198, 164, 92, 0.12);
+  transform: translateY(-2px);
+}
+
+.royal-card-static {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px -2px rgba(16, 27, 53, 0.04), 0 2px 6px -1px rgba(16, 27, 53, 0.02);
   border-radius: 20px;
 }
 
-.card-elevation-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.card-elevation-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -4px rgba(32, 37, 43, 0.08), 0 4px 10px -2px rgba(32, 37, 43, 0.04);
-  border-color: #D8D4C8;
+.royal-card-gold {
+  background: #FFFFFF;
+  border: 1px solid rgba(198, 164, 92, 0.4);
+  box-shadow: 0 8px 30px -4px rgba(198, 164, 92, 0.12);
+  border-radius: 20px;
 }
 
 /* Scanning lens animation */
-@keyframes scanline {
+@keyframes royalScanline {
   0% {
-    top: 0%;
-    opacity: 0.8;
+    top: 2%;
+    opacity: 0.9;
+    box-shadow: 0 0 16px rgba(198, 164, 92, 0.8), 0 0 32px rgba(35, 63, 140, 0.4);
   }
   50% {
     opacity: 1;
   }
   100% {
-    top: 98%;
-    opacity: 0.8;
+    top: 96%;
+    opacity: 0.9;
+    box-shadow: 0 0 16px rgba(198, 164, 92, 0.8), 0 0 32px rgba(35, 63, 140, 0.4);
   }
 }
 
 .animate-scanline {
-  animation: scanline 2.2s ease-in-out infinite alternate;
+  animation: royalScanline 2.4s ease-in-out infinite alternate;
 }
 
-/* Pulse ring */
-@keyframes pulseRing {
+/* Shimmer */
+@keyframes shimmer {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(17, 107, 103, 0.4);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 12px rgba(17, 107, 103, 0);
+    transform: translateX(-100%);
   }
   100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(17, 107, 103, 0);
+    transform: translateX(100%);
   }
 }
 
-.animate-pulse-ring {
-  animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }
 
 /* Reduced motion support */

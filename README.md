@@ -1,41 +1,81 @@
-# TruthLens — See what's real.
+# TruthLens — Project PRIMUS
+## Royal Digital Media & Medical Document Authenticity Platform
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19-61DAFB.svg)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38B2AC.svg)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 
-> **"See what's real."**  
-> TruthLens (Codename: PRIMUS) is a free-first, privacy-preserving digital authenticity and forensic verification platform. It enables students, journalists, researchers, and victims of deepfakes to analyze visual media and assess medical certificates with honest, explainable uncertainty.
+> **"See what's real. Know what to trust."**  
+> TruthLens is a free-first, privacy-preserving digital authenticity and forensic verification platform. It enables students, journalists, researchers, universities, and victims of deepfakes to analyze visual media and assess medical certificates with honest, explainable uncertainty.
 
 ---
 
-## 🌟 Key Capabilities
+## 👑 Royal Design System (Real Madrid Inspired)
+
+TruthLens features an art-directed royal aesthetic with layered surfaces, editorial typography, tactile controls, and subtle microinteractions:
+
+- **Royal Ivory Background:** `#FAF9F6`
+- **Pure White Surface:** `#FFFFFF`
+- **Midnight Navy:** `#101B35`
+- **Royal Blue:** `#233F8C`
+- **Championship Gold:** `#C6A45C`
+- **Soft Gold Highlight:** `#E6D5A2`
+- **Muted Blue-Gray:** `#737D90`
+- **Main Text:** `#192338`
+- **Secondary Text:** `#687386`
+- **Success Green:** `#1E824C`
+- **Warning Amber:** `#D97706`
+- **Error Red:** `#DC2626`
+
+---
+
+## 🌐 Global Multilingual Architecture
+
+A real internationalization system lives in the shared header and updates the entire website instantly:
+- **English (`EN`)**
+- **Hindi (`HI` - हिन्दी)**
+- **Marathi (`MR` - मराठी)**
+
+Translations cover header navigation, hero sections, forensic cards, certificate verification, victim SOS, review queues, audit logs, and modal dialogs. Language preferences persist across refreshes via `localStorage` and synchronize with the document `html lang` attribute.
+
+---
+
+## 🚀 One-Click Instant Demo Exploration
+
+Visitors can immediately explore TruthLens without configuring a database or registering:
+1. **Academic Reviewer Demo:** Signed in as **Dr. Eleanor Vance** (Senior Registrar, National Metropolitan University) with full review queue access.
+2. **Student Demo:** Signed in as **Karan Malhotra** (NMU) with document pre-check and submission tools.
+3. **Public Investigator Demo:** Signed in as **Aarav Sharma** with multi-signal image forensics.
+
+---
+
+## 🌟 Key Functional Modules
 
 ### 1. Multi-Spectral Deepfake & AI Image Detector (`/verify/image`)
 - **Error Level Analysis (ELA):** Detects localized re-compression and splicing anomalies across 8×8 DCT blocks.
 - **2D Fast Fourier Transform (FFT):** Identifies high-frequency periodic grid artifacts characteristic of generative diffusion upsamplers and GANs.
 - **Sensor Shot Noise & Laplacian Dispersion:** Evaluates physical optical sensor consistency against synthetic smoothing.
-- **Facial Landmark & Corneal Reflection Symmetry:** Checks for anatomical and corneal reflection discrepancies.
-- **Container & EXIF Inspection:** Scans for explicit generative parameter tags (e.g. ComfyUI, Automatic1111) while honestly disclosing that EXIF absence is standard on social media.
-- **Calibrated Three-Way Verdicts:** Strictly categorizes every result into **`LIKELY REAL`**, **`LIKELY FAKE`**, or **`NEEDS HUMAN REVIEW`**.
+- **Facial Landmark & Corneal Reflection Symmetry:** Checks for anatomical and corneal specular reflection discrepancies.
+- **Calibrated Three-Way Verdicts:** Strictly categorizes every result into **`LIKELY REAL`**, **`LIKELY FAKE`**, or **`NEEDS HUMAN REVIEW`** (Abstention corridor 33%–67%).
 
 ### 2. Medical Certificate Integrity & Pre-Check (`/verify/certificate`)
 - **OCR Credential Extraction:** Extracts physician name, state/national medical council registration number, clinic/hospital, and designated patient.
-- **Chronological Date Logic:** Identifies chronological impossibilities (e.g., leave start date occurring after leave end date) and implausible leave durations.
-- **Physical Stamp & Signatory Pen Stroke Detection:** Distinguishes genuine physical ink signatures from unendorsed digital drafts.
-- **Mandatory Non-Punitive Safeguard:** Built-in ethical guardrail guaranteeing that our system **never** automatically rejects leave or labels a student dishonest. All consequential decisions require authorized human review.
+- **Chronological Date Logic:** Identifies chronological impossibilities and date latency (e.g. retrospective clinic visits).
+- **Physical Stamp & Signatory Detection:** Distinguishes genuine physical ink signatures from unendorsed digital drafts.
+- **Mandatory Non-Punitive Safeguard:** Our system **never** automatically rejects leave or labels a student dishonest. All consequential decisions require authorized human review.
 
 ### 3. Victim SOS Incident Response (`/sos`)
 - **Zero-Upload Guidance:** Victims of non-consensual deepfakes are **never** required to upload sensitive material.
-- **Confidential Local Storage:** Incident notes and evidence checklists remain stored 100% locally inside the user's browser with a one-click wipe button.
-- **One-Click Takedown Templates:** Pre-drafted formal notices citing platform terms for Meta, X, Google, and Telegram.
-- **Verified Statutory Helplines:** Official cybercrime reporting portals for India (1930 / cybercrime.gov.in), US (CCRI), UK (Revenge Porn Helpline), and Global (StopNCII.org).
+- **100% Confidential Local Storage:** Incident notes and evidence checklists remain stored strictly inside the user's browser with a one-click wipe button.
+- **Formal Takedown Request Templates:** Pre-drafted formal notices citing platform terms for Meta, X, Reddit, and Telegram.
+- **Verified Statutory Helplines:** Official cybercrime reporting portals for India (1930 / cybercrime.gov.in), US (NCMEC CyberTipline), UK (Revenge Porn Helpline), and Global (StopNCII.org).
 
 ### 4. Tamper-Evident Trust Reports (`/dashboard/reports/:id`)
-- **HMAC-SHA256 Cryptographic Seal:** Every analysis generates an immutable signature over canonical findings.
-- **Revocable Authenticated Sharing:** Shareable links with expiration dates and instant owner revocation.
+- **HMAC-SHA256 Cryptographic Seal:** Immutable signatures over canonical findings.
+- **Revocable Authenticated Sharing:** Shareable public verification links with copy feedback.
 - **Downloadable Print View:** Clean, formatted PDF/print summaries.
 
 ### 5. University Review Workspace (`/university`)
@@ -49,106 +89,40 @@
 
 ---
 
-## 🎨 Visual Design System
+## 🛠️ Running Locally
 
-Crafted with the polish of modern fintech and the warmth of a trusted public health service:
-- **Main Background:** Warm Ivory (`#FAF9F6`)
-- **Main Surfaces:** Pure White (`#FFFFFF`)
-- **Primary Brand:** Deep Forest Teal (`#116B67`)
-- **Secondary:** Majestic Violet (`#7663D8`)
-- **Accents:** Coral (`#FF806F`), Amber (`#F2BD59`)
-- **Text:** Deep Ink (`#20252B`), Muted Slate (`#68717D`)
-- **Typography:** Plus Jakarta Sans & Manrope (Google Fonts)
-
----
-
-## 🚀 Quick Start Guide
-
-### Prerequisites
-- Python 3.10+
-- Node.js 18+ and npm
-
-### 1. Clone & Enter Directory
-```bash
-cd truthlens
-```
-
-### 2. Start the Backend API
+### Backend (FastAPI)
 ```bash
 cd backend
-python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-
-# Run backend server
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
-- API Documentation (Swagger UI): `http://127.0.0.1:8000/docs`
-- Health Check: `http://127.0.0.1:8000/api/v1/healthz`
+Interactive OpenAPI documentation will be available at `http://127.0.0.1:8000/docs`.
 
-### 3. Start the Frontend Application
+Run tests:
 ```bash
-# In a new terminal:
+cd backend
+PYTHONPATH=. ./venv/bin/pytest tests/test_truthlens_backend.py -v
+```
+
+### Frontend (React 19 + Vite)
+```bash
 cd frontend
 npm install
 npm run dev
 ```
-- Web Application: `http://127.0.0.1:5173`
+Open `http://127.0.0.1:5173` in your browser.
 
----
-
-## 🐳 Docker Deployment
-
-TruthLens can be launched in isolated containers using Docker Compose:
-
+Build for production:
 ```bash
-docker compose up --build
-```
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8000`
-
----
-
-## 🧪 Testing Suite
-
-TruthLens includes a complete unit, integration, and security test suite:
-
-```bash
-cd backend
-source venv/bin/activate
-PYTHONPATH=. pytest tests/test_truthlens_backend.py -v
+cd frontend
+npm run build
 ```
 
-Tests cover:
-- Health and readiness probes (`/api/v1/healthz`)
-- Anti-SSRF defenses (blocking loopback, cloud metadata, link-local, and private RFC 1918 networks)
-- Date logic sequence consistency and chronological validation
-- Error Level Analysis (ELA) and 2D FFT spectral pipeline
-- Medical certificate extraction and risk assessment
-- Cryptographic HMAC-SHA256 tamper-evident seal integrity
-- Authentication and SOS resource endpoints
-
 ---
 
-## 🔑 Demo Credentials
-
-Fictional demo accounts are pre-seeded upon initial startup:
-
-| Role | Email | Password | Access |
-|---|---|---|---|
-| **University Reviewer** | `reviewer@truthlens.org` | `truthlens2026!` | University Review Workspace & Audit Queue |
-| **Student** | `student@truthlens.org` | `truthlens2026!` | Student Verification & Pre-Check |
-
----
-
-## 📜 Ethical Operating Principles
-
-1. **Honest Uncertainty:** Detection models are probabilistic. TruthLens never describes experimental scores as 100% certainty.
-2. **Mandatory Human Agency:** No student is denied leave or sanctioned automatically by an algorithm.
-3. **Privacy First:** Uploaded artifacts are decoded in memory, stored outside the web root, and never used to retrain public models without explicit permission.
-
----
-
-## 📄 License
-
-Licensed under the Apache License, Version 2.0. Built for the public interest.
+## 🔒 Security & Privacy Commitments
+- Anti-SSRF URL validation blocking private, loopback, and cloud metadata IP ranges.
+- Zero data harvesting: uploaded files are never used to train public generative models.
+- WCAG 2.1 AA accessibility conformance with high contrast and full reduced-motion support.

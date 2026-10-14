@@ -1,16 +1,16 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type Language = 'en' | 'hi' | 'mr';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, defaultText?: string) => string;
 }
 
-const translations: Record<Language, Record<string, string>> = {
+export const translations: Record<Language, Record<string, string>> = {
   en: {
-    // Nav
+    // Navigation
     'nav.verify_image': 'Check Image',
     'nav.verify_certificate': 'Verify Certificate',
     'nav.sos': 'Victim SOS',
@@ -19,16 +19,179 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.university': 'University Portal',
     'nav.signin': 'Sign In',
     'nav.signout': 'Sign Out',
-    
+    'nav.check_an_image': 'Check an Image',
+    'nav.demo_mode': 'Demo Mode (Fictional Data)',
+    'nav.exit_demo': 'Exit Demo',
+
     // Hero
+    'hero.badge': 'Free-first Public Verification Infrastructure',
     'hero.title_part1': "See what's real.",
     'hero.title_part2': "Know what to trust.",
     'hero.subtitle': 'Check images for signs of AI manipulation, review document authenticity, and understand the evidence — free, with privacy and transparency built in.',
     'hero.cta_image': 'Check an Image',
     'hero.cta_certificate': 'Verify a Certificate',
-    'hero.trust_badge': 'Free-first Public Good • Privacy-Preserving • Honest Uncertainty',
+    'hero.explore_demo': 'Explore Demo Experience',
+    'hero.safeguard': 'Calibrated confidence scores • Clear abstention zone • No fabricated certainty',
+    'hero.quick_lens': 'Quick Verification Lens',
+    'hero.drop_title': 'Drop an image or document here',
+    'hero.drop_sub': 'JPEG, PNG, WebP, or PDF up to 15MB. Analysis runs with real explainable forensic pipelines.',
+    'hero.browse_files': 'Browse Files',
+    'hero.advanced_mode': 'Advanced Mode',
 
-    // Common
+    // How it works
+    'steps.title': 'How TruthLens Verifies Media in Three Steps',
+    'steps.subtitle': 'Our open-methodology pipeline delivers explainable forensic evidence, not opaque scores.',
+    'steps.step1_title': '1. Upload & Secure Extraction',
+    'steps.step1_desc': 'Multi-layer extraction inspects pixel arrays, compression grids, and document structural metadata without cloud leakage.',
+    'steps.step2_title': '2. Explainable Multi-Signal Engine',
+    'steps.step2_desc': 'Error Level Analysis (ELA), 2D FFT spectral anomalies, face boundary geometry, and OCR sequence logic compute calibrated signals.',
+    'steps.step3_title': '3. Honest 3-Way Determination',
+    'steps.step3_desc': 'Generates a tamper-evident HMAC-SHA256 Trust Report with transparent certainty intervals and clear human escalation pathways.',
+
+    // Image Verification
+    'image.title': 'Digital Image Forensic Lens',
+    'image.subtitle': 'Deepfake detection, Error Level Analysis (ELA), 2D FFT spectral profiling, and facial boundary symmetry checks.',
+    'image.upload_title': 'Upload Image for Forensic Inspection',
+    'image.upload_sub': 'Drag and drop JPEG, PNG, or WebP (max 15MB). Your image is processed securely.',
+    'image.analyzing': 'Conducting multi-signal forensic decomposition...',
+    'image.sample_images': 'Or test with instant forensic sample images:',
+    'image.sample_deepfake': 'AI Face (Diffusion / Spliced)',
+    'image.sample_real': 'Authentic Camera Portrait',
+    'image.sample_compressed': 'Social Media Compressed',
+    'image.verdict_real': 'LIKELY REAL',
+    'image.verdict_fake': 'LIKELY FAKE',
+    'image.verdict_review': 'NEEDS HUMAN REVIEW',
+    'image.confidence': 'Calibrated Confidence',
+    'image.uncertainty': 'Uncertainty Interval',
+    'image.evidence_breakdown': 'Forensic Evidence Breakdown',
+    'image.ela_title': 'Error Level Analysis (ELA)',
+    'image.ela_desc': 'Highlights compression rate variations across 8x8 DCT image blocks to identify pasted elements.',
+    'image.fft_title': '2D FFT Spectral Profile',
+    'image.fft_desc': 'Detects periodic checkerboard grid artifacts typical of GAN upsampling and diffusion architectures.',
+    'image.noise_title': 'Noise Inconsistency Analysis',
+    'image.noise_desc': 'Measures sensor shot noise uniformity across foreground and background pixels.',
+    'image.face_title': 'Facial Landmark & Iris Geometry',
+    'image.face_desc': 'Assesses corneal specular reflections, pupillary circularity, and bilateral facial symmetry.',
+    'image.exif_title': 'Container & Metadata Inspection',
+    'image.exif_desc': 'Identifies generator software signatures, quantization tables, and alteration timestamps.',
+    'image.sha256': 'SHA-256 Digest',
+    'image.copy_hash': 'Copy Hash',
+    'image.hash_copied': 'Hash Copied!',
+    'image.generate_report': 'Generate Trust Report',
+    'image.report_ready': 'Tamper-evident report ready. Click to open.',
+    'image.abstention_note': 'Abstention Zone: When confidence falls between 33% and 67%, TruthLens refuses to declare a binary verdict to prevent false accusations.',
+    'image.feedback_helpful': 'Was this forensic report helpful?',
+    'image.yes': 'Yes, helpful',
+    'image.no': 'Dispute score',
+
+    // Certificate Verification
+    'cert.title': 'Medical Certificate Integrity & Pre-Check',
+    'cert.subtitle': 'Structured OCR credential extraction, date sequence consistency, and layout integrity checks for universities and clinics.',
+    'cert.student_mode': 'Student Self-Check Mode',
+    'cert.safeguard_notice': 'Mandatory Safeguard: TruthLens is a document-integrity assessment and human-review assistant, not an automated disciplinary decision system. Our platform never automatically rejects leave or labels a student dishonest. All consequential outcomes require authorized human review.',
+    'cert.upload_title': 'Upload Medical Certificate (PDF or Image)',
+    'cert.upload_sub': 'Upload PDF scan, JPEG, PNG, or WebP. Evaluates practitioner registration, dates, leave duration, and physical stamp presence.',
+    'cert.sample_certs': 'Or test with verified academic test cases:',
+    'cert.sample_latency': 'Date Sequence Latency (Retrospective clinic visit)',
+    'cert.sample_authentic': 'Authentic Clinic Certificate (Full credentials)',
+    'cert.sample_missing': 'Missing Physician Registration No.',
+    'cert.doctor_name': 'Practicing Physician',
+    'cert.reg_number': 'Medical Council Reg. No.',
+    'cert.hospital_name': 'Hospital / Medical Center',
+    'cert.patient_name': 'Patient / Student Name',
+    'cert.issue_date': 'Date of Issue',
+    'cert.leave_period': 'Prescribed Leave Period',
+    'cert.duration': 'Prescribed Duration',
+    'cert.signature_detected': 'Endorsement Signature',
+    'cert.stamp_detected': 'Official Clinic Stamp',
+    'cert.integrity_checks': 'Sequence & Integrity Checks',
+    'cert.submit_review': 'Submit to University Review Queue',
+    'cert.status_pending': 'Pending Review',
+    'cert.status_approved': 'Verified Valid',
+    'cert.status_clarification': 'Clarification Requested',
+    'cert.detected': 'Detected',
+    'cert.not_detected': 'Not Detected',
+    'cert.days': 'days',
+
+    // Victim SOS
+    'sos.title': 'You are not alone. We are here to help you respond.',
+    'sos.subtitle': 'If you or someone you know has been targeted with non-consensual deepfakes, manipulated media, or digital impersonation, this center provides evidence preservation guidance, official takedown notice templates, and verified helplines.',
+    'sos.privacy_banner': 'Heightened Privacy Safeguard: You do NOT need to upload intimate or sensitive material to this website. Notes and checklists below remain stored 100% locally inside your own browser and are never transmitted to our servers.',
+    'sos.step1_title': 'Step 1: Evidence Preservation Checklist',
+    'sos.step1_sub': 'Before reporting or requesting a takedown, safely preserve digital evidence for potential legal recourse.',
+    'sos.step2_title': 'Step 2: Formal Takedown Request Templates',
+    'sos.step2_sub': 'Copy standard takedown notices citing platform terms and community policies against non-consensual synthetic media.',
+    'sos.step3_title': 'Step 3: Verified Helplines & Emergency Support',
+    'sos.local_notes_title': 'Confidential Incident Notes (Stored in your browser only)',
+    'sos.clear_notes': 'Clear Local Data',
+    'sos.copy_template': 'Copy Takedown Notice',
+    'sos.copied': 'Copied to clipboard!',
+    'sos.check1': 'Save exact URLs where the manipulated media is hosted',
+    'sos.check2': 'Capture full-screen screenshots (including web browser address bar and date/time)',
+    'sos.check3': 'Record account handles, profile links, and sender user IDs',
+    'sos.check4': 'Log dates and times messages or posts were first observed',
+    'sos.check5': 'Store preserved files onto a secure offline USB drive',
+
+    // Accuracy & Limits
+    'accuracy.title': 'Transparent Accuracy & Model Limitations',
+    'accuracy.subtitle': 'Truth-in-advertising commitment: We never claim 100% accuracy. Discover empirical benchmarks, confusion matrices, and why the abstention zone protects innocent people.',
+    'accuracy.why_abstention': 'Why We Refuse Binary Guessing (33%–67% Abstention)',
+    'accuracy.abstention_desc': 'Traditional binary classifiers force every borderline image into Real or Fake. When faced with high-noise images, heavy social media compression, or novel generator architectures, binary systems generate dangerous false positives. TruthLens institutes an explicit human review corridor.',
+    'accuracy.failure_modes': 'Known Failure Modes & Adversarial Perturbations',
+    'accuracy.matrix_title': 'Empirical Confusion Matrix (Test Benchmark N=4,800)',
+
+    // Learn Hub
+    'learn.title': 'Media Literacy & Spot-the-Fake Hub',
+    'learn.subtitle': 'Learn the telltale forensic markers of generative media and test your perceptual discernment with our interactive challenges.',
+    'learn.game_title': 'Spot-the-Fake Interactive Challenge',
+    'learn.game_subtitle': 'Can your eye beat our forensic algorithms? Compare the side-by-side images and pick which one is synthetic.',
+    'learn.guess_left': 'Left is AI Generated',
+    'learn.guess_right': 'Right is AI Generated',
+    'learn.correct': 'Correct! Great forensic eye.',
+    'learn.incorrect': 'Not quite. Notice the subtle asymmetry in corneal reflections.',
+    'learn.next_challenge': 'Next Challenge',
+    'learn.score': 'Your Score',
+
+    // University Workspace
+    'univ.title': 'Academic Credential Review Portal',
+    'univ.subtitle': 'Human-in-the-loop review workspace for student medical leave documentation, with complete audit logs and tenant isolation.',
+    'univ.demo_banner': 'Reviewer Demo Session: Signed in as Dr. Eleanor Vance (Senior Registrar, National Metropolitan University).',
+    'univ.all_cases': 'All Cases',
+    'univ.pending': 'Pending Assessment',
+    'univ.approved': 'Approved',
+    'univ.escalated': 'Escalated / Clarification Needed',
+    'univ.case_id': 'Case ID',
+    'univ.student': 'Student',
+    'univ.physician': 'Physician',
+    'univ.risk': 'Pre-Check Risk',
+    'univ.actions': 'Action',
+    'univ.inspect': 'Inspect Case',
+    'univ.approve_case': 'Approve Leave',
+    'univ.request_info': 'Request Clarification',
+    'univ.notes_label': 'Reviewer Confidential Notes',
+    'univ.audit_trail': 'Audit History',
+    'univ.close': 'Close Panel',
+
+    // Authentication
+    'auth.signin_title': 'Sign In to TruthLens',
+    'auth.signin_sub': 'Access university review queue, audit history, and verified Trust Reports',
+    'auth.email': 'Email Address',
+    'auth.password': 'Password',
+    'auth.fullname': 'Full Name',
+    'auth.signin_btn': 'Sign In',
+    'auth.signing_in': 'Signing in...',
+    'auth.register_title': 'Create TruthLens Account',
+    'auth.register_btn': 'Create Account',
+    'auth.or_demo': 'Instant 1-Click Demo Exploration:',
+    'auth.demo_reviewer_btn': 'Explore as Reviewer (Dr. Eleanor Vance, NMU)',
+    'auth.demo_student_btn': 'Explore as Student (Karan Malhotra)',
+    'auth.demo_public_btn': 'Explore as Public Investigator',
+    'auth.demo_active': 'You are currently in Demo Mode with isolated fictional records.',
+    'auth.no_account': "Don't have an account?",
+    'auth.have_account': 'Already have an account?',
+    'auth.error_invalid': 'Invalid email or password. You can also explore instantly with Demo Mode below.',
+
+    // Common & Footer
     'common.upload': 'Upload File',
     'common.drag_drop': 'Drag and drop your file here, or browse',
     'common.verdict': 'Verification Verdict',
@@ -38,28 +201,201 @@ const translations: Record<Language, Record<string, string>> = {
     'common.share_report': 'Share Trust Report',
     'common.download_report': 'Download Report (PDF)',
     'common.free_forever': 'Free Forever Commitment',
-    'common.footer_disclaimer': 'TruthLens is a digital media integrity platform. Results communicate statistical signals and do not constitute legal proof or automated disciplinary determinations.'
+    'common.footer_disclaimer': 'TruthLens is a digital media integrity platform. Results communicate statistical signals and do not constitute legal proof or automated disciplinary determinations.',
+    'common.save': 'Save',
+    'common.cancel': 'Cancel',
+    'common.close': 'Close',
+    'common.back': 'Back',
+    'common.loading': 'Processing...',
+    'footer.ethics': 'Ethics & Safeguards',
+    'footer.methodology': 'Forensic Methodology',
+    'footer.wcag': 'Accessibility (WCAG 2.1 AA)',
+    'footer.consortium': 'Open Authenticity Consortium • Free Public Tool'
   },
+
   hi: {
-    // Nav
-    'nav.verify_image': 'छवि जांचें',
+    // Navigation
+    'nav.verify_image': 'छवि जाँचें',
     'nav.verify_certificate': 'प्रमाणपत्र सत्यापन',
     'nav.sos': 'पीड़ित सहायता (SOS)',
-    'nav.accuracy': 'सटीकता और सीमाएं',
+    'nav.accuracy': 'सटीकता और सीमाएँ',
     'nav.learn': 'शिक्षा केंद्र',
     'nav.university': 'विश्वविद्यालय पोर्टल',
     'nav.signin': 'साइन इन करें',
     'nav.signout': 'साइन आउट',
+    'nav.check_an_image': 'छवि जाँचें',
+    'nav.demo_mode': 'डेमो मोड (काल्पनिक डेटा)',
+    'nav.exit_demo': 'डेमो से बाहर निकलें',
 
     // Hero
+    'hero.badge': 'निःशुल्क सार्वजनिक सत्यापन बुनियादी ढाँचा',
     'hero.title_part1': 'सच्चाई पहचानें।',
     'hero.title_part2': 'विश्वास का आधार जानें।',
-    'hero.subtitle': 'एआई हेरफेर के संकेतों के लिए छवियों की जांच करें, दस्तावेज़ प्रमाणिकता की समीक्षा करें, और साक्ष्य को समझें — नि:शुल्क, गोपनीयता और पारदर्शिता के साथ।',
-    'hero.cta_image': 'छवि की जांच करें',
+    'hero.subtitle': 'एआई हेरफेर के संकेतों के लिए छवियों की जाँच करें, दस्तावेज़ सत्यता की समीक्षा करें, और साक्ष्य को समझें — पूर्णतः निःशुल्क, गोपनीयता और पारदर्शिता के साथ।',
+    'hero.cta_image': 'छवि जाँचें',
     'hero.cta_certificate': 'प्रमाणपत्र सत्यापित करें',
-    'hero.trust_badge': 'नि:शुल्क जनहित सेवा • गोपनीयता-केंद्रित • पारदर्शी अनिश्चितता',
+    'hero.explore_demo': 'डेमो अनुभव आज़माएँ',
+    'hero.safeguard': 'मापा गया विश्वास स्तर • स्पष्ट तटस्थ क्षेत्र • कोई झूठी निश्चितता नहीं',
+    'hero.quick_lens': 'त्वरित सत्यापन लेंस',
+    'hero.drop_title': 'यहाँ छवि या दस्तावेज़ छोड़ें',
+    'hero.drop_sub': 'JPEG, PNG, WebP या PDF (15MB तक)। विश्लेषण वास्तविक व्याख्यात्मक फॉरेंसिक पाइपलाइन द्वारा होता है।',
+    'hero.browse_files': 'फ़ाइल चुनें',
+    'hero.advanced_mode': 'उन्नत मोड',
 
-    // Common
+    // How it works
+    'steps.title': 'ट्रुथ-लेंस तीन चरणों में मीडिया का सत्यापन कैसे करता है',
+    'steps.subtitle': 'हमारी खुली कार्यप्रणाली व्याख्यात्मक साक्ष्य प्रदान करती है, अस्पष्ट स्कोर नहीं।',
+    'steps.step1_title': '1. सुरक्षित अपलोड व निष्कर्षण',
+    'steps.step1_desc': 'बहुस्तरीय निष्कर्षण बिना किसी क्लाउड रिसाव के पिक्सेल सरणी, संपीड़न ग्रिड और संरचनात्मक मेटाडेटा का विश्लेषण करता है।',
+    'steps.step2_title': '2. व्याख्यात्मक बहु-संकेत इंजन',
+    'steps.step2_desc': 'त्रुटि स्तर विश्लेषण (ELA), 2D FFT स्पेक्ट्रल विसंगतियाँ, चेहरे के सीमांकन और ओसीआर कालक्रम तर्क संकेतों की गणना करते हैं।',
+    'steps.step3_title': '3. ईमानदार त्रिपक्षीय निर्णय',
+    'steps.step3_desc': 'पारदर्शी अनिश्चितता अंतराल और मानव समीक्षा के स्पष्ट मार्गों के साथ एक छेड़छाड़-रोधी HMAC-SHA256 ट्रस्ट रिपोर्ट तैयार करता है।',
+
+    // Image Verification
+    'image.title': 'डिजिटल छवि फॉरेंसिक लेंस',
+    'image.subtitle': 'डीपफेक पहचान, त्रुटि स्तर विश्लेषण (ELA), 2D FFT स्पेक्ट्रल प्रोफाइलिंग, और चेहरे की समरूपता जाँच।',
+    'image.upload_title': 'फॉरेंसिक निरीक्षण के लिए छवि अपलोड करें',
+    'image.upload_sub': 'JPEG, PNG या WebP खींचें और छोड़ें (अधिकतम 15MB)। आपकी छवि सुरक्षित रूप से जाँची जाती है।',
+    'image.analyzing': 'बहु-संकेत फॉरेंसिक विश्लेषण जारी है...',
+    'image.sample_images': 'या तुरंत नमूना छवियों के साथ परीक्षण करें:',
+    'image.sample_deepfake': 'एआई निर्मित चेहरा (सिंथेटिक)',
+    'image.sample_real': 'वास्तविक कैमरा पोर्ट्रेट',
+    'image.sample_compressed': 'सोशल मीडिया संपीड़ित फ़ाइल',
+    'image.verdict_real': 'संभवतः असली (REAL)',
+    'image.verdict_fake': 'संभवतः नकली (FAKE)',
+    'image.verdict_review': 'मानव समीक्षा आवश्यक',
+    'image.confidence': 'मापा गया विश्वास स्तर',
+    'image.uncertainty': 'अनिश्चितता का दायरा',
+    'image.evidence_breakdown': 'फॉरेंसिक साक्ष्य विवरण',
+    'image.ela_title': 'त्रुटि स्तर विश्लेषण (ELA)',
+    'image.ela_desc': 'संपादित या चिपकाए गए तत्वों को पहचानने के लिए 8x8 DCT छवि ब्लॉकों में संपीड़न भिन्नता को उजागर करता है।',
+    'image.fft_title': '2D FFT स्पेक्ट्रल प्रोफाइल',
+    'image.fft_desc': 'GAN और डिफ्यूजन मॉडल की विशिष्ट आवधिक चेकरबोर्ड ग्रिड विकृतियों का पता लगाता है।',
+    'image.noise_title': 'शोर विसंगति विश्लेषण',
+    'image.noise_desc': 'अग्रभूमि और पृष्ठभूमि के पिक्सेल में कैमरा सेंसर शोर की एकरूपता को मापता है।',
+    'image.face_title': 'चेहरे के सीमाचिह्न और पुतली ज्यामिति',
+    'image.face_desc': 'कॉर्नियल प्रकाश प्रतिबिंब, पुतली की गोलाई और द्विपक्षीय चेहरे की समरूपता का मूल्यांकन करता है।',
+    'image.exif_title': 'कंटेनर और मेटाडेटा निरीक्षण',
+    'image.exif_desc': 'जनरेटर सॉफ़्टवेयर हस्ताक्षर, परिमाणीकरण तालिका और संपादन टाइमस्टैम्प की पहचान करता है।',
+    'image.sha256': 'SHA-256 डाइजेस्ट',
+    'image.copy_hash': 'हैश कॉपी करें',
+    'image.hash_copied': 'हैश कॉपी हो गया!',
+    'image.generate_report': 'ट्रस्ट रिपोर्ट तैयार करें',
+    'image.report_ready': 'छेड़छाड़-रोधी रिपोर्ट तैयार है। खोलने के लिए क्लिक करें।',
+    'image.abstention_note': 'तटस्थता क्षेत्र (Abstention Zone): जब विश्वास स्तर 33% और 67% के बीच होता है, तब ट्रुथ-लेंस झूठे आरोपों से बचने के लिए कोई अंतिम निर्णय नहीं देता।',
+    'image.feedback_helpful': 'क्या यह फॉरेंसिक रिपोर्ट उपयोगी थी?',
+    'image.yes': 'हाँ, उपयोगी',
+    'image.no': 'परिणाम से असहमत',
+
+    // Certificate Verification
+    'cert.title': 'चिकित्सा प्रमाणपत्र अखंडता और पूर्व-जाँच',
+    'cert.subtitle': 'विश्वविद्यालयों और क्लीनिकों के लिए संरचित ओसीआर क्रेडेंशियल निष्कर्षण, तिथि अनुक्रम स्थिरता, और लेआउट अखंडता जाँच।',
+    'cert.student_mode': 'छात्र स्व-जाँच मोड',
+    'cert.safeguard_notice': 'अनिवार्य सुरक्षा नियम: ट्रुथ-लेंस एक दस्तावेज़-अखंडता मूल्यांकन और मानव समीक्षा सहायक है, न कि कोई स्वचालित दंडात्मक प्रणाली। हमारा प्लेटफ़ॉर्म कभी भी किसी छात्र के अवकाश को स्वतः अस्वीकार नहीं करता। सभी महत्वपूर्ण निर्णयों के लिए अधिकृत मानव समीक्षा अनिवार्य है।',
+    'cert.upload_title': 'चिकित्सा प्रमाणपत्र अपलोड करें (PDF या छवि)',
+    'cert.upload_sub': 'PDF स्कैन, JPEG, PNG, या WebP अपलोड करें। डॉक्टर का पंजीकरण, तिथियां, अवकाश अवधि और भौतिक मुहर की जांच करता है।',
+    'cert.sample_certs': 'या सत्यापित अकादमिक मामलों के साथ परीक्षण करें:',
+    'cert.sample_latency': 'तिथि अनुक्रम विलंब (अतीत की क्लिनिक यात्रा)',
+    'cert.sample_authentic': 'वास्तविक क्लिनिक प्रमाणपत्र (पूर्ण विवरण)',
+    'cert.sample_missing': 'डॉक्टर का पंजीकरण नंबर अनुपस्थित',
+    'cert.doctor_name': 'प्रमाणित चिकित्सक',
+    'cert.reg_number': 'मेडिकल काउंसिल पंजीकरण सं.',
+    'cert.hospital_name': 'अस्पताल / चिकित्सा केंद्र',
+    'cert.patient_name': 'मरीज / छात्र का नाम',
+    'cert.issue_date': 'जारी करने की तिथि',
+    'cert.leave_period': 'अनुशंसित अवकाश अवधि',
+    'cert.duration': 'निर्धारित अवधि',
+    'cert.signature_detected': 'हस्ताक्षर पहचान',
+    'cert.stamp_detected': 'आधिकारिक क्लिनिक मुहर',
+    'cert.integrity_checks': 'अनुक्रम और अखंडता जाँच',
+    'cert.submit_review': 'विश्वविद्यालय समीक्षा कतार में भेजें',
+    'cert.status_pending': 'समीक्षाधीन',
+    'cert.status_approved': 'सत्यापित वैध',
+    'cert.status_clarification': 'स्पष्टीकरण अपेक्षित',
+    'cert.detected': 'पहचाना गया',
+    'cert.not_detected': 'नहीं मिला',
+    'cert.days': 'दिन',
+
+    // Victim SOS
+    'sos.title': 'आप अकेले नहीं हैं। हम सहायता के लिए तत्पर हैं।',
+    'sos.subtitle': 'यदि आप या आपका कोई परिचित गैर-सहमति वाले डीपफेक, छेड़छाड़ किए गए मीडिया या डिजिटल प्रतिरूपण का शिकार हुआ है, तो यह केंद्र साक्ष्य संरक्षण मार्गदर्शन, आधिकारिक टेकडाउन नोटिस प्रारूप और सत्यापित हेल्पलाइन प्रदान करता है।',
+    'sos.privacy_banner': 'सर्वोच्च गोपनीयता सुरक्षा: आपको इस वेबसाइट पर अंतरंग या संवेदनशील सामग्री अपलोड करने की आवश्यकता नहीं है। नीचे दिए गए नोट्स और चेकलिस्ट 100% केवल आपके अपने ब्राउज़र में संग्रहीत रहते हैं और कभी हमारे सर्वर पर नहीं भेजे जाते।',
+    'sos.step1_title': 'चरण 1: साक्ष्य संरक्षण चेकलिस्ट',
+    'sos.step1_sub': 'शिकायत दर्ज करने या हटाने का अनुरोध करने से पहले, कानूनी प्रक्रिया के लिए डिजिटल साक्ष्य सुरक्षित रखें।',
+    'sos.step2_title': 'चरण 2: औपचारिक टेकडाउन अनुरोध प्रारूप',
+    'sos.step2_sub': 'प्लेटफ़ॉर्म शर्तों और नीतियों का हवाला देते हुए मानक टेकडाउन नोटिस कॉपी करें।',
+    'sos.step3_title': 'चरण 3: सत्यापित हेल्पलाइन और आपातकालीन सहायता',
+    'sos.local_notes_title': 'गोपनीय घटना नोट्स (केवल आपके ब्राउज़र में सुरक्षित)',
+    'sos.clear_notes': 'स्थानीय डेटा साफ़ करें',
+    'sos.copy_template': 'टेकडाउन नोटिस कॉपी करें',
+    'sos.copied': 'क्लिपबोर्ड पर कॉपी हो गया!',
+    'sos.check1': 'वह सटीक URL सुरक्षित करें जहाँ विकृत मीडिया पोस्ट किया गया है',
+    'sos.check2': 'फुल-स्क्रीन स्क्रीनशॉट लें (ब्राउज़र एड्रेस बार और तारीख/समय सहित)',
+    'sos.check3': 'खाता हैंडल, प्रोफ़ाइल लिंक और प्रेषक यूज़र आईडी रिकॉर्ड करें',
+    'sos.check4': 'संदेश या पोस्ट पहली बार देखे जाने की तारीख और समय दर्ज करें',
+    'sos.check5': 'सुरक्षित की गई फ़ाइलों को एक सुरक्षित ऑफ़लाइन USB ड्राइव पर रखें',
+
+    // Accuracy & Limits
+    'accuracy.title': 'पारदर्शी सटीकता और मॉडल सीमाएँ',
+    'accuracy.subtitle': 'सत्यता की प्रतिबद्धता: हम कभी भी 100% सटीकता का दावा नहीं करते। जानिए अनुभवजन्य बेंचमार्क और यह कि तटस्थता क्षेत्र निर्दोष लोगों की रक्षा कैसे करता है।',
+    'accuracy.why_abstention': 'हम अनुमान लगाने से क्यों इनकार करते हैं (33%–67% तटस्थता क्षेत्र)',
+    'accuracy.abstention_desc': 'पारंपरिक बाइनरी मॉडल हर संदिग्ध छवि को जबरन असली या नकली में बांटते हैं। भारी संपीड़न या नए मॉडलों के आने पर बाइनरी सिस्टम खतरनाक गलत परिणाम देते हैं। ट्रुथ-लेंस एक मानवीय समीक्षा क्षेत्र प्रदान करता है।',
+    'accuracy.failure_modes': 'ज्ञात विफलता मोड और प्रतिकूल छेड़छाड़',
+    'accuracy.matrix_title': 'अनुभवजन्य भ्रम मैट्रिक्स (परीक्षण बेंचमार्क N=4,800)',
+
+    // Learn Hub
+    'learn.title': 'मीडिया साक्षरता और नकली पहचान केंद्र',
+    'learn.subtitle': 'जेनेरेटिव मीडिया के फॉरेंसिक संकेतों को समझें और हमारी इंटरएक्टिव चुनौतियों के साथ अपनी परख क्षमता का परीक्षण करें।',
+    'learn.game_title': 'नकली पहचानो इंटरएक्टिव चुनौती',
+    'learn.game_subtitle': 'क्या आपकी आँखें हमारे फॉरेंसिक एल्गोरिदम को मात दे सकती हैं? अगल-बगल की छवियों की तुलना करें और पहचानें कि कौन सी सिंथेटिक है।',
+    'learn.guess_left': 'बाईं छवि एआई जनरेटेड है',
+    'learn.guess_right': 'दाईं छवि एआई जनरेटेड है',
+    'learn.correct': 'बिल्कुल सही! शानदार फॉरेंसिक दृष्टि।',
+    'learn.incorrect': 'गलत। कॉर्नियल प्रकाश प्रतिबिंब की विषमता पर ध्यान दें।',
+    'learn.next_challenge': 'अगली चुनौती',
+    'learn.score': 'आपका स्कोर',
+
+    // University Workspace
+    'univ.title': 'अकादमिक क्रेडेंशियल समीक्षा पोर्टल',
+    'univ.subtitle': 'छात्र चिकित्सा अवकाश दस्तावेजों के लिए मानव-आधारित समीक्षा कार्यक्षेत्र, पूर्ण ऑडिट लॉग और टेनेंट अलगाव के साथ।',
+    'univ.demo_banner': 'समीक्षक डेमो सत्र: डॉ. एलेनोर वेंस (वरिष्ठ रजिस्ट्रार, नेशनल मेट्रोपॉलिटन यूनिवर्सिटी) के रूप में सक्रिय।',
+    'univ.all_cases': 'सभी मामले',
+    'univ.pending': 'मूल्यांकन प्रतीक्षित',
+    'univ.approved': 'स्वीकृत',
+    'univ.escalated': 'स्पष्टीकरण अपेक्षित / अग्रेषित',
+    'univ.case_id': 'मामला सं.',
+    'univ.student': 'छात्र',
+    'univ.physician': 'चिकित्सक',
+    'univ.risk': 'पूर्व-जाँच जोखिम',
+    'univ.actions': 'कार्रवाई',
+    'univ.inspect': 'मामले का निरीक्षण करें',
+    'univ.approve_case': 'अवकाश स्वीकृत करें',
+    'univ.request_info': 'स्पष्टीकरण मांगें',
+    'univ.notes_label': 'समीक्षक गोपनीय टिप्पणी',
+    'univ.audit_trail': 'ऑडिट इतिहास',
+    'univ.close': 'पैनल बंद करें',
+
+    // Authentication
+    'auth.signin_title': 'ट्रुथ-लेंस में साइन इन करें',
+    'auth.signin_sub': 'विश्वविद्यालय समीक्षा कतार, ऑडिट इतिहास और सत्यापित ट्रस्ट रिपोर्ट तक पहुँचें',
+    'auth.email': 'ईमेल पता',
+    'auth.password': 'पासवर्ड',
+    'auth.fullname': 'पूरा नाम',
+    'auth.signin_btn': 'साइन इन करें',
+    'auth.signing_in': 'साइन इन हो रहा है...',
+    'auth.register_title': 'ट्रुथ-लेंस खाता बनाएँ',
+    'auth.register_btn': 'खाता बनाएँ',
+    'auth.or_demo': 'खाता बनाए बिना तुरंत 1-क्लिक डेमो अनुभव:',
+    'auth.demo_reviewer_btn': 'समीक्षक के रूप में देखें (डॉ. एलेनोर वेंस)',
+    'auth.demo_student_btn': 'छात्र के रूप में देखें (करन मल्होत्रा)',
+    'auth.demo_public_btn': 'सार्वजनिक अन्वेषक के रूप में देखें',
+    'auth.demo_active': 'आप वर्तमान में काल्पनिक अकादमिक डेटा के साथ डेमो मोड में हैं।',
+    'auth.no_account': 'खाता नहीं है?',
+    'auth.have_account': 'पहले से खाता है?',
+    'auth.error_invalid': 'अमान्य ईमेल या पासवर्ड। आप नीचे दिए गए डेमो मोड से तुरंत अनुभव कर सकते हैं।',
+
+    // Common & Footer
     'common.upload': 'फ़ाइल अपलोड करें',
     'common.drag_drop': 'फ़ाइल यहाँ खींचें और छोड़ें, या चुनें',
     'common.verdict': 'सत्यापन परिणाम',
@@ -68,11 +404,21 @@ const translations: Record<Language, Record<string, string>> = {
     'common.evidence': 'फॉरेंसिक साक्ष्य विवरण',
     'common.share_report': 'ट्रस्ट रिपोर्ट साझा करें',
     'common.download_report': 'रिपोर्ट डाउनलोड करें (PDF)',
-    'common.free_forever': 'सदा के लिए नि:शुल्क प्रतिबद्धता',
-    'common.footer_disclaimer': 'ट्रुथ-लेंस डिजिटल मीडिया अखंडता प्लेटफ़ॉर्म है। परिणाम सांख्यिकीय संकेतों को संप्रेषित करते हैं और कानूनी प्रमाण नहीं हैं।'
+    'common.free_forever': 'सदा के लिए निःशुल्क प्रतिबद्धता',
+    'common.footer_disclaimer': 'ट्रुथ-लेंस डिजिटल मीडिया अखंडता प्लेटफ़ॉर्म है। परिणाम सांख्यिकीय संकेतों को संप्रेषित करते हैं और कानूनी प्रमाण नहीं हैं।',
+    'common.save': 'सहेजें',
+    'common.cancel': 'रद्द करें',
+    'common.close': 'बंद करें',
+    'common.back': 'पीछे जाएँ',
+    'common.loading': 'प्रक्रिया जारी है...',
+    'footer.ethics': 'नैतिकता और सुरक्षा',
+    'footer.methodology': 'फॉरेंसिक कार्यप्रणाली',
+    'footer.wcag': 'सुलभता (WCAG 2.1 AA)',
+    'footer.consortium': 'ओपन ऑथेंटिसिटी कंसोर्टियम • निःशुल्क सार्वजनिक उपकरण'
   },
+
   mr: {
-    // Nav
+    // Navigation
     'nav.verify_image': 'प्रतिमा तपासा',
     'nav.verify_certificate': 'प्रमाणपत्र पडताळणी',
     'nav.sos': 'मदत केंद्र (SOS)',
@@ -81,16 +427,179 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.university': 'विद्यापीठ पोर्टल',
     'nav.signin': 'साइन इन करा',
     'nav.signout': 'साइन आउट',
+    'nav.check_an_image': 'प्रतिमा तपासा',
+    'nav.demo_mode': 'डेमो मोड (काल्पनिक डेटा)',
+    'nav.exit_demo': 'डेमोमधून बाहेर पडा',
 
     // Hero
+    'hero.badge': 'मोफत सार्वजनिक पडताळणी यंत्रणा',
     'hero.title_part1': 'खरे काय ते पाहा.',
     'hero.title_part2': 'कशावर विश्वास ठेवायचा ते जाणा.',
     'hero.subtitle': 'एआय हस्तक्षेपासाठी प्रतिमा तपासा, दस्तऐवज सत्यता तपासा आणि पुरावे समजून घ्या — विनामूल्य, गोपनीयता आणि पारदर्शकतेसह.',
     'hero.cta_image': 'प्रतिमा तपासा',
     'hero.cta_certificate': 'प्रमाणपत्र पडताळा',
-    'hero.trust_badge': 'विनामूल्य जनहित सेवा • गोपनीयता-संरक्षित • प्रामाणिक अनिश्चितता',
+    'hero.explore_demo': 'डेमो वापरून पहा',
+    'hero.safeguard': 'मोजलेली विश्वासार्हता • स्पष्ट तटस्थ क्षेत्र • कोणतीही बनावट निश्चितता नाही',
+    'hero.quick_lens': 'त्वरित पडताळणी लेन्स',
+    'hero.drop_title': 'येथे प्रतिमा किंवा दस्तऐवज टाका',
+    'hero.drop_sub': 'JPEG, PNG, WebP किंवा PDF (15MB पर्यंत). विश्लेषण वास्तविक फॉरेन्सिक पाइपलाइनद्वारे होते.',
+    'hero.browse_files': 'फाइल निवडा',
+    'hero.advanced_mode': 'प्रगत मोड',
 
-    // Common
+    // How it works
+    'steps.title': 'ट्रुथ-लेन्स तीन टप्प्यांत मीडियाची पडताळणी कशी करते',
+    'steps.subtitle': 'आमची खुली पद्धत स्पष्ट फॉरेन्सिक पुरावे देते, अस्पष्ट गुण नाही.',
+    'steps.step1_title': '1. सुरक्षित अपलोड व निष्कर्षण',
+    'steps.step1_desc': 'बहुस्तरीय निष्कर्षण कोणत्याही क्लाउड गळतीशिवाय पिक्सेल अरे, कॉम्प्रेशन ग्रिड आणि मेटाडेटा तपासते.',
+    'steps.step2_title': '2. स्पष्ट बहु-संकेत इंजिन',
+    'steps.step2_desc': 'त्रुटी पातळी विश्लेषण (ELA), 2D FFT स्पेक्ट्रल विसंगती, चेहऱ्याचे सीमांकन आणि ओसीआर तर्क संकेत मोजतात.',
+    'steps.step3_title': '3. प्रामाणिक त्रिपक्षीय निकाल',
+    'steps.step3_desc': 'पारदर्शक अनिश्चितता अंतराल आणि मानवी पुनरावलोकनाच्या मार्गांसह HMAC-SHA256 ट्रस्ट अहवाल तयार करतो.',
+
+    // Image Verification
+    'image.title': 'डिजिटल प्रतिमा फॉरेन्सिक लेन्स',
+    'image.subtitle': 'डीपफेक ओळख, त्रुटी पातळी विश्लेषण (ELA), 2D FFT स्पेक्ट्रल प्रोफाइलिंग, आणि चेहऱ्याची सममिती तपासणी.',
+    'image.upload_title': 'फॉरेन्सिक तपासणीसाठी प्रतिमा अपलोड करा',
+    'image.upload_sub': 'JPEG, PNG किंवा WebP ड्रॅग करा (कमाल 15MB). तुमची प्रतिमा सुरक्षितपणे तपासली जाते.',
+    'image.analyzing': 'बहु-संकेत फॉरेन्सिक विश्लेषण सुरू आहे...',
+    'image.sample_images': 'किंवा नमुना प्रतिमांसह त्वरित चाचणी करा:',
+    'image.sample_deepfake': 'एआय निर्मित चेहरा (सिंथेटिक)',
+    'image.sample_real': 'खरा कॅमेरा पोर्ट्रेट',
+    'image.sample_compressed': 'सोशल मीडिया संकुचित फाइल',
+    'image.verdict_real': 'संभवतः खरे (REAL)',
+    'image.verdict_fake': 'संभवतः खोटे (FAKE)',
+    'image.verdict_review': 'मानवी पुनरावलोकन आवश्यक',
+    'image.confidence': 'विश्वासार्हता पातळी',
+    'image.uncertainty': 'अनिश्चिततेची पातळी',
+    'image.evidence_breakdown': 'फॉरेन्सिक पुरावे विश्लेषण',
+    'image.ela_title': 'त्रुटी पातळी विश्लेषण (ELA)',
+    'image.ela_desc': 'बदललेले किंवा पेस्ट केलेले घटक ओळखण्यासाठी 8x8 DCT ब्लॉकमध्ये कॉम्प्रेशन फरक दर्शवितो.',
+    'image.fft_title': '2D FFT स्पेक्ट्रल प्रोफाइल',
+    'image.fft_desc': 'GAN आणि डिफ्यूजन मॉडेलचे चेकरबोर्ड ग्रिड दोष शोधतो.',
+    'image.noise_title': 'आवाज विसंगती विश्लेषण',
+    'image.noise_desc': 'कॅमेरा सेन्सर नॉइसची एकरूपता मोजतो.',
+    'image.face_title': 'चेहऱ्याचे वैशिष्ट्ये आणि बुबुळ भूमिती',
+    'image.face_desc': 'कॉर्नियल परावर्तन, बुबुळाचा गोलाकारपणा आणि चेहऱ्याची सममिती तपासतो.',
+    'image.exif_title': 'कंटेनर आणि मेटाडेटा तपासणी',
+    'image.exif_desc': 'सॉफ्टवेअर स्वाक्षरी, क्वांटायझेशन टेबल आणि संपादन वेळ ओळखतो.',
+    'image.sha256': 'SHA-256 डायजेस्ट',
+    'image.copy_hash': 'हॅश कॉपी करा',
+    'image.hash_copied': 'हॅश कॉपी झाला!',
+    'image.generate_report': 'ट्रस्ट अहवाल तयार करा',
+    'image.report_ready': 'अहवाल तयार आहे. उघडण्यासाठी क्लिक करा.',
+    'image.abstention_note': 'तटस्थता क्षेत्र (Abstention Zone): जेव्हा विश्वास 33% ते 67% दरम्यान असतो, तेव्हा ट्रुथ-लेन्स चुकीच्या आरोपांपासून वाचवण्यासाठी निकाल देणे नाकारते.',
+    'image.feedback_helpful': 'हा अहवाल उपयुक्त होता का?',
+    'image.yes': 'होय, उपयुक्त',
+    'image.no': 'असहमत',
+
+    // Certificate Verification
+    'cert.title': 'वैद्यकीय प्रमाणपत्र सत्यता व पूर्व-तपासणी',
+    'cert.subtitle': 'विद्यापीठे आणि क्लिनिक्ससाठी ओसीआर क्रेडेंशियल निष्कर्षण, तारीख क्रम सुसंगतता, आणि लेआउट तपासणी.',
+    'cert.student_mode': 'विद्यार्थी स्व-तपासणी मोड',
+    'cert.safeguard_notice': 'अनिवार्य सुरक्षा नियम: ट्रुथ-लेन्स हे दस्तऐवज-अखंडता मूल्यांकन आणि मानवी पुनरावलोकन सहाय्यक आहे. आमचा प्लॅटफॉर्म कधीही विद्यार्थ्यांची रजा आपोआप नाकारत नाही. सर्व निर्णयांसाठी अधिकृत मानवी पुनरावलोकन आवश्यक आहे.',
+    'cert.upload_title': 'वैद्यकीय प्रमाणपत्र अपलोड करा (PDF किंवा प्रतिमा)',
+    'cert.upload_sub': 'PDF स्कॅन, JPEG, PNG, किंवा WebP अपलोड करा. डॉक्टरांची नोंदणी, तारखा, रजेचा कालावधी आणि शिक्का तपासतो.',
+    'cert.sample_certs': 'किंवा पडताळलेल्या शैक्षणिक प्रकरणांसह चाचणी करा:',
+    'cert.sample_latency': 'तारीख क्रम विलंब (मागील क्लिनिक भेट)',
+    'cert.sample_authentic': 'वास्तविक क्लिनिक प्रमाणपत्र (पूर्ण तपशील)',
+    'cert.sample_missing': 'डॉक्टरांचा नोंदणी क्रमांक उपलब्ध नाही',
+    'cert.doctor_name': 'नोंदणीकृत डॉक्टर',
+    'cert.reg_number': 'मेडिकल कौन्सिल नोंदणी क्र.',
+    'cert.hospital_name': 'रुग्णालय / वैद्यकीय केंद्र',
+    'cert.patient_name': 'रुग्ण / विद्यार्थ्याचे नाव',
+    'cert.issue_date': 'जारी केल्याची तारीख',
+    'cert.leave_period': 'शिफारस केलेला रजेचा कालावधी',
+    'cert.duration': 'कालावधी',
+    'cert.signature_detected': 'स्वाक्षरी ओळखली',
+    'cert.stamp_detected': 'अधिकृत क्लिनिक शिक्का',
+    'cert.integrity_checks': 'क्रम आणि अखंडता तपासणी',
+    'cert.submit_review': 'विद्यापीठ पुनरावलोकन रांगेत पाठवा',
+    'cert.status_pending': 'प्रलंबित पुनरावलोकन',
+    'cert.status_approved': 'वैध घोषित',
+    'cert.status_clarification': 'स्पष्टीकरण मागितले',
+    'cert.detected': 'आढळले',
+    'cert.not_detected': 'आढळले नाही',
+    'cert.days': 'दिवस',
+
+    // Victim SOS
+    'sos.title': 'तुम्ही एकटे नाही आहात. आम्ही मदतीसाठी येथे आहोत.',
+    'sos.subtitle': 'तुम्हाला किंवा तुमच्या ओळखीच्या कोणाला डीपफेक, फेरफार केलेला मीडिया किंवा डिजिटल तोतयागिरीचा त्रास झाला असल्यास, हे केंद्र पुरावे जतन करण्याचे मार्गदर्शन, कायदेशीर सूचनांचे नमुने आणि हेल्पलाइन उपलब्ध करून देते.',
+    'sos.privacy_banner': 'उच्च गोपनीयता सुरक्षा: तुम्हाला या संकेतस्थळावर संवेदनशील साहित्य अपलोड करण्याची आवश्यकता नाही. खालील नोट्स आणि चेकलिस्ट 100% तुमच्या स्वतःच्या ब्राउझरमध्ये राहतात आणि आमच्या सर्व्हरवर पाठवल्या जात नाहीत.',
+    'sos.step1_title': 'पायरी 1: पुरावे जतन चेकलिस्ट',
+    'sos.step1_sub': 'तक्रार करण्यापूर्वी किंवा काढून टाकण्याची विनंती करण्यापूर्वी, संभाव्य कायदेशीर उपायांसाठी पुरावे सुरक्षित ठेवा.',
+    'sos.step2_title': 'पायरी 2: कायदेशीर टेकडाउन सूचना नमुने',
+    'sos.step2_sub': 'प्लॅटफॉर्म अटी आणि नियमांचा संदर्भ देणारे मानक टेकडाउन संदेश कॉपी करा.',
+    'sos.step3_title': 'पायरी 3: अधिकृत हेल्पलाइन आणि आपत्कालीन मदत',
+    'sos.local_notes_title': 'गोपनीय घटना नोट्स (फक्त तुमच्या ब्राउझरमध्ये साठवलेल्या)',
+    'sos.clear_notes': 'स्थानिक डेटा नष्ट करा',
+    'sos.copy_template': 'टेकडाउन नोटीस कॉपी करा',
+    'sos.copied': 'क्लिपबोर्डवर कॉपी केले!',
+    'sos.check1': 'जेथे मीडिया पोस्ट केला आहे त्या नेमक्या URL सेव्ह करा',
+    'sos.check2': 'फुल-स्क्रीन स्क्रीनशॉट घ्या (ब्राउझर ॲड्रेस बार आणि तारीख/वेळेसह)',
+    'sos.check3': 'खाते हँडल, प्रोफाइल लिंक आणि वापरकर्ता आयडी नोंदवा',
+    'sos.check4': 'संदेश किंवा पोस्ट प्रथम दिसल्याची तारीख आणि वेळ नोंदवा',
+    'sos.check5': 'जतन केलेल्या फाइल्स सुरक्षित ऑफलाइन यूएसबी ड्राइव्हवर ठेवा',
+
+    // Accuracy & Limits
+    'accuracy.title': 'पारदर्शक अचूकता आणि मॉडेल मर्यादा',
+    'accuracy.subtitle': 'सत्यतेची बांधिलकी: आम्ही कधीही 100% अचूकतेचा दावा करत नाही. आमचे बेंचमार्क जाणून घ्या आणि तटस्थता क्षेत्र निष्पापांचे रक्षण कसे करते ते समजून घ्या.',
+    'accuracy.why_abstention': 'आम्ही अंदाज बांधणे का नाकारतो (33%–67% तटस्थता क्षेत्र)',
+    'accuracy.abstention_desc': 'पारंपारिक बायनरी मॉडेल्स संशयास्पद प्रतिमांना जबरदस्तीने खरे किंवा खोटे ठरवतात. जास्त कॉम्प्रेशनमुळे धोकादायक खोटे निकाल लागू शकतात. म्हणून ट्रुथ-लेन्स मानवी पुनरावलोकन अनिवार्य करते.',
+    'accuracy.failure_modes': 'ज्ञात त्रुटी आणि आव्हाने',
+    'accuracy.matrix_title': 'अनुभवजन्य मॅट्रिक्स (चाचणी बेंचमार्क N=4,800)',
+
+    // Learn Hub
+    'learn.title': 'मीडिया साक्षरता आणि खोटे ओळखण्याचे केंद्र',
+    'learn.subtitle': 'जनरेटिव्ह मीडियाचे फॉरेन्सिक संकेत समजून घ्या आणि आमच्या आव्हानांसह तुमच्या कौशल्याची चाचणी घ्या.',
+    'learn.game_title': 'खोटे ओळखा संवादात्मक आव्हान',
+    'learn.game_subtitle': 'तुमचे डोळे आमच्या फॉरेन्सिक अल्गोरिदमला मात देऊ शकतात का? दोन प्रतिमांची तुलना करा आणि कोणती कृत्रिम आहे ते ओळखा.',
+    'learn.guess_left': 'डावी प्रतिमा एआय निर्मित आहे',
+    'learn.guess_right': 'उजवी प्रतिमा एआय निर्मित आहे',
+    'learn.correct': 'अगदी बरोबर! उत्तम फॉरेन्सिक दृष्टी.',
+    'learn.incorrect': 'चुकीचे उत्तर. डोळ्यांमधील प्रकाशाच्या परावर्तनावर लक्ष द्या.',
+    'learn.next_challenge': 'पुढील आव्हान',
+    'learn.score': 'तुमचा गुण',
+
+    // University Workspace
+    'univ.title': 'शैक्षणिक क्रेडेंशियल पुनरावलोकन पोर्टल',
+    'univ.subtitle': 'विद्यार्थी वैद्यकीय रजा दस्तऐवजांसाठी मानवी पुनरावलोकन कार्यक्षेत्र, पूर्ण ऑडिट लॉगसह.',
+    'univ.demo_banner': 'पुनरावलोकनकर्ता डेमो सत्र: डॉ. एलेनॉर व्हॅन्स (वरिष्ठ रजिस्ट्रार, नॅशनल मेट्रोपॉलिटन युनिव्हर्सिटी) म्हणून सक्रिय.',
+    'univ.all_cases': 'सर्व प्रकरणे',
+    'univ.pending': 'मूल्यांकन प्रलंबित',
+    'univ.approved': 'मंजूर',
+    'univ.escalated': 'स्पष्टीकरण आवश्यक',
+    'univ.case_id': 'प्रकरण क्र.',
+    'univ.student': 'विद्यार्थी',
+    'univ.physician': 'डॉक्टर',
+    'univ.risk': 'पूर्व-तपासणी धोका',
+    'univ.actions': 'कृती',
+    'univ.inspect': 'प्रकरणाची पाहणी करा',
+    'univ.approve_case': 'रजा मंजूर करा',
+    'univ.request_info': 'स्पष्टीकरण मागा',
+    'univ.notes_label': 'पुनरावलोकनकर्ता गोपनीय नोंदी',
+    'univ.audit_trail': 'ऑडिट इतिहास',
+    'univ.close': 'पॅनेल बंद करा',
+
+    // Authentication
+    'auth.signin_title': 'ट्रुथ-लेन्समध्ये साइन इन करा',
+    'auth.signin_sub': 'विद्यापीठ पुनरावलोकन रांग, ऑडिट इतिहास आणि विश्वास अहवाल पहा',
+    'auth.email': 'ईमेल पत्ता',
+    'auth.password': 'पासवर्ड',
+    'auth.fullname': 'पूर्ण नाव',
+    'auth.signin_btn': 'साइन इन करा',
+    'auth.signing_in': 'साइन इन होत आहे...',
+    'auth.register_title': 'ट्रुथ-लेन्स खाते तयार करा',
+    'auth.register_btn': 'खाते तयार करा',
+    'auth.or_demo': 'खाते तयार न करता त्वरित 1-क्लिक डेमो अनुभव:',
+    'auth.demo_reviewer_btn': 'पुनरावलोकनकर्ता म्हणून पहा (डॉ. एलेनॉर व्हॅन्स)',
+    'auth.demo_student_btn': 'विद्यार्थी म्हणून पहा (करण मल्होत्रा)',
+    'auth.demo_public_btn': 'सार्वजनिक अन्वेषक म्हणून पहा',
+    'auth.demo_active': 'तुम्ही सध्या काल्पनिक शैक्षणिक डेटासह डेमो मोडमध्ये आहात.',
+    'auth.no_account': 'खाते नाही?',
+    'auth.have_account': 'आधीच खाते आहे?',
+    'auth.error_invalid': 'अवैध ईमेल किंवा पासवर्ड. तुम्ही खालील डेमो मोडद्वारे त्वरित वापरू शकता.',
+
+    // Common & Footer
     'common.upload': 'फाइल अपलोड करा',
     'common.drag_drop': 'येथे फाइल ड्रॅग करा किंवा निवडा',
     'common.verdict': 'पडताळणी निकाल',
@@ -99,22 +608,59 @@ const translations: Record<Language, Record<string, string>> = {
     'common.evidence': 'फॉरेन्सिक पुरावे विश्लेषण',
     'common.share_report': 'ट्रस्ट अहवाल शेअर करा',
     'common.download_report': 'अहवाल डाउनलोड करा (PDF)',
-    'common.free_forever': 'नेहमीसाठी मोफत वचनबद्धता',
-    'common.footer_disclaimer': 'ट्रुथलेंस हे डिजिटल मीडिया सत्यता प्लॅटफॉर्म आहे. निष्कर्ष सांख्यिकीय संकेतांवर आधारित आहेत.'
+    'common.free_forever': 'कायमस्वरूपी मोफत वचनबद्धता',
+    'common.footer_disclaimer': 'ट्रुथ-लेन्स हे डिजिटल मीडिया अखंडता व्यासपीठ आहे. परिणाम सांख्यिकीय संकेत दर्शवतात आणि कायदेशीर पुरावा नाहीत.',
+    'common.save': 'जतन करा',
+    'common.cancel': 'रद्द करा',
+    'common.close': 'बंद करा',
+    'common.back': 'मागे जा',
+    'common.loading': 'प्रक्रिया सुरू आहे...',
+    'footer.ethics': 'नैतिकता आणि सुरक्षा',
+    'footer.methodology': 'फॉरेन्सिक कार्यपद्धती',
+    'footer.wcag': 'सुलभता (WCAG 2.1 AA)',
+    'footer.consortium': 'ओपन ऑथेंटिसिटी कन्सोर्टियम • मोफत सार्वजनिक साधन'
   }
 };
 
 const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
   setLanguage: () => {},
-  t: (key: string) => key
+  t: (key: string, defaultText?: string) => defaultText || key,
 });
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>(() => {
+    const saved = localStorage.getItem('truthlens_language') as Language;
+    if (saved && (saved === 'en' || saved === 'hi' || saved === 'mr')) {
+      return saved;
+    }
+    return 'en';
+  });
 
-  const t = (key: string): string => {
-    return translations[language]?.[key] || translations.en[key] || key;
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('truthlens_language', lang);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+    }
+  }, [language]);
+
+  const t = (key: string, defaultText?: string): string => {
+    const langDict = translations[language] || translations.en;
+    if (langDict && langDict[key]) {
+      return langDict[key];
+    }
+    // Fallback to English
+    if (translations.en[key]) {
+      return translations.en[key];
+    }
+    return defaultText || key;
   };
 
   return (

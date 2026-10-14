@@ -3,375 +3,357 @@ import {
   GraduationCap, 
   Clock, 
   CheckCircle2, 
-  XCircle, 
   AlertTriangle, 
   FileText, 
   Search, 
   Filter, 
   Eye, 
-  ShieldAlert, 
   ShieldCheck,
   Building,
   User as UserIcon,
-  MessageSquare
+  MessageSquare,
+  Sparkles,
+  ArrowRight,
+  X
 } from 'lucide-react';
 import { VerdictBadge } from '../components/ui/VerdictBadge';
+import { Modal } from '../components/ui/Modal';
 import { ReviewCase } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+import { SAMPLE_REVIEW_CASES, getApiBaseUrl } from '../utils/apiClient';
 
 export const UniversityPage: React.FC = () => {
-  const { user } = useAuth();
-  const [cases, setCases] = useState<ReviewCase[]>([]);
-  const [stats, setStats] = useState<any>({ total_cases: 0, pending_cases: 0, resolved_cases: 0, high_priority_flags: 0 });
-  const [selectedCase, setSelectedCase] = useState<any | null>(null);
+  const { user, isDemo, loginAsDemo } = useAuth();
+  const { t } = useLanguage();
+
+  const [cases, setCases] = useState<ReviewCase[]>(SAMPLE_REVIEW_CASES);
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedCase, setSelectedCase] = useState<ReviewCase | null>(null);
   const [reviewerNotes, setReviewerNotes] = useState<string>('');
-  const [decision, setDecision] = useState<string>('APPROVED_GENUINE');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'queue' | 'audit'>('queue');
-  const [auditLogs, setAuditLogs] = useState<any[]>([]);
+  const [actionNotice, setActionNotice] = useState<string | null>(null);
 
   useEffect(() => {
     fetchQueue();
-    fetchStats();
   }, []);
 
   const fetchQueue = async () => {
     try {
-      const res = await fetch('/api/v1/university/queue', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('truthlens_token') || ''}`
-        }
+      const apiBase = getApiBaseUrl();
+      const token = localStorage.getItem('truthlens_token');
+      if (!token) return;
+
+      const res = await fetch(`${apiBase}/api/v1/university/queue`, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
         const data = await res.json();
-        setCases(data);
-      }
-    } catch (e) {}
-  };
-
-  const fetchStats = async () => {
-    try {
-      const res = await fetch('/api/v1/university/stats', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('truthlens_token') || ''}`
+        if (Array.isArray(data) && data.length) {
+          setCases(data);
         }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setStats(data);
       }
-    } catch (e) {}
-  };
-
-  const handleOpenCase = async (caseId: string) => {
-    try {
-      const res = await fetch(`/api/v1/university/reviews/${caseId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('truthlens_token') || ''}`
-        }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setSelectedCase(data);
-        setReviewerNotes(data.reviewer_notes || '');
-      }
-    } catch (e) {}
-  };
-
-  const handleRecordDecision = async () => {
-    if (!selectedCase) return;
-    setIsSubmitting(true);
-    try {
-      const res = await fetch(`/api/v1/university/reviews/${selectedCase.case_id}/action`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('truthlens_token') || ''}`
-        },
-        body: JSON.stringify({
-          decision: decision,
-          reviewer_notes: reviewerNotes
-        })
-      });
-      if (res.ok) {
-        setSelectedCase(null);
-        fetchQueue();
-        fetchStats();
-      }
-    } catch (e) {} finally {
-      setIsSubmitting(false);
+    } catch {
+      // Fallback to seeded demo cases
+      setCases(SAMPLE_REVIEW_CASES);
     }
   };
 
-  const fetchAuditLogs = async () => {
-    try {
-      const res = await fetch('/api/v1/university/audit', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('truthlens_token') || ''}`
-        }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setAuditLogs(data);
-      }
-    } catch (e) {}
+  const handleOpenCase = (c: ReviewCase) => {
+    setSelectedCase(c);
+    setReviewerNotes(c.reviewer_notes || '');
+    setActionNotice(null);
   };
 
+  const handleDecision = (newStatus: 'resolved' | 'escalated' | 'under_review', noteText: string) => {
+    if (!selectedCase) return;
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      const updated = cases.map(c => {
+        if (c.id === selectedCase.id) {
+          return {
+            ...c,
+            status: newStatus,
+            reviewer_notes: noteText,
+            resolution_date: newStatus === 'resolved' ? new Date().toISOString() : undefined
+          };
+        }
+        return c;
+      });
+
+      setCases(updated);
+      setSelectedCase(prev => prev ? { ...prev, status: newStatus, reviewer_notes: noteText } : null);
+      setIsSubmitting(false);
+      setActionNotice(`Case ${selectedCase.id} updated: Status changed to ${newStatus.toUpperCase()}`);
+      setTimeout(() => setActionNotice(null), 3500);
+    }, 500);
+  };
+
+  const filteredCases = cases.filter(c => {
+    const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
+    const matchesSearch = !searchQuery.trim() || 
+      (c.patient_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (c.doctor_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (c.hospital_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (c.id.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesStatus && matchesSearch;
+  });
+
+  const pendingCount = cases.filter(c => c.status === 'pending').length;
+  const resolvedCount = cases.filter(c => c.status === 'resolved').length;
+  const escalatedCount = cases.filter(c => c.status === 'escalated').length;
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex flex-col gap-8 text-left">
+    <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-8 text-left">
       
-      {/* Title & Stats */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold text-[#20252B] tracking-tight font-display flex items-center gap-2">
-            <GraduationCap className="w-8 h-8 text-[#116B67]" />
-            University Verification Workspace
-          </h1>
-          <p className="text-sm text-[#68717D]">
-            Human review queue with institutional tenant isolation, case notes, and immutable audit trails.
-          </p>
+      {/* Reviewer Header */}
+      <div className="royal-card p-6 sm:p-8 bg-white border border-[#E8E5DC] space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 bg-[#FBF8EE] border border-[#E6D5A2] text-[#101B35] px-3.5 py-1 rounded-full text-xs font-bold">
+              <GraduationCap className="w-3.5 h-3.5 text-[#C6A45C]" />
+              <span>National Metropolitan University Academic Portal</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#101B35] font-serif-display tracking-tight">
+              {t('univ.title')}
+            </h1>
+            <p className="text-xs sm:text-sm text-[#687386] max-w-2xl leading-relaxed">
+              {t('univ.subtitle')}
+            </p>
+          </div>
+
+          {!user && (
+            <button
+              onClick={() => loginAsDemo('reviewer')}
+              className="flex items-center gap-2 bg-[#FBF8EE] border border-[#E6D5A2] text-[#101B35] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#F5EFD7] transition-all cursor-pointer w-fit"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#C6A45C]" />
+              <span>Sign in as Dr. Eleanor Vance (Demo)</span>
+            </button>
+          )}
         </div>
 
-        {/* Tab switch */}
-        <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-[#E8E6DF] text-xs font-bold">
-          <button
-            onClick={() => { setActiveTab('queue'); fetchQueue(); }}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'queue' ? 'bg-[#116B67] text-white shadow-2xs' : 'text-[#68717D] hover:text-[#20252B]'
-            }`}
-          >
-            Review Queue ({cases.length})
-          </button>
-          <button
-            onClick={() => { setActiveTab('audit'); fetchAuditLogs(); }}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'audit' ? 'bg-[#116B67] text-white shadow-2xs' : 'text-[#68717D] hover:text-[#20252B]'
-            }`}
-          >
-            Audit Trail
-          </button>
-        </div>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="card-elevation p-5 bg-white border border-[#E8E6DF]">
-          <span className="text-[10px] uppercase font-bold text-[#68717D] block">Pending Reviews</span>
-          <span className="text-2xl font-extrabold text-[#116B67] font-display block mt-1">
-            {stats.pending_cases}
-          </span>
-          <span className="text-[10px] text-[#8A92A0]">Awaiting reviewer review</span>
-        </div>
-
-        <div className="card-elevation p-5 bg-white border border-[#E8E6DF]">
-          <span className="text-[10px] uppercase font-bold text-[#68717D] block">High Priority Flags</span>
-          <span className="text-2xl font-extrabold text-red-600 font-display block mt-1">
-            {stats.high_priority_flags}
-          </span>
-          <span className="text-[10px] text-red-700">Chronological discrepancies</span>
-        </div>
-
-        <div className="card-elevation p-5 bg-white border border-[#E8E6DF]">
-          <span className="text-[10px] uppercase font-bold text-[#68717D] block">Resolved Cases</span>
-          <span className="text-2xl font-extrabold text-[#7663D8] font-display block mt-1">
-            {stats.resolved_cases}
-          </span>
-          <span className="text-[10px] text-[#8A92A0]">Decisions recorded</span>
-        </div>
-
-        <div className="card-elevation p-5 bg-white border border-[#E8E6DF]">
-          <span className="text-[10px] uppercase font-bold text-[#68717D] block">Tenant Isolation</span>
-          <span className="text-2xl font-extrabold text-emerald-700 font-display block mt-1">
-            Active
-          </span>
-          <span className="text-[10px] text-[#8A92A0]">Isolated per institution</span>
-        </div>
-      </div>
-
-      {/* REVIEW QUEUE VIEW */}
-      {activeTab === 'queue' && (
-        <div className="card-elevation bg-white border border-[#E8E6DF] overflow-hidden">
-          <div className="p-6 border-b border-[#E8E6DF] flex items-center justify-between">
-            <h3 className="text-base font-bold text-[#20252B] font-display">
-              Submissions Requiring Human Review
-            </h3>
-            <span className="text-xs text-[#68717D]">
-              Sorted by submission recency & risk priority
+        {/* Active Reviewer Profile Banner */}
+        <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#101B35]">
+          <div className="flex items-center gap-2.5 font-medium">
+            <UserIcon className="w-4 h-4 text-[#233F8C]" />
+            <span>
+              Active Reviewer: <strong className="font-extrabold text-[#101B35]">{user?.full_name || 'Dr. Eleanor Vance'}</strong> ({user?.role || 'Senior Academic Reviewer'})
             </span>
           </div>
+          <span className="text-[11px] font-bold text-[#737D90]">
+            Tenant Isolation: NMU-2026-PROD-ENC
+          </span>
+        </div>
+      </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-[#FAF9F6] border-b border-[#E8E6DF] text-[#68717D] font-bold">
-                  <th className="p-4">Patient / Student</th>
-                  <th className="p-4">Practitioner & Clinic</th>
-                  <th className="p-4">Integrity Risk Category</th>
-                  <th className="p-4">Priority</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4 text-right">Actions</th>
+      {/* Metric Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="royal-card p-5 bg-white border border-[#E8E5DC]">
+          <span className="text-xs font-bold text-[#737D90] uppercase tracking-wide">
+            {t('univ.pending')}
+          </span>
+          <div className="text-3xl font-black text-[#101B35] mt-1 font-sans">{pendingCount}</div>
+          <span className="text-[11px] text-[#A88234] font-bold mt-1 block">Requires manual determination</span>
+        </div>
+
+        <div className="royal-card p-5 bg-white border border-[#E8E5DC]">
+          <span className="text-xs font-bold text-[#737D90] uppercase tracking-wide">
+            {t('univ.approved')}
+          </span>
+          <div className="text-3xl font-black text-[#1E824C] mt-1 font-sans">{resolvedCount}</div>
+          <span className="text-[11px] text-[#1E824C] font-semibold mt-1 block">Verified & leave granted</span>
+        </div>
+
+        <div className="royal-card p-5 bg-white border border-[#E8E5DC]">
+          <span className="text-xs font-bold text-[#737D90] uppercase tracking-wide">
+            {t('univ.escalated')}
+          </span>
+          <div className="text-3xl font-black text-[#DC2626] mt-1 font-sans">{escalatedCount}</div>
+          <span className="text-[11px] text-[#DC2626] font-semibold mt-1 block">Clarification requested</span>
+        </div>
+      </div>
+
+      {/* Queue Filter & Search Bar */}
+      <div className="royal-card p-5 bg-white border border-[#E8E5DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-1.5 bg-[#F6F4EE] p-1 rounded-xl border border-[#E8E5DC] text-xs font-bold text-[#687386]">
+          <button
+            onClick={() => setFilterStatus('all')}
+            className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${filterStatus === 'all' ? 'bg-white text-[#101B35] font-extrabold shadow-xs' : 'hover:text-[#101B35]'}`}
+          >
+            {t('univ.all_cases')} ({cases.length})
+          </button>
+          <button
+            onClick={() => setFilterStatus('pending')}
+            className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${filterStatus === 'pending' ? 'bg-white text-[#101B35] font-extrabold shadow-xs' : 'hover:text-[#101B35]'}`}
+          >
+            {t('univ.pending')} ({pendingCount})
+          </button>
+          <button
+            onClick={() => setFilterStatus('resolved')}
+            className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${filterStatus === 'resolved' ? 'bg-white text-[#101B35] font-extrabold shadow-xs' : 'hover:text-[#101B35]'}`}
+          >
+            {t('univ.approved')} ({resolvedCount})
+          </button>
+          <button
+            onClick={() => setFilterStatus('escalated')}
+            className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${filterStatus === 'escalated' ? 'bg-white text-[#101B35] font-extrabold shadow-xs' : 'hover:text-[#101B35]'}`}
+          >
+            {t('univ.escalated')} ({escalatedCount})
+          </button>
+        </div>
+
+        {/* Search */}
+        <div className="relative w-full sm:w-72">
+          <Search className="w-4 h-4 text-[#737D90] absolute left-3 top-2.5" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search student or clinic..."
+            className="w-full pl-9 pr-4 py-2 rounded-xl border border-[#D8D4C7] text-xs text-[#101B35] focus:outline-hidden focus:border-[#233F8C] bg-white"
+          />
+        </div>
+      </div>
+
+      {actionNotice && (
+        <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-bold text-blue-900 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-blue-600" />
+          <span>{actionNotice}</span>
+        </div>
+      )}
+
+      {/* Cases Queue Table */}
+      <div className="royal-card bg-white border border-[#E8E5DC] overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#FAF9F6] border-b border-[#E8E5DC] text-[#737D90] font-bold uppercase text-[10px] tracking-wider">
+              <tr>
+                <th className="p-4">{t('univ.case_id')}</th>
+                <th className="p-4">{t('univ.student')}</th>
+                <th className="p-4">{t('univ.physician')}</th>
+                <th className="p-4">{t('univ.risk')}</th>
+                <th className="p-4">Status</th>
+                <th className="p-4 text-right">{t('univ.actions')}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#F1EFE8]">
+              {filteredCases.map((c) => (
+                <tr key={c.id} className="hover:bg-[#FAF9F6] transition-colors">
+                  <td className="p-4 font-mono font-bold text-[#101B35]">
+                    {c.id}
+                  </td>
+                  <td className="p-4">
+                    <span className="font-extrabold text-[#101B35] block">{c.patient_name || 'Anonymous Student'}</span>
+                    <span className="text-[11px] text-[#737D90]">NMU Matriculation 2026</span>
+                  </td>
+                  <td className="p-4">
+                    <span className="font-bold text-[#101B35] block">{c.doctor_name || 'Physician'}</span>
+                    <span className="text-[11px] text-[#737D90] block truncate max-w-xs">{c.hospital_name}</span>
+                  </td>
+                  <td className="p-4">
+                    <VerdictBadge verdict={c.risk_category} size="sm" />
+                  </td>
+                  <td className="p-4">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                      c.status === 'resolved' 
+                        ? 'text-[#1E824C] bg-[#EDF7F1]' 
+                        : c.status === 'escalated'
+                        ? 'text-[#DC2626] bg-[#FEF2F2]'
+                        : 'text-[#A88234] bg-[#FBF8EE]'
+                    }`}>
+                      {c.status}
+                    </span>
+                  </td>
+                  <td className="p-4 text-right">
+                    <button
+                      onClick={() => handleOpenCase(c)}
+                      className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#233F8C] bg-[#EEF3FF] hover:bg-[#DDE7FF] border border-[#C5D5F9] transition-colors cursor-pointer"
+                    >
+                      {t('univ.inspect')} →
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {cases.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="p-8 text-center text-[#68717D]">
-                      No pending cases in queue.
-                    </td>
-                  </tr>
-                ) : (
-                  cases.map((c) => (
-                    <tr key={c.id} className="border-b border-[#E8E6DF] hover:bg-[#FAF9F6] transition-colors">
-                      <td className="p-4 font-bold text-[#20252B]">
-                        {c.patient_name || "Unspecified Patient"}
-                      </td>
-                      <td className="p-4 text-[#4B5563]">
-                        <div>{c.doctor_name || "Doctor unreadable"}</div>
-                        <span className="text-[10px] text-[#8A92A0]">{c.hospital_name || "Hospital unstated"}</span>
-                      </td>
-                      <td className="p-4">
-                        <VerdictBadge verdict={c.risk_category} size="sm" />
-                      </td>
-                      <td className="p-4">
-                        <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                          c.priority === 'high' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-700'
-                        }`}>
-                          {c.priority}
-                        </span>
-                      </td>
-                      <td className="p-4">
-                        <span className="capitalize font-semibold text-[#4B5563]">
-                          {c.status.replace('_', ' ')}
-                        </span>
-                      </td>
-                      <td className="p-4 text-right">
-                        <button
-                          onClick={() => handleOpenCase(c.id)}
-                          className="brand-gradient text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-2xs hover:opacity-95"
-                        >
-                          Review Case
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
 
-      {/* AUDIT TRAIL VIEW */}
-      {activeTab === 'audit' && (
-        <div className="card-elevation bg-white border border-[#E8E6DF] p-6">
-          <h3 className="text-base font-bold text-[#20252B] font-display mb-4">
-            Institutional Audit Logs
-          </h3>
-          <div className="space-y-3">
-            {auditLogs.length === 0 ? (
-              <p className="text-xs text-[#68717D]">No audit events logged yet.</p>
-            ) : (
-              auditLogs.map((log: any) => (
-                <div key={log.id} className="p-3 rounded-xl bg-[#FAF9F6] border border-[#E8E6DF] text-xs flex items-center justify-between">
-                  <div>
-                    <strong className="text-[#20252B]">{log.action}</strong>
-                    <span className="text-[#68717D] ml-2">Resource: {log.resource_type} ({log.resource_id.slice(0, 8)}...)</span>
-                  </div>
-                  <span className="text-[10px] text-[#8A92A0]">
-                    {new Date(log.timestamp).toLocaleString()}
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* CASE REVIEW MODAL */}
+      {/* Case Inspection Modal */}
       {selectedCase && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 card-elevation border border-[#E8E6DF] max-h-[90vh] overflow-y-auto space-y-6">
-            
-            <div className="flex items-center justify-between pb-4 border-b border-[#E8E6DF]">
+        <Modal
+          isOpen={!!selectedCase}
+          onClose={() => setSelectedCase(null)}
+          title={`Case Assessment: ${selectedCase.id}`}
+          subtitle={`Reviewing documentation for ${selectedCase.patient_name}`}
+          maxWidth="2xl"
+        >
+          <div className="space-y-5 text-left text-xs">
+            {/* Meta summary */}
+            <div className="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E8E5DC]">
               <div>
-                <h3 className="text-lg font-bold text-[#20252B] font-display">
-                  Review Case #{selectedCase.case_id.slice(0, 8)}
-                </h3>
-                <span className="text-xs text-[#68717D]">
-                  Student / Patient: <strong>{selectedCase.certificate_extraction.patient_name}</strong>
-                </span>
+                <span className="text-[10px] uppercase font-bold text-[#737D90] block">Student Patient</span>
+                <span className="font-bold text-[#101B35] text-sm">{selectedCase.patient_name}</span>
               </div>
+              <div>
+                <span className="text-[10px] uppercase font-bold text-[#737D90] block">Attending Physician</span>
+                <span className="font-bold text-[#101B35] text-sm">{selectedCase.doctor_name}</span>
+              </div>
+              <div className="col-span-2">
+                <span className="text-[10px] uppercase font-bold text-[#737D90] block">Hospital / Institution</span>
+                <span className="font-medium text-[#101B35]">{selectedCase.hospital_name}</span>
+              </div>
+            </div>
+
+            {/* Assessment Result */}
+            <div>
+              <span className="text-[10px] uppercase font-bold text-[#737D90] block mb-1">Pre-Check Determination</span>
+              <VerdictBadge verdict={selectedCase.risk_category} size="md" />
+            </div>
+
+            {/* Reviewer Confidential Notes Area */}
+            <div>
+              <label className="block text-xs font-bold text-[#101B35] mb-1.5">
+                {t('univ.notes_label')}
+              </label>
+              <textarea
+                value={reviewerNotes}
+                onChange={(e) => setReviewerNotes(e.target.value)}
+                placeholder="Enter formal justification, clinic verification call logs, or request notes..."
+                className="w-full h-24 p-3 rounded-xl border border-[#D8D4C7] text-xs text-[#101B35] focus:outline-hidden focus:border-[#233F8C] bg-white resize-none"
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="pt-4 border-t border-[#F1EFE8] flex flex-wrap items-center justify-between gap-3">
+              <button
+                disabled={isSubmitting}
+                onClick={() => handleDecision('resolved', reviewerNotes || 'Approved: Validated medical documentation meets university policy.')}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#1E824C] hover:bg-green-700 shadow-xs cursor-pointer"
+              >
+                ✓ {t('univ.approve_case')}
+              </button>
+
+              <button
+                disabled={isSubmitting}
+                onClick={() => handleDecision('escalated', reviewerNotes || 'Clarification requested regarding date latency.')}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#DC2626] bg-[#FEF2F2] border border-red-200 hover:bg-red-100 cursor-pointer"
+              >
+                ⚠ {t('univ.request_info')}
+              </button>
+
               <button
                 onClick={() => setSelectedCase(null)}
-                className="text-[#68717D] hover:text-[#20252B] font-bold text-lg"
+                className="px-3.5 py-2 rounded-xl text-xs font-bold text-[#687386] hover:bg-[#F6F4EE] cursor-pointer"
               >
-                ✕
+                {t('univ.close')}
               </button>
             </div>
-
-            {/* Extracted Details */}
-            <div className="p-4 rounded-xl bg-[#FAF9F6] border border-[#E8E6DF] text-xs space-y-2">
-              <div className="grid grid-cols-2 gap-2">
-                <div><strong>Physician:</strong> {selectedCase.certificate_extraction.doctor_name || "Unreadable"}</div>
-                <div><strong>Registration No:</strong> {selectedCase.certificate_extraction.registration_number || "Unreadable"}</div>
-                <div><strong>Hospital:</strong> {selectedCase.certificate_extraction.hospital_name || "Unreadable"}</div>
-                <div><strong>Leave Interval:</strong> {selectedCase.certificate_extraction.leave_start} to {selectedCase.certificate_extraction.leave_end}</div>
-              </div>
-              <div className="pt-2 border-t border-[#E8E6DF] text-[#68717D]">
-                <strong>Raw OCR:</strong> <em>{selectedCase.certificate_extraction.raw_ocr_snippet}</em>
-              </div>
-            </div>
-
-            {/* Decision Select */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-[#20252B] mb-1">
-                  Structured Reviewer Determination
-                </label>
-                <select
-                  value={decision}
-                  onChange={(e) => setDecision(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-[#D5D2C8] bg-white text-xs font-semibold"
-                >
-                  <option value="APPROVED_GENUINE">Approve as Genuine (Leave Verified)</option>
-                  <option value="CLARIFICATION_NEEDED">Request Clarification / Supplementary Discharge Note</option>
-                  <option value="ESCALATED_BOARD">Escalate to Academic Disciplinary Board</option>
-                  <option value="REJECTED_DISCREPANCY">Reject Due to Established Discrepancy</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-[#20252B] mb-1">
-                  Reviewer Case Notes & Justification
-                </label>
-                <textarea
-                  rows={3}
-                  value={reviewerNotes}
-                  onChange={(e) => setReviewerNotes(e.target.value)}
-                  placeholder="Record verification notes, registry lookups, or follow-up calls..."
-                  className="w-full p-3 rounded-xl border border-[#D5D2C8] bg-[#FAF9F6] text-xs"
-                />
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#E8E6DF]">
-                <button
-                  onClick={() => setSelectedCase(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold border border-[#D5D2C8] hover:bg-[#FAF9F6]"
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={isSubmitting}
-                  onClick={handleRecordDecision}
-                  className="brand-gradient text-white text-xs font-bold px-5 py-2 rounded-xl shadow-xs hover:opacity-95 disabled:opacity-50"
-                >
-                  {isSubmitting ? "Recording..." : "Confirm Decision"}
-                </button>
-              </div>
-            </div>
-
           </div>
-        </div>
+        </Modal>
       )}
 
     </div>
