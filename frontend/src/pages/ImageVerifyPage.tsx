@@ -190,10 +190,10 @@ export const ImageVerifyPage: React.FC = () => {
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-10 text-left">
       
       {/* Header Bar */}
-      <div className="space-y-2 border-b border-slate-200 pb-6">
+      <div className="space-y-2 border-b border-[#0B1B3D]/10 pb-6">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#DC052D]" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
             <span>AI Image Detection Engine</span>
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200">
@@ -201,10 +201,10 @@ export const ImageVerifyPage: React.FC = () => {
             <span>100% Free Forever</span>
           </span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+        <h1 className="text-3xl sm:text-4xl font-black text-[#0B1B3D] tracking-tight font-display">
           AI Image & Manipulation Detector
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#556987] max-w-3xl leading-relaxed">
           Screen customer-submitted photos, claims evidence, profile photos, and receipts. Detect AI-generated diffusion models, facial landmark splicing, and compression discrepancies in real time.
         </p>
       </div>
@@ -214,15 +214,15 @@ export const ImageVerifyPage: React.FC = () => {
         
         {/* Left Column: Upload Box & Test Cases */}
         <div className="lg:col-span-5 space-y-5">
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5">
+          <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-5">
             
             {/* Input Method Toggle */}
-            <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200">
+            <div className="flex rounded-xl bg-[#F0F4FA] p-1 border border-[#0B1B3D]/10">
               <button
                 type="button"
                 onClick={() => setInputTab('upload')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  inputTab === 'upload' ? 'bg-[#DC052D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
+                  inputTab === 'upload' ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-xs border border-[#C5A059]/40' : 'text-[#556987] hover:text-[#0B1B3D]'
                 }`}
               >
                 <Upload className="w-3.5 h-3.5" />
@@ -232,7 +232,7 @@ export const ImageVerifyPage: React.FC = () => {
                 type="button"
                 onClick={() => setInputTab('url')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  inputTab === 'url' ? 'bg-[#DC052D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
+                  inputTab === 'url' ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-xs border border-[#C5A059]/40' : 'text-[#556987] hover:text-[#0B1B3D]'
                 }`}
               >
                 <LinkIcon className="w-3.5 h-3.5" />
@@ -242,27 +242,27 @@ export const ImageVerifyPage: React.FC = () => {
 
             {/* Upload Zone */}
             {inputTab === 'upload' ? (
-              <label className="border-2 border-dashed border-slate-300 hover:border-[#DC052D] hover:bg-red-50/20 rounded-2xl p-7 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
+              <label className="border-2 border-dashed border-[#0B1B3D]/20 hover:border-[#C5A059] hover:bg-[#FAF6EE]/30 rounded-2xl p-7 flex flex-col items-center justify-center text-center cursor-pointer transition-all block">
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 text-[#DC052D] flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-xl bg-[#FAF6EE] border border-[#C5A059]/40 text-[#C5A059] flex items-center justify-center mb-3">
                   <Upload className="w-6 h-6" />
                 </div>
-                <span className="text-sm font-bold text-slate-900 block mb-1">
+                <span className="text-sm font-bold text-[#0B1B3D] block mb-1">
                   Upload an image to scan
                 </span>
-                <span className="text-xs text-slate-500 block max-w-xs">
+                <span className="text-xs text-[#64748B] block max-w-xs">
                   JPEG, PNG, or WebP up to 25MB. Instant multi-signal forensic decomposition.
                 </span>
               </label>
             ) : (
               <form onSubmit={handleUrlSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-[#0B1B3D] mb-1">
                     Remote Media URL
                   </label>
                   <input
@@ -271,29 +271,29 @@ export const ImageVerifyPage: React.FC = () => {
                     value={imageUrlInput}
                     onChange={(e) => setImageUrlInput(e.target.value)}
                     placeholder="https://example.com/photo-to-verify.jpg"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-hidden focus:border-[#DC052D] focus:ring-2 focus:ring-[#DC052D]/10 bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#0B1B3D]/20 text-xs text-[#0B1B3D] focus:outline-hidden focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/15 bg-white"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isAnalyzing}
-                  className="w-full bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
+                  className="w-full bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer active:scale-95"
                 >
                   Fetch & Verify Image
                 </button>
               </form>
             )}
 
-            {/* Instant Sample Selectors (TruthScan Style) */}
-            <div className="pt-4 border-t border-slate-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-900 block">
+            {/* Instant Sample Selectors */}
+            <div className="pt-4 border-t border-[#0B1B3D]/10 space-y-2.5">
+              <span className="text-xs font-bold text-[#0B1B3D] block">
                 Or test with verified forensic cases:
               </span>
               <div className="flex flex-col gap-1.5">
                 <button
                   type="button"
                   onClick={() => loadSample('deepfake')}
-                  className="w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold bg-red-50/80 border border-red-200 text-red-700 hover:bg-red-100/80 transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold bg-red-50/80 border border-red-200 text-red-800 hover:bg-red-100/80 transition-colors cursor-pointer"
                 >
                   <span>1. AI Synthetic Face (Diffusion Latent)</span>
                   <span className="text-[10px] uppercase font-bold bg-white px-2 py-0.5 rounded border border-red-200">Load Case →</span>
@@ -309,7 +309,7 @@ export const ImageVerifyPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => loadSample('compressed')}
-                  className="w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold bg-blue-50/80 border border-blue-200 text-blue-700 hover:bg-blue-100/80 transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold bg-blue-50/80 border border-blue-200 text-blue-800 hover:bg-blue-100/80 transition-colors cursor-pointer"
                 >
                   <span>3. Social Media Compressed (Abstention Zone)</span>
                   <span className="text-[10px] uppercase font-bold bg-white px-2 py-0.5 rounded border border-blue-200">Load Case →</span>
@@ -319,9 +319,9 @@ export const ImageVerifyPage: React.FC = () => {
 
             {/* Image Preview Container */}
             {previewUrl && (
-              <div className="pt-3 border-t border-slate-100">
-                <span className="text-xs font-bold text-slate-900 block mb-2">Ingested Media Target</span>
-                <div className="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-950 max-h-56 flex items-center justify-center">
+              <div className="pt-3 border-t border-[#0B1B3D]/10">
+                <span className="text-xs font-bold text-[#0B1B3D] block mb-2">Ingested Media Target</span>
+                <div className="relative rounded-xl overflow-hidden border border-[#0B1B3D]/15 bg-[#071530] max-h-56 flex items-center justify-center">
                   <img src={previewUrl} alt="Inspection Target" className="max-h-56 w-auto object-contain" />
                 </div>
               </div>
@@ -332,7 +332,7 @@ export const ImageVerifyPage: React.FC = () => {
         {/* Right Column: Forensic Results & Evidence */}
         <div className="lg:col-span-7 space-y-6">
           {isAnalyzing ? (
-            <div className="p-12 rounded-2xl bg-white border border-slate-200 flex flex-col items-center justify-center min-h-[420px] shadow-sm">
+            <div className="p-12 rounded-3xl bg-white border border-[#0B1B3D]/10 flex flex-col items-center justify-center min-h-[420px] shadow-sm">
               <ScanningLens 
                 statusText="Calculating multi-signal forensic decomposition..." 
                 subText="Scanning 2D FFT spectral lattices, 8x8 DCT compression error levels, and corneal light reflection geometry."
@@ -346,12 +346,12 @@ export const ImageVerifyPage: React.FC = () => {
               className="space-y-6"
             >
               
-              {/* Top Executive Assessment Header (TruthScan Style) */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6">
+              {/* Top Executive Assessment Header */}
+              <div className="p-6 sm:p-7 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-6">
                 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#0B1B3D]/10">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 block mb-1">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#64748B] block mb-1">
                       Forensic Verdict
                     </span>
                     <div className="flex items-center gap-3">
@@ -367,19 +367,19 @@ export const ImageVerifyPage: React.FC = () => {
                       showText={false}
                     />
                     <div className="text-left">
-                      <span className="text-xs font-bold text-slate-800 block">AI Probability</span>
-                      <span className="text-3xl font-black text-slate-900">
+                      <span className="text-xs font-bold text-[#0B1B3D] block">AI Probability</span>
+                      <span className="text-3xl font-black text-[#0B1B3D]">
                         {Math.round(result.confidence_score * 100)}%
                       </span>
-                      <span className="block text-[11px] font-semibold text-slate-500">
-                        Uncertainty: <strong className="text-slate-800">{result.uncertainty_level}</strong>
+                      <span className="block text-[11px] font-semibold text-[#64748B]">
+                        Uncertainty: <strong className="text-[#0B1B3D]">{result.uncertainty_level}</strong>
                       </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Plain-Language Forensic Finding */}
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 leading-relaxed font-medium">
+                <div className="p-4 rounded-xl bg-[#F0F4FA] border border-[#0B1B3D]/10 text-xs text-[#0B1B3D] leading-relaxed font-medium">
                   {result.summary_explanation}
                 </div>
 
@@ -388,20 +388,20 @@ export const ImageVerifyPage: React.FC = () => {
                   <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2.5">
                     <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
                     <span className="leading-relaxed">
-                      Abstention Zone Activated: Confidence falls within the 33%–67% uncertainty corridor due to re-compression. TruthLens abstains from declaring a false-positive binary verdict.
+                      Abstention Zone Activated: Confidence falls within the 33%–67% uncertainty corridor due to re-compression. Mahira abstains from declaring a false-positive binary verdict.
                     </span>
                   </div>
                 )}
 
                 {/* Hash & Verification Speed */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs pt-1">
-                  <div className="flex items-center gap-2 font-mono text-slate-500 text-[11px] truncate max-w-sm">
-                    <Hash className="w-3.5 h-3.5 text-[#DC052D] shrink-0" />
+                  <div className="flex items-center gap-2 font-mono text-[#556987] text-[11px] truncate max-w-sm">
+                    <Hash className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
                     <span className="truncate">{result.file_hash_sha256}</span>
                   </div>
                   <button
                     onClick={copyHashToClipboard}
-                    className="flex items-center gap-1.5 text-[11px] font-bold text-[#DC052D] bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg border border-red-200 w-fit cursor-pointer transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] font-bold text-[#0B1B3D] bg-[#FAF6EE] hover:bg-[#F2ECE0] px-3 py-1.5 rounded-lg border border-[#C5A059]/40 w-fit cursor-pointer transition-colors"
                   >
                     {hashCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{hashCopied ? 'Hash Copied!' : 'Copy SHA-256 Digest'}</span>
@@ -409,17 +409,17 @@ export const ImageVerifyPage: React.FC = () => {
                 </div>
 
                 {/* Action CTAs */}
-                <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#0B1B3D]/10 flex flex-wrap items-center justify-between gap-3">
                   <Link
                     to={`/dashboard/reports/${result.job_id}`}
                     state={{ reportData: result }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
+                    className="flex items-center gap-2 bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer active:scale-95"
                   >
-                    <Share2 className="w-3.5 h-3.5" />
+                    <Share2 className="w-3.5 h-3.5 text-[#C5A059]" />
                     <span>Download Tamper-Evident Report</span>
                   </Link>
 
-                  <span className="text-[11px] text-slate-500 font-medium">
+                  <span className="text-[11px] text-[#64748B] font-medium">
                     Analysis completed in {result.execution_time_ms}ms
                   </span>
                 </div>
@@ -427,12 +427,12 @@ export const ImageVerifyPage: React.FC = () => {
               </div>
 
               {/* View Switcher: Evidence Breakdown vs Heatmap Overlay */}
-              <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200">
+              <div className="flex items-center gap-2 bg-[#F0F4FA] p-1 rounded-xl border border-[#0B1B3D]/10">
                 <button
                   type="button"
                   onClick={() => setActiveTab('overview')}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeTab === 'overview' ? 'bg-[#001F4D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
+                    activeTab === 'overview' ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-xs border border-[#C5A059]/40' : 'text-[#556987] hover:text-[#0B1B3D]'
                   }`}
                 >
                   Forensic Signals Matrix
@@ -441,7 +441,7 @@ export const ImageVerifyPage: React.FC = () => {
                   type="button"
                   onClick={() => setActiveTab('heatmap')}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeTab === 'heatmap' ? 'bg-[#001F4D] text-white shadow-xs' : 'text-slate-600 hover:text-[#DC052D]'
+                    activeTab === 'heatmap' ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-xs border border-[#C5A059]/40' : 'text-[#556987] hover:text-[#0B1B3D]'
                   }`}
                 >
                   Region Saliency & Heatmap View
@@ -450,8 +450,8 @@ export const ImageVerifyPage: React.FC = () => {
 
               {/* Tab 1: Multi-Signal Forensic Evidence Breakdown */}
               {activeTab === 'overview' ? (
-                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-                  <h3 className="text-base font-bold text-slate-900 font-sans">
+                <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-[#0B1B3D] font-display">
                     Multi-Domain Evidence Breakdown
                   </h3>
 
@@ -462,11 +462,11 @@ export const ImageVerifyPage: React.FC = () => {
                       return (
                         <div 
                           key={item.id} 
-                          className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 flex flex-col gap-2 hover:border-slate-300 transition-all"
+                          className="p-4 rounded-xl border border-[#0B1B3D]/10 bg-[#FAFBFD] flex flex-col gap-2 hover:border-[#C5A059]/40 transition-all"
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-900">{item.signal_name}</span>
-                            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${
+                            <span className="text-xs font-bold text-[#0B1B3D]">{item.signal_name}</span>
+                            <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                               isFakeIndicator 
                                 ? 'text-red-700 bg-red-50 border-red-200' 
                                 : isRealIndicator 
@@ -476,7 +476,7 @@ export const ImageVerifyPage: React.FC = () => {
                               {isFakeIndicator ? 'Synthetic Anomaly' : isRealIndicator ? 'Coherent Optical Baseline' : 'Inconclusive Compression'}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-600 leading-relaxed">
+                          <p className="text-xs text-[#556987] leading-relaxed">
                             {item.description}
                           </p>
                         </div>
@@ -496,14 +496,14 @@ export const ImageVerifyPage: React.FC = () => {
             </motion.div>
           ) : (
             /* Empty State */
-            <div className="p-12 rounded-2xl bg-white border border-slate-200 flex flex-col items-center justify-center text-center min-h-[360px] space-y-3 shadow-sm">
-              <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-200 text-[#DC052D] flex items-center justify-center">
+            <div className="p-12 rounded-3xl bg-white border border-[#0B1B3D]/10 flex flex-col items-center justify-center text-center min-h-[360px] space-y-3 shadow-sm">
+              <div className="w-14 h-14 rounded-2xl bg-[#FAF6EE] border border-[#C5A059]/40 text-[#C5A059] flex items-center justify-center">
                 <Scan className="w-7 h-7" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">
+              <h3 className="text-base font-bold text-[#0B1B3D]">
                 Forensic Canvas Ready for Ingestion
               </h3>
-              <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
+              <p className="text-xs text-[#64748B] max-w-sm leading-relaxed">
                 Upload a JPEG, PNG, or WebP image, enter a remote image URL, or click any verified sample on the left to inspect multi-signal forensic breakdown.
               </p>
             </div>

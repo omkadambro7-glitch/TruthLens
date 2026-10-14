@@ -43,27 +43,27 @@ const CONSOLE_CASES: ConsoleCase[] = [
     id: 'image',
     engineName: 'AI Image ELA',
     icon: Eye,
-    title: 'Synthetic Profile Portrait (Diffusion v6)',
+    title: 'Synthetic Profile Portrait (Diffusion Latent v6)',
     badge: 'SPECTRAL ELA',
     verdict: 'AI SYNTHETIC / TAMPERED',
     isFake: true,
     score: 96.8,
-    timeSec: 1.1,
-    primarySignal: 'Transposed Convolution Latent Artifacts Detected',
-    secondarySignal: 'Corneal Pupil Reflection Asymmetry in Vector Grid',
+    timeSec: 0.8,
+    primarySignal: 'Transposed Convolution Latent Grid Artifacts Detected',
+    secondarySignal: 'Corneal Pupil Reflection Asymmetry in 2D Spectral Space',
     link: '/verify/image',
     type: 'image'
   },
   {
     id: 'video',
-    engineName: 'Deepfake Radar',
+    engineName: 'Deepfake Video',
     icon: Video,
-    title: 'Politician Live Face-Swap (GAN Overlay)',
+    title: 'Politician Live Face-Swap (GAN Overlay & Warping)',
     badge: 'BIOMETRIC GLITCH',
     verdict: 'BIOMETRIC GLITCH',
     isFake: true,
     score: 95.4,
-    timeSec: 1.4,
+    timeSec: 1.2,
     primarySignal: 'Unnatural 0 Blink Frequency across 18s window',
     secondarySignal: 'Jawline boundary micro-shear jitter at 30.0 fps',
     link: '/verify/video',
@@ -71,15 +71,15 @@ const CONSOLE_CASES: ConsoleCase[] = [
   },
   {
     id: 'voice',
-    engineName: 'Voice Clone',
+    engineName: 'AI Voice Clone',
     icon: Mic,
-    title: 'Executive Wire Transfer Voice Note',
+    title: 'Executive Wire Transfer Voice Note (ElevenLabs TTS)',
     badge: 'ACOUSTIC SYNTH',
     verdict: 'AI SYNTHETIC / TAMPERED',
     isFake: true,
     score: 97.6,
-    timeSec: 0.8,
-    primarySignal: 'Sharp Harmonic Truncation above 16,000Hz (TTS)',
+    timeSec: 0.6,
+    primarySignal: 'Sharp Harmonic Truncation above 16,000Hz (TTS Vocoder)',
     secondarySignal: 'Zero micro-aspiration breath pauses in vocal tract',
     link: '/verify/voice',
     type: 'voice'
@@ -88,12 +88,12 @@ const CONSOLE_CASES: ConsoleCase[] = [
     id: 'invoice',
     engineName: 'Invoice Tamper',
     icon: Receipt,
-    title: 'Uber Enterprise Expense Receipt',
+    title: 'Uber Enterprise Expense Receipt ($184.20 Injected)',
     badge: 'MATH DISCREPANCY',
     verdict: 'AI SYNTHETIC / TAMPERED',
     isFake: true,
     score: 98.2,
-    timeSec: 0.6,
+    timeSec: 0.5,
     primarySignal: 'Total artificially inflated by +$184.20 in Photoshop',
     secondarySignal: 'Digit "2" baseline font kerning mismatch of 3.2px',
     link: '/verify/invoice',
@@ -117,28 +117,28 @@ export const HeroScannerWidget: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-xl lg:max-w-none mx-auto select-none">
-      {/* Outer Studio Frame with Blaugrana Glass Border */}
-      <div className="relative rounded-3xl bg-[#090F22]/90 backdrop-blur-2xl border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300">
+    <div className="w-full max-w-2xl lg:max-w-none mx-auto select-none">
+      {/* Outer Studio Frame with Navy Glass & Royal Gold Reticles */}
+      <div className="relative rounded-3xl bg-[#071530] text-white border border-[#C5A059]/40 shadow-[0_25px_80px_rgba(11,27,61,0.35)] overflow-hidden transition-all duration-300">
         
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-r from-[#004D98]/20 via-[#A50044]/25 to-transparent pointer-events-none" />
+        {/* Subtle Ambient Gold & Navy Sheen */}
+        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#C5A059]/10 via-[#0B1B3D]/20 to-transparent pointer-events-none" />
 
         {/* Top Studio Header with macOS Window Pips & Live Radar Indicator */}
-        <div className="flex items-center justify-between border-b border-white/10 bg-[#060A16]/80 px-4 py-3 text-xs">
+        <div className="flex items-center justify-between border-b border-[#C5A059]/20 bg-[#050E22]/90 px-4 py-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-            <span className="font-mono text-[10px] text-slate-400 font-bold ml-2 hidden sm:inline">
-              TRUTHLENS SENSOR STATION • ACTIVE
+            <span className="w-3 h-3 rounded-full bg-[#C5A059]/80 inline-block shadow-[0_0_8px_#C5A059]" />
+            <span className="w-3 h-3 rounded-full bg-white/30 inline-block" />
+            <span className="w-3 h-3 rounded-full bg-white/20 inline-block" />
+            <span className="font-mono text-[10px] text-[#C5A059] font-bold ml-2 hidden sm:inline tracking-wider">
+              MAHIRA FORENSIC COCKPIT • ACTIVE v2.6
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest">
-              ONLINE
+            <span className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
+            <span className="text-[10px] font-mono font-bold text-[#C5A059] uppercase tracking-widest">
+              ONLINE • ZERO-PAYWALL
             </span>
           </div>
         </div>
@@ -153,10 +153,10 @@ export const HeroScannerWidget: React.FC = () => {
                 key={item.id}
                 type="button"
                 onClick={() => handleTabChange(idx)}
-                className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`flex-1 min-w-[110px] flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   active
-                    ? 'bg-gradient-to-r from-[#A50044] to-[#004D98] text-white shadow-md border border-white/20'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#C5A059] text-[#071530] font-black shadow-md border border-[#F2D06B]'
+                    : 'text-slate-300 hover:text-white hover:bg-white/8'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -169,27 +169,27 @@ export const HeroScannerWidget: React.FC = () => {
         {/* Interactive Ingestion Canvas & Visualizer */}
         <div className="p-5 sm:p-6 space-y-5">
           
-          <div className="relative rounded-2xl overflow-hidden bg-[#040813] border border-white/10 aspect-[16/10] flex flex-col justify-between p-4 shadow-inner">
+          <div className="relative rounded-2xl overflow-hidden bg-[#030914] border border-[#C5A059]/25 aspect-[16/10] flex flex-col justify-between p-4 shadow-inner">
             
             {/* Real-time Forensic Laser Scanner Line */}
             {isScanning && (
-              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF4D6D] to-transparent shadow-[0_0_20px_#FF4D6D] animate-laser z-30 pointer-events-none" />
+              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent shadow-[0_0_20px_#C5A059] animate-laser z-30 pointer-events-none" />
             )}
 
-            {/* Corner Targeting Reticles */}
-            <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#EDBB00] pointer-events-none z-20" />
-            <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#EDBB00] pointer-events-none z-20" />
-            <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#EDBB00] pointer-events-none z-20" />
-            <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#EDBB00] pointer-events-none z-20" />
+            {/* Bleach Corner Targeting Reticles */}
+            <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#C5A059] pointer-events-none z-20" />
+            <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#C5A059] pointer-events-none z-20" />
+            <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#C5A059] pointer-events-none z-20" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#C5A059] pointer-events-none z-20" />
 
             {/* Top Canvas Tag */}
             <div className="flex items-center justify-between text-xs z-20">
-              <span className="flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                <span className="w-2 h-2 rounded-full bg-[#A50044] animate-ping" />
+              <span className="flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#C5A059]/30">
+                <span className="w-2 h-2 rounded-full bg-[#C5A059] animate-ping" />
                 <span>{currentCase.badge}</span>
               </span>
 
-              <span className="font-mono text-[10px] text-[#EDBB00] bg-black/60 px-2.5 py-1 rounded-md border border-white/10">
+              <span className="font-mono text-[10px] text-[#C5A059] bg-black/70 px-2.5 py-1 rounded-md border border-[#C5A059]/30">
                 LATENCY: {currentCase.timeSec}s
               </span>
             </div>
@@ -200,13 +200,13 @@ export const HeroScannerWidget: React.FC = () => {
               {currentCase.type === 'image' && (
                 <div className="relative p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-2 max-w-sm">
                   <div className="flex items-center justify-center gap-3">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#A50044] to-[#004D98] flex items-center justify-center text-white shadow-lg">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#0B1B3D] to-[#1E3A8A] border border-[#C5A059]/50 flex items-center justify-center text-[#C5A059] shadow-lg">
                       <Eye className="w-8 h-8" />
                     </div>
                     <div className="text-left">
                       <span className="text-xs font-bold text-white block">Diffusion Latent Grid</span>
-                      <span className="text-[10px] font-mono text-red-300">8x8 DCT Spectral Residual High</span>
-                      <span className="text-[10px] font-mono text-slate-400 block">Corneal Specular Glint Vector Error</span>
+                      <span className="text-[10px] font-mono text-[#F87171]">8x8 DCT Spectral Residual Spike</span>
+                      <span className="text-[10px] font-mono text-[#C5A059] block">Pupil Specular Vector Mismatch</span>
                     </div>
                   </div>
                 </div>
@@ -214,14 +214,14 @@ export const HeroScannerWidget: React.FC = () => {
 
               {currentCase.type === 'video' && (
                 <div className="relative p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-2 max-w-sm">
-                  <div className="w-20 h-20 rounded-full border-2 border-dashed border-[#A50044] flex items-center justify-center relative mx-auto">
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 absolute top-5 left-5 shadow-sm" />
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 absolute top-5 right-5 shadow-sm" />
-                    <div className="w-5 h-1.5 rounded-full bg-[#EDBB00] absolute bottom-5" />
+                  <div className="w-20 h-20 rounded-full border-2 border-dashed border-[#C5A059] flex items-center justify-center relative mx-auto">
+                    <div className="w-2 h-2 rounded-full bg-[#C5A059] absolute top-5 left-5 shadow-sm" />
+                    <div className="w-2 h-2 rounded-full bg-[#C5A059] absolute top-5 right-5 shadow-sm" />
+                    <div className="w-5 h-1.5 rounded-full bg-cyan-400 absolute bottom-5" />
                     <span className="text-[9px] font-mono font-bold text-white uppercase">FRAME 180</span>
                   </div>
-                  <span className="text-[11px] font-mono text-red-300 font-bold block">
-                    Facial Boundary Mask Glitch Detected
+                  <span className="text-[11px] font-mono text-[#F87171] font-bold block">
+                    Facial Mask Boundary Shear Detected
                   </span>
                 </div>
               )}
@@ -229,11 +229,11 @@ export const HeroScannerWidget: React.FC = () => {
               {currentCase.type === 'voice' && (
                 <div className="w-full max-w-sm p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-3">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-white">Audio Waveform (44.1 kHz)</span>
+                    <span className="font-bold text-white">Acoustic FFT Waveform (44.1 kHz)</span>
                     <button
                       type="button"
                       onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-                      className="px-2.5 py-1 bg-[#A50044] hover:bg-[#C70039] text-white rounded-lg flex items-center gap-1 font-mono text-[10px]"
+                      className="px-2.5 py-1 bg-[#C5A059] hover:bg-[#D4AF37] text-[#071530] rounded-lg flex items-center gap-1 font-mono text-[10px] font-bold cursor-pointer"
                     >
                       {isPlayingAudio ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
                       <span>{isPlayingAudio ? 'PAUSE' : 'PLAY'}</span>
@@ -244,14 +244,14 @@ export const HeroScannerWidget: React.FC = () => {
                       <div
                         key={i}
                         className={`flex-1 rounded-full transition-all duration-150 ${
-                          i > 18 ? 'bg-slate-700/60' : 'bg-gradient-to-t from-[#A50044] to-[#004D98]'
+                          i > 18 ? 'bg-slate-700/60' : 'bg-gradient-to-t from-[#0B1B3D] to-[#C5A059]'
                         }`}
                         style={{ height: isPlayingAudio ? `${Math.max(20, (h * (i % 3 + 1)) % 100)}%` : `${h * 0.7}%` }}
                       />
                     ))}
                   </div>
-                  <span className="text-[10px] font-mono text-red-300 block">
-                    ⚠️ Truncation at 16,000Hz indicative of neural TTS vocoder
+                  <span className="text-[10px] font-mono text-[#F87171] block">
+                    ⚠️ Truncation at 16,000Hz confirms neural TTS model
                   </span>
                 </div>
               )}
@@ -259,15 +259,15 @@ export const HeroScannerWidget: React.FC = () => {
               {currentCase.type === 'invoice' && (
                 <div className="relative p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-2 max-w-sm text-left">
                   <div className="flex items-center justify-between text-xs pb-1 border-b border-white/10">
-                    <span className="text-slate-400">Claimed Reimbursement:</span>
+                    <span className="text-slate-400">Claimed Total:</span>
                     <span className="font-mono font-bold text-white">$248.50</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400">Reconciled Math Sum:</span>
+                    <span className="text-slate-400">Calculated Mathematical Sum:</span>
                     <span className="font-mono font-bold text-emerald-400">$64.30</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs pt-1 border-t border-white/10 text-red-400 font-bold font-mono">
-                    <span>Variance:</span>
+                  <div className="flex items-center justify-between text-xs pt-1 border-t border-white/10 text-[#F87171] font-bold font-mono">
+                    <span>Audit Variance:</span>
                     <span>+$184.20 (Photoshop Altered)</span>
                   </div>
                 </div>
@@ -276,33 +276,33 @@ export const HeroScannerWidget: React.FC = () => {
             </div>
 
             {/* Bottom Status Banner */}
-            <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 z-20 pt-2 border-t border-white/10 bg-black/40 -mx-4 -mb-4 px-4 py-2">
-              <span className="truncate max-w-[240px] text-slate-400">{currentCase.title}</span>
-              <span className="text-emerald-400 font-bold">ACCURACY 97.4%</span>
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 z-20 pt-2 border-t border-white/10 bg-black/50 -mx-4 -mb-4 px-4 py-2">
+              <span className="truncate max-w-[240px] text-slate-300">{currentCase.title}</span>
+              <span className="text-[#C5A059] font-bold">ACCURACY 97.4%</span>
             </div>
 
           </div>
 
           {/* Signals Breakdown & Confidence Bar */}
-          <div className="p-4 rounded-2xl bg-white/4 border border-white/10 space-y-3 text-left">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3 text-left">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono uppercase text-slate-400 block">VERDICT CONFIDENCE</span>
+                <span className="text-[10px] font-mono uppercase text-[#C5A059] block">VERDICT CONFIDENCE</span>
                 <span className="text-sm font-black text-white font-mono">{currentCase.score}% PROBABILITY</span>
               </div>
 
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-[#A50044] to-[#70002E] text-white border border-[#A50044]/50 shadow-sm">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-[#C5A059] text-[#071530] border border-[#F2D06B] shadow-sm">
                 {currentCase.verdict}
               </span>
             </div>
 
             <div className="space-y-1.5 text-xs">
-              <div className="flex items-start gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#EDBB00] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 text-slate-200">
+                <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
                 <span className="leading-snug">{currentCase.primarySignal}</span>
               </div>
-              <div className="flex items-start gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#004D98] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 text-slate-200">
+                <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
                 <span className="leading-snug">{currentCase.secondarySignal}</span>
               </div>
             </div>
@@ -311,10 +311,10 @@ export const HeroScannerWidget: React.FC = () => {
             <div className="pt-2">
               <Link
                 to={currentCase.link}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-[#A50044] via-[#70002E] to-[#004D98] hover:from-[#C70039] hover:to-[#0066B2] text-white text-xs font-bold shadow-md hover:shadow-lg transition-all"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-[#0B1B3D] via-[#142A5C] to-[#0B1B3D] hover:from-[#142A5C] hover:to-[#1E3A8A] text-[#FAFBFD] border border-[#C5A059]/50 text-xs font-bold shadow-md hover:shadow-lg transition-all"
               >
                 <span>Open Dedicated {currentCase.engineName}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 text-[#C5A059]" />
               </Link>
             </div>
           </div>

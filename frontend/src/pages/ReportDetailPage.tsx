@@ -234,7 +234,7 @@ export const ReportDetailPage: React.FC = () => {
 
         {/* Legal Disclaimer */}
         <div className="bg-[#FAF9F6] p-4 rounded-xl border border-[#E8E5DC] text-[10px] text-[#737D90] leading-relaxed">
-          <strong>Mandatory Disclosure:</strong> This document represents computational forensic signals evaluated by TruthLens. It communicates probabilistic evidence and does not constitute automated disciplinary determinations. All consequential outcomes require authorized human review.
+          <strong>Mandatory Disclosure:</strong> This document represents computational forensic signals evaluated by Mahira. It communicates probabilistic evidence and does not constitute automated disciplinary determinations. All consequential outcomes require authorized human review.
         </div>
 
       </div>

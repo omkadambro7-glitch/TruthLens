@@ -27,17 +27,17 @@ import { AboutPage, PrivacyPage, TermsPage, AccessibilityPage } from './pages/Po
 
 const PageFallback: React.FC = () => (
   <div className="max-w-md mx-auto py-24 px-4 text-center space-y-3">
-    <div className="w-8 h-8 border-3 border-[#A50044] border-t-transparent rounded-full animate-spin mx-auto" />
-    <span className="text-xs text-slate-400 font-bold block">Loading TruthLens interface...</span>
+    <div className="w-8 h-8 border-3 border-[#C5A059] border-t-transparent rounded-full animate-spin mx-auto" />
+    <span className="text-xs text-[#556987] font-bold block">Loading Mahira interface...</span>
   </div>
 );
 
 const NotFoundPage: React.FC = () => (
   <div className="max-w-md mx-auto py-24 px-4 text-center space-y-4">
-    <h1 className="text-5xl font-black text-white font-display">404</h1>
-    <h2 className="text-xl font-bold text-white">Page Not Found</h2>
-    <p className="text-xs text-slate-400">The verification artifact or page you are looking for does not exist.</p>
-    <Link to="/" className="inline-block mt-4 text-xs font-bold text-white bg-gradient-to-r from-[#A50044] to-[#004D98] px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+    <h1 className="text-5xl font-black text-[#0B1B3D] font-display">404</h1>
+    <h2 className="text-xl font-bold text-[#0B1B3D]">Page Not Found</h2>
+    <p className="text-xs text-[#556987]">The verification artifact or page you are looking for does not exist.</p>
+    <Link to="/" className="inline-block mt-4 text-xs font-bold text-[#FAFBFD] bg-[#0B1B3D] hover:bg-[#142A5C] px-6 py-3 rounded-full shadow-lg border border-[#C5A059]/40 transition-all">
       Return to Scanner
     </Link>
   </div>
@@ -47,7 +47,7 @@ function AppContent() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#060B18] text-[#F8FAFC]">
+    <div className="min-h-screen flex flex-col bg-[#FAFBFD] text-[#0B1B3D]">
       {/* Top Glass Navbar with drawer trigger and quick links */}
       <Navbar onToggleDrawer={() => setDrawerOpen(true)} />
 
@@ -57,7 +57,7 @@ function AppContent() {
         onClose={() => setDrawerOpen(false)}
       />
 
-      {/* Main Workspace: 100% full-width, immersive, cinematic */}
+      {/* Main Workspace: 100% full-width, luminous, editorial */}
       <main className="flex-1 overflow-x-hidden min-w-0 pb-16">
         <Suspense fallback={<PageFallback />}>
           <Routes>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { TruthLensLogo } from '../components/brand/Logo';
+import { MahiraIcon } from '../components/brand/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Lock, Mail, AlertCircle, Sparkles, GraduationCap, ShieldCheck, UserCheck } from 'lucide-react';
@@ -58,16 +58,16 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto py-16 px-4 w-full flex flex-col gap-6 text-left">
       <div className="text-center flex flex-col items-center gap-2">
-        <TruthLensLogo variant="icon" size={52} />
-        <h1 className="text-3xl font-extrabold text-[#101B35] font-serif-display tracking-tight">
+        <MahiraIcon size={48} />
+        <h1 className="text-3xl font-black text-[#0B1B3D] font-display tracking-tight">
           {t('auth.signin_title')}
         </h1>
-        <p className="text-xs text-[#687386] max-w-xs">
-          {t('auth.signin_sub')}
+        <p className="text-xs text-[#556987] max-w-xs">
+          Access the Mahira forensic intelligence desk & review records
         </p>
       </div>
 
-      <div className="royal-card p-6 sm:p-8 bg-white border border-[#E8E5DC] space-y-5">
+      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#0B1B3D]/15 shadow-xl space-y-5">
         {errorMsg && (
           <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -77,35 +77,35 @@ export const LoginPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-[#101B35] mb-1.5">
+            <label className="block text-xs font-bold text-[#0B1B3D] mb-1.5">
               {t('auth.email')}
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-[#737D90] absolute left-3.5 top-3.5" />
+              <Mail className="w-4 h-4 text-[#64748B] absolute left-3.5 top-3.5" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@university.edu"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D8D4C7] text-xs text-[#101B35] focus:outline-hidden focus:border-[#233F8C] focus:ring-2 focus:ring-[#233F8C]/10 bg-white"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#0B1B3D]/20 text-xs text-[#0B1B3D] focus:outline-hidden focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 bg-white"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#101B35] mb-1.5">
+            <label className="block text-xs font-bold text-[#0B1B3D] mb-1.5">
               {t('auth.password')}
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#737D90] absolute left-3.5 top-3.5" />
+              <Lock className="w-4 h-4 text-[#64748B] absolute left-3.5 top-3.5" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D8D4C7] text-xs text-[#101B35] focus:outline-hidden focus:border-[#233F8C] focus:ring-2 focus:ring-[#233F8C]/10 bg-white"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#0B1B3D]/20 text-xs text-[#0B1B3D] focus:outline-hidden focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 bg-white"
               />
             </div>
           </div>
@@ -113,33 +113,33 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#101B35] to-[#233F8C] text-white font-bold text-xs py-3 rounded-xl shadow-xs hover:shadow-md hover:border-[#C6A45C] border border-transparent disabled:opacity-50 transition-all cursor-pointer"
+            className="w-full bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] font-bold text-xs py-3 rounded-xl shadow-md border border-[#C5A059]/50 disabled:opacity-50 transition-all cursor-pointer active:scale-95"
           >
             {loading ? t('auth.signing_in') : t('auth.signin_btn')}
           </button>
         </form>
 
         {/* 1-Click Instant Demo Experience */}
-        <div className="pt-5 border-t border-[#F1EFE8] text-center space-y-3">
-          <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#101B35]">
-            <Sparkles className="w-3.5 h-3.5 text-[#C6A45C]" />
-            <span>{t('auth.or_demo')}</span>
+        <div className="pt-5 border-t border-[#0B1B3D]/10 text-center space-y-3">
+          <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#0B1B3D]">
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+            <span>Instant Demo Session</span>
           </div>
 
           <div className="flex flex-col gap-2">
             <button
               type="button"
               onClick={() => handleInstantDemo('reviewer')}
-              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#101B35] bg-[#FBF8EE] border border-[#E6D5A2] px-3.5 py-2.5 rounded-xl hover:bg-[#F5EFD7] transition-all cursor-pointer"
+              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 px-3.5 py-2.5 rounded-xl hover:bg-[#F2ECE0] transition-all cursor-pointer active:scale-98"
             >
               <div className="flex items-center gap-2">
-                <GraduationCap className="w-4 h-4 text-[#C6A45C]" />
+                <GraduationCap className="w-4 h-4 text-[#C5A059]" />
                 <div>
-                  <div className="font-extrabold text-[11px] text-[#101B35]">Dr. Eleanor Vance (Reviewer)</div>
-                  <div className="text-[10px] text-[#737D90] font-medium">National Metropolitan University</div>
+                  <div className="font-bold text-[11px] text-[#0B1B3D]">Dr. Eleanor Vance (Reviewer)</div>
+                  <div className="text-[10px] text-[#64748B] font-medium">National Metropolitan University</div>
                 </div>
               </div>
-              <span className="text-[10px] uppercase font-extrabold text-[#A88234] bg-white px-2 py-0.5 rounded-md border border-[#E6D5A2]">
+              <span className="text-[10px] uppercase font-bold text-[#9A7B38] bg-white px-2 py-0.5 rounded-md border border-[#C5A059]/30">
                 Open Queue →
               </span>
             </button>
@@ -147,16 +147,16 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleInstantDemo('student')}
-              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#101B35] bg-[#EEF3FF] border border-[#C5D5F9] px-3.5 py-2.5 rounded-xl hover:bg-[#DDE7FF] transition-all cursor-pointer"
+              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#0B1B3D] bg-[#F0F4FA] border border-[#0B1B3D]/15 px-3.5 py-2.5 rounded-xl hover:bg-[#E2E8F0] transition-all cursor-pointer active:scale-98"
             >
               <div className="flex items-center gap-2">
-                <UserCheck className="w-4 h-4 text-[#233F8C]" />
+                <UserCheck className="w-4 h-4 text-[#0B1B3D]" />
                 <div>
-                  <div className="font-extrabold text-[11px] text-[#101B35]">Karan Malhotra (Student)</div>
-                  <div className="text-[10px] text-[#737D90] font-medium">Self-Check & Submissions</div>
+                  <div className="font-bold text-[11px] text-[#0B1B3D]">Karan Malhotra (Student)</div>
+                  <div className="text-[10px] text-[#64748B] font-medium">Self-Check & Submissions</div>
                 </div>
               </div>
-              <span className="text-[10px] uppercase font-extrabold text-[#233F8C] bg-white px-2 py-0.5 rounded-md border border-[#C5D5F9]">
+              <span className="text-[10px] uppercase font-bold text-[#0B1B3D] bg-white px-2 py-0.5 rounded-md border border-[#0B1B3D]/15">
                 Verify Cert →
               </span>
             </button>
@@ -164,21 +164,21 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleInstantDemo('individual')}
-              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#101B35] bg-white border border-[#E8E5DC] px-3.5 py-2 rounded-xl hover:bg-[#F6F4EE] transition-all cursor-pointer"
+              className="w-full flex items-center justify-between text-left text-xs font-bold text-[#0B1B3D] bg-white border border-[#0B1B3D]/10 px-3.5 py-2 rounded-xl hover:bg-[#F0F4FA] transition-all cursor-pointer active:scale-98"
             >
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#1E824C]" />
-                <span className="text-[11px] font-semibold text-[#687386]">Aarav Sharma (Investigator)</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span className="text-[11px] font-semibold text-[#556987]">Aarav Sharma (Investigator)</span>
               </div>
-              <span className="text-[10px] font-bold text-[#687386]">Check Media →</span>
+              <span className="text-[10px] font-bold text-[#556987]">Check Media →</span>
             </button>
           </div>
         </div>
       </div>
 
-      <p className="text-center text-xs text-[#687386]">
+      <p className="text-center text-xs text-[#556987]">
         {t('auth.no_account')}{' '}
-        <Link to="/register" className="font-bold text-[#233F8C] hover:underline">
+        <Link to="/register" className="font-bold text-[#0B1B3D] hover:text-[#C5A059] underline">
           {t('auth.register_btn')}
         </Link>
       </p>

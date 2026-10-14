@@ -41,8 +41,8 @@ const TEXT_SAMPLES: Record<string, TextSampleCase> = {
     verdict: 'HIGHLY LIKELY AI GENERATED',
     isAi: true,
     score: 94.6,
-    perplexity: 18.2, // Low perplexity = very predictable LLM text
-    burstiness: 0.14, // Low burstiness = flat robotic sentence lengths
+    perplexity: 18.2,
+    burstiness: 0.14,
     repeatedPhrasingCount: 5,
     sentences: [
       { text: 'Furthermore, it is crucial to recognize that central banks navigate an intricate balancing act between price stability and economic growth.', isAi: true, prob: 96, reason: 'Stereotypical transition phrase + low entropy token sequence' },
@@ -59,8 +59,8 @@ const TEXT_SAMPLES: Record<string, TextSampleCase> = {
     verdict: 'HUMAN AUTHORED',
     isAi: false,
     score: 98.2,
-    perplexity: 84.6, // High perplexity = organic unpredictable human speech
-    burstiness: 0.72, // High burstiness = dynamic varied sentence structures
+    perplexity: 84.6,
+    burstiness: 0.72,
     repeatedPhrasingCount: 0,
     sentences: [
       { text: 'Honestly, my first week at the emergency clinic was pretty terrifying.', isAi: false, prob: 4, reason: 'Spontaneous conversational opening with authentic emotional vulnerability' },
@@ -125,14 +125,14 @@ export const TextVerifyPage: React.FC = () => {
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-10 text-left">
       
       {/* Header Bar */}
-      <div className="space-y-2 border-b border-slate-200 pb-6">
+      <div className="space-y-2 border-b border-[#0B1B3D]/10 pb-6">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#DC052D] bg-red-50 border border-red-200 shadow-2xs">
-            <FileCode className="w-3.5 h-3.5 text-[#DC052D]" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 shadow-xs">
+            <FileCode className="w-3.5 h-3.5 text-[#C5A059]" />
             <span>AI Text & Essay Scanner</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-50 border border-amber-200 shadow-2xs">
-            <span className="text-[#FFCC00]">★</span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 shadow-xs">
+            <span className="text-[#C5A059]">★</span>
             <span>Perplexity & Token Burstiness</span>
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200">
@@ -140,11 +140,11 @@ export const TextVerifyPage: React.FC = () => {
             <span>100% Free Forever</span>
           </span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
-          AI Text & Content Authenticity Scanner
+        <h1 className="text-3xl sm:text-4xl font-black text-[#0B1B3D] tracking-tight font-display">
+          AI Text & Academic Essay Scanner
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
-          Inspect student essays, customer complaints, reviews, and job applications. Analyzes token entropy, linguistic perplexity, and syntax burstiness to highlight synthetic LLM patterns (ChatGPT, Claude, Gemini).
+        <p className="text-xs sm:text-sm text-[#556987] max-w-3xl leading-relaxed">
+          Analyze student assignments, college essays, research drafts, and professional resumes. Measures sentence-level perplexity, token burstiness, and LLM signature phrase distribution in real time.
         </p>
       </div>
 
@@ -152,17 +152,13 @@ export const TextVerifyPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Column: Text Input & Sample Cases */}
-        <div className="lg:col-span-6 space-y-5">
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+        <div className="lg:col-span-5 space-y-5">
+          <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-5">
             
             <form onSubmit={handleCustomScan} className="space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <label className="font-bold text-slate-900 block">
-                  Paste Text or Document Content:
-                </label>
-                <span className="text-slate-500 font-mono">
-                  {wordCount} words • {charCount} chars
-                </span>
+              <div className="flex items-center justify-between text-xs font-bold text-[#0B1B3D]">
+                <span>Paste Document Text</span>
+                <span className="text-[#64748B] font-mono text-[11px]">{wordCount} words • {charCount} chars</span>
               </div>
 
               <textarea
@@ -170,34 +166,33 @@ export const TextVerifyPage: React.FC = () => {
                 required
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="Paste academic essay, candidate submission, customer review, or article here to inspect..."
-                className="w-full p-4 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-hidden focus:border-[#DC052D] focus:ring-2 focus:ring-[#DC052D]/10 bg-white leading-relaxed resize-y font-sans"
+                placeholder="Paste paragraph, essay, or resume text to inspect for synthetic generation..."
+                className="w-full p-4 rounded-xl border border-[#0B1B3D]/20 text-xs text-[#0B1B3D] focus:outline-hidden focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/15 bg-white leading-relaxed resize-y font-sans"
               />
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   type="submit"
                   disabled={isScanning || !inputText.trim()}
-                  className="flex-1 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="flex-1 bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold py-2.5 rounded-xl shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Analyze Text Authenticity</span>
+                  <Zap className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>Scan Linguistic Entropy</span>
                 </button>
-
                 <button
                   type="button"
                   onClick={() => setInputText('')}
-                  className="p-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
-                  title="Clear Input"
+                  className="p-2.5 rounded-xl border border-[#0B1B3D]/15 bg-[#FAFBFD] hover:bg-[#F0F4FA] text-[#556987] hover:text-[#0B1B3D] transition-colors cursor-pointer"
+                  title="Clear Text"
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <RotateCcw className="w-3.5 h-3.5" />
                 </button>
               </div>
             </form>
 
-            {/* Test Cases */}
-            <div className="pt-4 border-t border-slate-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-900 block">
+            {/* Test Samples */}
+            <div className="pt-2 border-t border-[#0B1B3D]/10 space-y-2.5">
+              <span className="text-xs font-bold text-[#0B1B3D] block">
                 Or test with verified linguistic cases:
               </span>
               <div className="flex flex-col gap-1.5">
@@ -206,11 +201,11 @@ export const TextVerifyPage: React.FC = () => {
                   onClick={() => handleLoadSample('chatgpt')}
                   className={`w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     selectedCase?.id === 'chatgpt'
-                      ? 'bg-red-50 border-[#DC052D] text-red-900 font-bold'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                      ? 'bg-red-50 border-red-300 text-red-900 font-bold'
+                      : 'bg-[#FAFBFD] border-[#0B1B3D]/10 text-[#3E5274] hover:bg-[#F0F4FA]'
                   }`}
                 >
-                  <span>1. University Macroeconomics Paper (94.6% AI)</span>
+                  <span>1. University Macro Term Paper (94.6% AI)</span>
                   <span className="text-[10px] uppercase font-bold bg-white px-2 py-0.5 rounded border border-red-200">Load Case →</span>
                 </button>
 
@@ -219,8 +214,8 @@ export const TextVerifyPage: React.FC = () => {
                   onClick={() => handleLoadSample('human')}
                   className={`w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     selectedCase?.id === 'human'
-                      ? 'bg-emerald-50 border-emerald-500 text-emerald-900 font-bold'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                      ? 'bg-emerald-50 border-emerald-400 text-emerald-900 font-bold'
+                      : 'bg-[#FAFBFD] border-[#0B1B3D]/10 text-[#3E5274] hover:bg-[#F0F4FA]'
                   }`}
                 >
                   <span>2. Student Personal Statement (98.2% Human)</span>
@@ -232,27 +227,45 @@ export const TextVerifyPage: React.FC = () => {
                   onClick={() => handleLoadSample('hybrid')}
                   className={`w-full flex items-center justify-between text-left px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     selectedCase?.id === 'hybrid'
-                      ? 'bg-amber-50 border-amber-500 text-amber-900 font-bold'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                      ? 'bg-amber-50 border-amber-300 text-amber-900 font-bold'
+                      : 'bg-[#FAFBFD] border-[#0B1B3D]/10 text-[#3E5274] hover:bg-[#F0F4FA]'
                   }`}
                 >
-                  <span>3. Corporate Strategy Memo (64.0% AI-Assisted)</span>
+                  <span>3. Corporate Memo (64.0% AI-Assisted)</span>
                   <span className="text-[10px] uppercase font-bold bg-white px-2 py-0.5 rounded border border-amber-200">Load Case →</span>
                 </button>
               </div>
             </div>
 
+            {/* Perplexity & Burstiness Stat Card */}
+            {selectedCase && (
+              <div className="p-4 bg-[#FAFBFD] rounded-xl border border-[#0B1B3D]/10 text-xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#556987]">Perplexity (PPL):</span>
+                  <span className="font-mono font-bold text-[#0B1B3D]">
+                    {selectedCase.perplexity} {selectedCase.perplexity < 30 ? '(Low = Predictable LLM)' : '(High = Organic Human)'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#556987]">Burstiness Variance:</span>
+                  <span className="font-mono font-bold text-[#0B1B3D]">
+                    {selectedCase.burstiness} {selectedCase.burstiness < 0.25 ? '(Flat robotic cadence)' : '(Natural sentence variance)'}
+                  </span>
+                </div>
+              </div>
+            )}
+
           </div>
         </div>
 
-        {/* Right Column: Sentence Highlighter & Statistical Breakdown */}
-        <div className="lg:col-span-6 space-y-6">
+        {/* Right Column: Sentence-by-Sentence Breakdown & Verdict */}
+        <div className="lg:col-span-7 space-y-6">
           {isScanning ? (
-            <div className="p-12 rounded-2xl bg-white border border-slate-200 text-center space-y-3 shadow-sm min-h-[380px] flex flex-col items-center justify-center">
-              <div className="w-12 h-12 border-3 border-[#DC052D] border-t-transparent rounded-full animate-spin" />
-              <h4 className="text-sm font-bold text-slate-900">Computing n-gram perplexity & burstiness metrics...</h4>
-              <p className="text-xs text-slate-500 max-w-sm">
-                Parsing sentence variance distribution, transition predictability, and synthetic hedging phrases.
+            <div className="p-12 rounded-3xl bg-white border border-[#0B1B3D]/10 text-center space-y-3 shadow-sm min-h-[380px] flex flex-col items-center justify-center">
+              <div className="w-12 h-12 border-3 border-[#C5A059] border-t-transparent rounded-full animate-spin" />
+              <h4 className="text-sm font-bold text-[#0B1B3D]">Calculating n-gram entropy & cross-entropy perplexity...</h4>
+              <p className="text-xs text-[#556987] max-w-sm">
+                Evaluating token probability distributions against transformer autoregressive language models.
               </p>
             </div>
           ) : selectedCase ? (
@@ -262,12 +275,12 @@ export const TextVerifyPage: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="space-y-6"
             >
-              {/* Verdict Header Card */}
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              {/* Verdict Header */}
+              <div className="p-6 rounded-3xl bg-white border border-[#0B1B3D]/10 shadow-sm space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#0B1B3D]/10 pb-4">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mb-1 font-mono">
-                      TEXT AUTHENTICITY VERDICT
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#64748B] block mb-1 font-mono">
+                      LINGUISTIC SYNTHETIC VERDICT
                     </span>
                     <div className="flex items-center gap-3">
                       <span className={`text-base font-black px-3.5 py-1 rounded-full border ${
@@ -277,77 +290,54 @@ export const TextVerifyPage: React.FC = () => {
                       }`}>
                         {selectedCase.verdict}
                       </span>
-                      <span className="text-xs font-bold text-slate-700">
-                        Confidence: <strong className="text-slate-900 font-mono">{selectedCase.score}%</strong>
+                      <span className="text-xs font-bold text-[#3E5274]">
+                        Probability: <strong className="text-[#0B1B3D] font-mono">{selectedCase.score}%</strong>
                       </span>
                     </div>
                   </div>
 
-                  <span className="text-xs font-mono text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 w-fit">
+                  <span className="text-xs font-mono text-[#0B1B3D] bg-[#FAF6EE] border border-[#C5A059]/40 px-3 py-1.5 rounded-lg font-bold w-fit">
                     {selectedCase.category}
                   </span>
                 </div>
 
-                {/* Statistical Metric Gauges */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Perplexity</span>
-                    <span className="text-lg font-black font-mono text-slate-900">{selectedCase.perplexity}</span>
-                    <span className="text-[9px] text-slate-400 block">Low = Synthetic</span>
-                  </div>
-
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Burstiness</span>
-                    <span className="text-lg font-black font-mono text-slate-900">{selectedCase.burstiness}</span>
-                    <span className="text-[9px] text-slate-400 block">Low = Robotic</span>
-                  </div>
-
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Boilerplate Cliches</span>
-                    <span className="text-lg font-black font-mono text-slate-900">{selectedCase.repeatedPhrasingCount}</span>
-                    <span className="text-[9px] text-slate-400 block">Hedging Tokens</span>
-                  </div>
-                </div>
-
-                {/* Sentence by Sentence Token Color Highlighting */}
-                <div className="space-y-3 pt-2">
+                {/* Sentence Highlight View */}
+                <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">
-                      Token Saliency & Sentence Decomposition
+                    <h3 className="text-xs font-bold text-[#0B1B3D] uppercase tracking-wider font-mono">
+                      Sentence-Level Saliency Analysis
                     </h3>
                     <div className="flex items-center gap-3 text-[10px] font-bold">
-                      <span className="flex items-center gap-1 text-red-600">
-                        <span className="w-2 h-2 rounded-full bg-red-500" />
-                        <span>AI Synthetic</span>
+                      <span className="flex items-center gap-1 text-red-700">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-red-200 border border-red-400" />
+                        <span>High AI Probability</span>
                       </span>
-                      <span className="flex items-center gap-1 text-emerald-600">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span className="flex items-center gap-1 text-emerald-800">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-emerald-100 border border-emerald-300" />
                         <span>Human Baseline</span>
                       </span>
                     </div>
                   </div>
 
                   <div className="space-y-2.5">
-                    {selectedCase.sentences.map((sent, i) => (
+                    {selectedCase.sentences.map((sent, idx) => (
                       <div 
-                        key={i}
-                        className={`p-3.5 rounded-xl border text-xs leading-relaxed space-y-1 transition-all ${
+                        key={idx}
+                        className={`p-3.5 rounded-xl border text-xs transition-all ${
                           sent.isAi 
-                            ? 'bg-red-50/70 border-red-200 hover:bg-red-100/70' 
-                            : 'bg-emerald-50/70 border-emerald-200 hover:bg-emerald-100/70'
+                            ? 'bg-red-50/70 border-red-200 text-red-950' 
+                            : 'bg-emerald-50/50 border-emerald-200 text-emerald-950'
                         }`}
                       >
-                        <p className={`font-medium ${sent.isAi ? 'text-red-950' : 'text-emerald-950'}`}>
+                        <p className="leading-relaxed font-serif-reading">
                           "{sent.text}"
                         </p>
-                        <div className="flex items-center justify-between text-[10px]">
-                          <span className={sent.isAi ? 'text-red-700' : 'text-emerald-700'}>
-                            {sent.reason}
+                        <div className="mt-2 pt-2 border-t border-black/5 flex items-center justify-between text-[11px]">
+                          <span className="font-mono text-[#556987]">
+                            Entropy: {sent.reason}
                           </span>
-                          <span className={`font-mono font-bold px-1.5 py-0.2 rounded border ${
-                            sent.isAi ? 'bg-red-200/50 text-red-900 border-red-300' : 'bg-emerald-200/50 text-emerald-900 border-emerald-300'
-                          }`}>
-                            {sent.prob}% {sent.isAi ? 'AI' : 'Human'}
+                          <span className={`font-mono font-bold ${sent.isAi ? 'text-red-700' : 'text-emerald-700'}`}>
+                            {sent.prob}% {sent.isAi ? 'Synthetic' : 'Human'}
                           </span>
                         </div>
                       </div>
@@ -355,17 +345,22 @@ export const TextVerifyPage: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Mandatory Disclaimer */}
+                <div className="p-3 bg-[#FAFBFD] rounded-xl border border-[#0B1B3D]/10 text-[11px] text-[#556987] leading-relaxed">
+                  <strong className="text-[#0B1B3D]">Academic & Disciplinary Notice:</strong> AI text detection models communicate empirical token perplexity and syntactic predictability. They do not constitute absolute proof of misconduct. No student should face academic penalties without human dialogue and draft history inspection.
+                </div>
+
                 {/* Action CTAs */}
-                <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#0B1B3D]/10 flex flex-wrap items-center justify-between gap-3">
                   <Link
                     to="/dashboard/reports/job-demo-deepfake-01"
-                    className="flex items-center gap-2 bg-gradient-to-r from-[#DC052D] to-[#990000] hover:from-[#E60026] hover:to-[#B3001B] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer"
+                    className="flex items-center gap-2 bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all cursor-pointer active:scale-95"
                   >
-                    <Share2 className="w-3.5 h-3.5" />
-                    <span>Download Cryptographic Text Audit Report</span>
+                    <Share2 className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>Download Cryptographic Perplexity Report</span>
                   </Link>
 
-                  <span className="text-[11px] text-slate-500 font-mono">
+                  <span className="text-[11px] text-[#64748B] font-mono">
                     Token parsing latency: 420ms
                   </span>
                 </div>

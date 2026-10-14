@@ -22,11 +22,13 @@ import {
   CreditCard, 
   Scan, 
   ChevronRight,
-  ShieldAlert
+  ShieldAlert,
+  LogIn,
+  UserPlus
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
-import { TruthLensIcon } from '../brand/Logo';
+import { MahiraIcon, MahiraLogo } from '../brand/Logo';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -54,106 +56,106 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const detectionEngines: NavItem[] = [
     {
       to: '/verify/image',
-      label: 'AI Image Detector',
+      label: 'AI Image & Diffusion ELA',
       icon: Eye,
       badge: 'Spectral ELA',
-      badgeColor: 'bg-[#A50044]/20 text-[#FF4D6D] border-[#A50044]/40',
-      subtitle: 'Midjourney, Diffusion & GANs'
+      badgeColor: 'bg-[#0B1B3D] text-[#C5A059] border-[#C5A059]/40',
+      subtitle: 'Midjourney, Flux, Stable Diffusion & GANs'
     },
     {
       to: '/verify/video',
       label: 'Deepfake Video Radar',
       icon: Video,
       badge: 'Biometric',
-      badgeColor: 'bg-[#004D98]/20 text-[#60A5FA] border-[#004D98]/40',
-      subtitle: 'Face-swaps & Temporal Glitches'
+      badgeColor: 'bg-[#0B1B3D] text-[#60A5FA] border-[#0B1B3D]/30',
+      subtitle: 'Face-swaps & Temporal Landmark Jitter'
     },
     {
       to: '/verify/voice',
       label: 'AI Voice Clone Detector',
       icon: Mic,
       badge: 'Acoustic',
-      badgeColor: 'bg-amber-400/20 text-amber-300 border-amber-400/40',
-      subtitle: 'ElevenLabs & Neural Vocoders'
+      badgeColor: 'bg-[#C5A059]/15 text-[#9A7B38] border-[#C5A059]/40',
+      subtitle: 'ElevenLabs & 16kHz Neural Vocoders'
     },
     {
       to: '/verify/text',
       label: 'AI Text & Essay Scanner',
       icon: FileCode,
       badge: 'Perplexity',
-      badgeColor: 'bg-[#A50044]/20 text-[#FF4D6D] border-[#A50044]/40',
-      subtitle: 'ChatGPT, Claude & Burstiness'
+      badgeColor: 'bg-[#0B1B3D] text-[#93C5FD] border-[#0B1B3D]/20',
+      subtitle: 'ChatGPT, Claude & Sentence Burstiness'
     },
     {
       to: '/verify/certificate',
       label: 'PDF & Document Engine',
       icon: FileText,
       badge: 'OCR & Dates',
-      badgeColor: 'bg-[#EDBB00]/20 text-[#FFD700] border-[#EDBB00]/40',
-      subtitle: 'Medical Leave & Clearances'
+      badgeColor: 'bg-[#C5A059]/15 text-[#9A7B38] border-[#C5A059]/40',
+      subtitle: 'Medical Leave & Official Clearances'
     },
     {
       to: '/verify/invoice',
       label: 'Receipt & Expense Tamper',
       icon: Receipt,
       badge: 'Financial',
-      badgeColor: 'bg-[#EDBB00]/20 text-[#FFD700] border-[#EDBB00]/40',
-      subtitle: 'Photoshop Font & Math Audit'
+      badgeColor: 'bg-[#0B1B3D] text-[#C5A059] border-[#C5A059]/40',
+      subtitle: 'Photoshop Font & Mathematical Sum Audit'
     },
     {
       to: '/verify/kyc',
-      label: 'KYC & ID Card Scanner',
+      label: 'KYC & ID Card Authenticator',
       icon: CreditCard,
       badge: 'Security',
-      badgeColor: 'bg-[#004D98]/20 text-[#60A5FA] border-[#004D98]/40',
-      subtitle: 'Passports & National IDs'
+      badgeColor: 'bg-[#0B1B3D] text-[#60A5FA] border-[#0B1B3D]/20',
+      subtitle: 'ICAO 9303 MRZ & Ghost Watermarks'
     }
   ];
 
   const governanceItems: NavItem[] = [
     {
       to: '/university',
-      label: 'University & Review Desk',
+      label: 'Reviewer Desk & Portal',
       icon: GraduationCap,
       badge: 'Queue',
-      badgeColor: 'bg-[#EDBB00]/20 text-[#FFD700] border-[#EDBB00]/40',
-      subtitle: 'Human Evaluator Portal'
+      badgeColor: 'bg-[#C5A059]/15 text-[#9A7B38] border-[#C5A059]/40',
+      subtitle: 'Human Evaluator Queue & Multi-sign'
     },
     {
       to: '/dashboard/reports/job-demo-deepfake-01',
       label: 'HMAC Cryptographic Ledger',
       icon: Share2,
       badge: 'SHA-256',
-      badgeColor: 'bg-[#004D98]/20 text-[#60A5FA] border-[#004D98]/40',
-      subtitle: 'Tamper-Evident Proof'
+      badgeColor: 'bg-[#0B1B3D] text-[#93C5FD] border-[#0B1B3D]/20',
+      subtitle: 'Tamper-Evident Court Proof'
     },
     {
       to: '/accuracy',
       label: 'Model Accuracy & ROC AUC',
       icon: BarChart3,
       badge: '97.4%',
-      badgeColor: 'bg-emerald-400/20 text-emerald-300 border-emerald-400/40',
-      subtitle: 'Calibration & Benchmarks'
+      badgeColor: 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30',
+      subtitle: 'Calibration, F1-Scores & Benchmarks'
     }
   ];
 
   const safetyItems: NavItem[] = [
     {
       to: '/sos',
-      label: 'Victim SOS Emergency',
+      label: 'Victim SOS Emergency Desk',
       icon: AlertOctagon,
       highlight: true,
       badge: '1930 Helpline',
-      badgeColor: 'bg-[#A50044] text-white border-white/40 shadow-[0_0_10px_#A50044]',
-      subtitle: 'Instant Cyber Police Kit'
+      badgeColor: 'bg-[#0B1B3D] text-[#C5A059] border-[#C5A059]/50 shadow-xs',
+      subtitle: 'Instant Indian Cyber Police Kit'
     },
     {
       to: '/learn',
-      label: 'TruthLens Academy',
+      label: 'Mahira Defense Academy',
       icon: BookOpen,
       badge: 'Quizzes',
-      badgeColor: 'bg-[#EDBB00]/20 text-[#FFD700] border-[#EDBB00]/40',
-      subtitle: 'Interactive Spot-the-Fake'
+      badgeColor: 'bg-[#C5A059]/15 text-[#9A7B38] border-[#C5A059]/40',
+      subtitle: 'Interactive Spot-the-Deepfake Modules'
     }
   ];
 
@@ -161,68 +163,74 @@ export const Sidebar: React.FC<SidebarProps> = ({
     return location.pathname === path;
   };
 
-  const renderNavGroup = (title: string, items: NavItem[]) => (
-    <div className="space-y-1.5 pt-4">
+  const renderNavGroup = (chapterNumber: string, title: string, items: NavItem[]) => (
+    <div className="space-y-2 pt-5">
       <div className="flex items-center justify-between px-3 mb-1">
-        <span className="text-[10px] font-black uppercase tracking-widest text-[#EDBB00]/90 font-mono flex items-center gap-1.5">
-          <span className="text-[#EDBB00]">★</span>
-          <span>{title}</span>
+        <span className="text-[10px] font-mono font-bold tracking-widest text-[#0B1B3D] flex items-center gap-1.5 uppercase">
+          <span className="text-[#C5A059] font-black">{chapterNumber}</span>
+          <span>// {title}</span>
         </span>
-        <span className="text-[9px] font-mono text-slate-400 font-bold">100% FREE</span>
+        <span className="text-[9px] font-mono text-[#C5A059] font-bold bg-[#FAF6EE] px-2 py-0.5 rounded border border-[#C5A059]/30">
+          FREE
+        </span>
       </div>
 
-      {items.map((item) => {
-        const Icon = item.icon;
-        const active = isActive(item.to);
+      <div className="space-y-1.5">
+        {items.map((item) => {
+          const Icon = item.icon;
+          const active = isActive(item.to);
 
-        return (
-          <Link
-            key={item.to}
-            to={item.to}
-            onClick={onClose}
-            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group relative ${
-              active
-                ? 'bg-gradient-to-r from-[#A50044] via-[#800030] to-[#0A1128] text-white shadow-[0_4px_24px_rgba(165,0,68,0.4)] border-l-4 border-[#EDBB00]'
-                : item.highlight
-                ? 'text-white bg-[#A50044]/25 hover:bg-[#A50044]/35 border border-[#A50044]/50 shadow-[0_0_14px_rgba(165,0,68,0.25)]'
-                : 'text-slate-300 hover:text-white hover:bg-white/6 hover:border-slate-700/60'
-            }`}
-          >
-            <div className={`p-2 rounded-xl shrink-0 transition-all ${
-              active 
-                ? 'bg-white/20 text-white' 
-                : item.highlight
-                ? 'bg-[#A50044] text-white shadow-md'
-                : 'bg-white/5 text-slate-300 group-hover:text-[#EDBB00] group-hover:bg-white/10'
-            }`}>
-              <Icon className="w-4 h-4" />
-            </div>
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onClose}
+              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group relative ${
+                active
+                  ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-md border-l-4 border-[#C5A059]'
+                  : item.highlight
+                  ? 'text-[#0B1B3D] bg-[#FAF6EE] hover:bg-[#F2ECE0] border border-[#C5A059]/50 shadow-xs'
+                  : 'text-[#3E5274] hover:text-[#0B1B3D] hover:bg-[#F0F4FA] border border-transparent'
+              }`}
+            >
+              <div className={`p-2 rounded-xl shrink-0 transition-all ${
+                active 
+                  ? 'bg-[#C5A059] text-[#0B1B3D]' 
+                  : item.highlight
+                  ? 'bg-[#0B1B3D] text-[#C5A059]'
+                  : 'bg-[#FAFBFD] text-[#0B1B3D] group-hover:bg-[#0B1B3D] group-hover:text-[#C5A059] border border-[#0B1B3D]/10'
+              }`}>
+                <Icon className="w-4 h-4" />
+              </div>
 
-            <div className="flex items-center justify-between flex-1 min-w-0">
-              <div className="flex flex-col min-w-0">
-                <span className="truncate leading-tight font-display">{item.label}</span>
-                {item.subtitle && (
-                  <span className={`text-[10px] truncate leading-tight mt-0.5 ${
-                    active ? 'text-white/80' : 'text-slate-400 group-hover:text-slate-300'
+              <div className="flex items-center justify-between flex-1 min-w-0">
+                <div className="flex flex-col min-w-0">
+                  <span className={`truncate leading-tight font-sans ${active ? 'text-white' : 'text-[#0B1B3D]'}`}>
+                    {item.label}
+                  </span>
+                  {item.subtitle && (
+                    <span className={`text-[10px] truncate leading-tight mt-0.5 ${
+                      active ? 'text-slate-300' : 'text-[#64748B]'
+                    }`}>
+                      {item.subtitle}
+                    </span>
+                  )}
+                </div>
+
+                {item.badge && (
+                  <span className={`text-[9px] uppercase font-mono font-bold px-1.5 py-0.5 rounded-md ml-2 shrink-0 border ${
+                    active 
+                      ? 'bg-white/15 text-white border-white/30' 
+                      : item.badgeColor || 'bg-white text-[#3E5274] border-slate-200'
                   }`}>
-                    {item.subtitle}
+                    {item.badge}
                   </span>
                 )}
               </div>
-
-              {item.badge && (
-                <span className={`text-[9px] uppercase font-mono font-extrabold px-1.5 py-0.5 rounded-md ml-2 shrink-0 border ${
-                  active 
-                    ? 'bg-white/20 text-white border-white/40' 
-                    : item.badgeColor || 'bg-white/10 text-slate-300 border-white/15'
-                }`}>
-                  {item.badge}
-                </span>
-              )}
-            </div>
-          </Link>
-        );
-      })}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 
@@ -236,36 +244,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 bg-[#0B1B3D]/60 backdrop-blur-sm"
           />
 
-          {/* Slide-Out Glass Panel */}
+          {/* Bleach Editorial Drawer Panel */}
           <motion.aside
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
-            transition={{ type: 'spring', damping: 26, stiffness: 260 }}
-            className="relative w-84 max-w-[90vw] h-full bg-[#070D1E]/95 backdrop-blur-2xl border-r border-white/10 text-white shadow-[0_0_80px_rgba(0,0,0,0.9)] z-10 flex flex-col overflow-hidden"
+            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+            className="relative w-88 max-w-[92vw] h-full bg-[#FAFBFD] border-r border-[#0B1B3D]/15 text-[#0B1B3D] shadow-[0_20px_60px_rgba(11,27,61,0.25)] z-10 flex flex-col overflow-hidden"
           >
-            {/* Ambient Sapphire & Garnet Glow */}
-            <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#A50044]/20 via-[#004D98]/15 to-transparent pointer-events-none" />
+            {/* Top Navy Banner Accent with Gold Hairline */}
+            <div className="h-1 bg-gradient-to-r from-[#0B1B3D] via-[#C5A059] to-[#0B1B3D]" />
 
             {/* Drawer Header */}
-            <div className="h-18 px-5 flex items-center justify-between border-b border-white/10 shrink-0 relative z-10">
+            <div className="h-18 px-5 flex items-center justify-between border-b border-[#0B1B3D]/10 bg-white shrink-0 relative z-10">
               <div className="flex items-center gap-3">
-                <TruthLensIcon size={34} />
+                <MahiraIcon size={34} />
                 <div className="flex flex-col">
-                  <span className="text-sm font-black font-display tracking-tight text-white">
-                    Truth<span className="bg-gradient-to-r from-[#A50044] to-[#EDBB00] bg-clip-text text-transparent">Lens</span>
+                  <span className="text-base font-black tracking-tight text-[#0B1B3D] font-display">
+                    Mahira<span className="text-[#C5A059]">.</span>
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">Forensic Workspace</span>
+                  <span className="text-[10px] font-mono text-[#64748B] tracking-wider uppercase">
+                    Forensic Intelligence • 2026
+                  </span>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-2 rounded-xl bg-[#F0F4FA] hover:bg-[#E2E8F0] text-[#0B1B3D] transition-colors cursor-pointer border border-[#0B1B3D]/10"
                 title="Close Drawer"
               >
                 <X className="w-5 h-5" />
@@ -280,48 +290,69 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={onClose}
                 className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group ${
                   location.pathname === '/'
-                    ? 'bg-gradient-to-r from-[#A50044] via-[#800030] to-[#0A1128] text-white shadow-lg border-l-4 border-[#EDBB00]'
-                    : 'text-slate-300 hover:text-white hover:bg-white/6'
+                    ? 'bg-[#0B1B3D] text-[#FAFBFD] shadow-md border-l-4 border-[#C5A059]'
+                    : 'text-[#3E5274] hover:text-[#0B1B3D] hover:bg-[#F0F4FA]'
                 }`}
               >
                 <div className={`p-2 rounded-xl shrink-0 ${
-                  location.pathname === '/' ? 'bg-white/20 text-white' : 'bg-white/5 text-slate-300 group-hover:text-[#EDBB00]'
+                  location.pathname === '/' ? 'bg-[#C5A059] text-[#0B1B3D]' : 'bg-[#FAFBFD] text-[#0B1B3D] group-hover:bg-[#0B1B3D] group-hover:text-[#C5A059] border border-[#0B1B3D]/10'
                 }`}>
                   <Home className="w-4 h-4" />
                 </div>
                 <div className="flex items-center justify-between flex-1">
-                  <span className="font-display">Home & Live Workbench</span>
-                  <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded">
-                    LIVE
+                  <span className="font-display">Home & Live Cockpit</span>
+                  <span className="text-[9px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded">
+                    ACTIVE
                   </span>
                 </div>
               </Link>
 
-              {renderNavGroup('DETECTION ARSENAL', detectionEngines)}
-              {renderNavGroup('GOVERNANCE & TRUST', governanceItems)}
-              {renderNavGroup('SAFETY & COMMUNITY', safetyItems)}
+              {renderNavGroup('01', 'DETECTION ARSENAL', detectionEngines)}
+              {renderNavGroup('02', 'GOVERNANCE & TRUST', governanceItems)}
+              {renderNavGroup('03', 'SAFETY & CITADEL', safetyItems)}
             </div>
 
-            {/* Drawer Footer Banner */}
-            <div className="p-4 border-t border-white/10 bg-[#050914] relative z-10 shrink-0 space-y-2.5">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-[#004D98]/20 via-[#0A1128] to-[#A50044]/25 border border-white/10 space-y-1 text-left">
+            {/* Drawer Footer Banner & Direct Authentication Actions */}
+            <div className="p-4 border-t border-[#0B1B3D]/10 bg-white relative z-10 shrink-0 space-y-3">
+              {/* Direct Auth Shortcuts so user ALWAYS sees Sign In / Account */}
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  to="/login"
+                  onClick={onClose}
+                  className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F0F4FA] hover:bg-[#E2E8F0] border border-[#0B1B3D]/15 text-xs font-bold text-[#0B1B3D] transition-colors"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={onClose}
+                  className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B1B3D] hover:bg-[#142A5C] text-[#FAFBFD] border border-[#C5A059]/40 text-xs font-bold transition-colors"
+                >
+                  <UserPlus className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>Register</span>
+                </Link>
+              </div>
+
+              {/* Public Good Guarantee Box */}
+              <div className="p-3 rounded-2xl bg-[#FAF6EE] border border-[#C5A059]/30 space-y-1 text-left">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-black text-[#EDBB00] uppercase tracking-wider flex items-center gap-1">
+                  <span className="text-[10px] font-mono font-bold text-[#9A7B38] uppercase tracking-wider flex items-center gap-1">
                     <span>★</span>
                     <span>100% Free Public Good</span>
                   </span>
-                  <span className="text-[9px] font-mono text-emerald-400 font-bold">VERIFIED</span>
+                  <span className="text-[9px] font-mono text-emerald-700 font-bold bg-emerald-100/60 px-1 rounded">SECURED</span>
                 </div>
-                <p className="text-[10px] text-slate-300 leading-relaxed">
-                  Open cryptographic digital authenticity infrastructure. Zero subscriptions, zero paywalls.
+                <p className="text-[10px] text-[#556987] leading-relaxed">
+                  Cryptographic digital authenticity standard. No paywalls, zero data harvesting.
                 </p>
               </div>
 
               {/* Secondary links */}
-              <div className="flex items-center justify-between text-[10px] text-slate-400 px-1">
-                <Link to="/about" onClick={onClose} className="hover:text-white transition-colors">Methodology</Link>
-                <Link to="/privacy" onClick={onClose} className="hover:text-white transition-colors">Zero-Harvesting</Link>
-                <Link to="/accessibility" onClick={onClose} className="hover:text-white transition-colors">WCAG 2.1 AA</Link>
+              <div className="flex items-center justify-between text-[10px] text-[#64748B] px-1 font-medium">
+                <Link to="/about" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">Methodology</Link>
+                <Link to="/privacy" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">Zero-Harvesting</Link>
+                <Link to="/accessibility" onClick={onClose} className="hover:text-[#0B1B3D] transition-colors">WCAG 2.1 AA</Link>
               </div>
             </div>
           </motion.aside>

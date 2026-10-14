@@ -35,15 +35,15 @@ export const ForensicComparator: React.FC<ForensicComparatorProps> = ({
 
   return (
     <div className="w-full space-y-3 select-none">
-      <div className="flex items-center justify-between text-xs font-bold text-slate-300">
+      <div className="flex items-center justify-between text-xs font-bold text-[#0B1B3D]">
         <div className="flex items-center gap-2">
-          <Scan className="w-4 h-4 text-[#EDBB00]" />
+          <Scan className="w-4 h-4 text-[#C5A059]" />
           <span>{label}</span>
         </div>
         <div className="flex items-center gap-3 text-[11px]">
-          <span className="text-cyan-400 font-extrabold font-mono">◀ Optical Camera Ingestion</span>
-          <span className="text-slate-600">•</span>
-          <span className="text-[#FF4D6D] font-extrabold font-mono">Spectral ELA Heatmap ▶</span>
+          <span className="text-[#0B1B3D] font-bold font-mono">◀ Optical Sensor Capture</span>
+          <span className="text-slate-400">•</span>
+          <span className="text-[#C5A059] font-bold font-mono">Spectral ELA Heatmap ▶</span>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export const ForensicComparator: React.FC<ForensicComparatorProps> = ({
         onMouseUp={() => setIsDragging(false)}
         onMouseLeave={() => setIsDragging(false)}
         onTouchMove={handleTouchMove}
-        className="relative h-72 sm:h-96 w-full rounded-3xl overflow-hidden shadow-2xl border border-white/15 cursor-ew-resize bg-[#060B18]"
+        className="relative h-72 sm:h-96 w-full rounded-3xl overflow-hidden shadow-xl border border-[#0B1B3D]/15 cursor-ew-resize bg-[#071530]"
       >
         {/* Layer 2: Forensic ELA Heatmap Layer (Underneath right) */}
         <div className="absolute inset-0">
@@ -64,10 +64,10 @@ export const ForensicComparator: React.FC<ForensicComparatorProps> = ({
             className="w-full h-full object-cover filter contrast-125 saturate-150"
           />
           {/* Simulated ELA Thermal Overlay Grid */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#A50044]/50 via-[#EDBB00]/30 to-[#004D98]/50 mix-blend-color" />
-          <div className="absolute inset-0 bg-[radial-gradient(#EDBB00_1px,transparent_1px)] [background-size:16px_16px] opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#0B1B3D]/60 via-[#C5A059]/35 to-transparent mix-blend-color" />
+          <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px] opacity-35" />
           
-          <div className="absolute top-4 right-4 bg-black/75 backdrop-blur-md border border-[#A50044]/50 text-red-200 text-[10px] uppercase font-mono font-bold px-3 py-1 rounded-md shadow-lg">
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md border border-[#C5A059]/60 text-[#C5A059] text-[10px] uppercase font-mono font-bold px-3 py-1 rounded-md shadow-lg">
             ELA Spectral Grid (High Variance)
           </div>
         </div>
@@ -83,23 +83,23 @@ export const ForensicComparator: React.FC<ForensicComparatorProps> = ({
             className="w-full h-full object-cover max-w-none"
             style={{ width: containerRef.current?.getBoundingClientRect().width || '100%' }}
           />
-          <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md border border-cyan-500/40 text-cyan-200 text-[10px] uppercase font-mono font-bold px-3 py-1 rounded-md shadow-lg">
+          <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] uppercase font-mono font-bold px-3 py-1 rounded-md shadow-lg">
             Optical Sensor Capture
           </div>
         </div>
 
         {/* Draggable Divider Handle */}
         <div
-          className="absolute top-0 bottom-0 w-1 bg-gradient-to-b from-[#EDBB00] via-[#FFFFFF] to-[#A50044] shadow-[0_0_16px_#A50044]"
+          className="absolute top-0 bottom-0 w-1 bg-gradient-to-b from-[#C5A059] via-white to-[#0B1B3D] shadow-[0_0_16px_rgba(197,160,89,0.8)]"
           style={{ left: `${sliderPosition}%` }}
         >
-          <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#060B18] border-2 border-white shadow-xl flex items-center justify-center text-[#EDBB00] text-xs font-bold">
+          <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#0B1B3D] border-2 border-[#C5A059] shadow-xl flex items-center justify-center text-[#C5A059] text-xs font-bold">
             ↔
           </div>
         </div>
 
         {/* Bottom Status Tooltip */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[10px] font-mono text-slate-300 pointer-events-none">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/75 backdrop-blur-md border border-[#C5A059]/30 px-4 py-1.5 rounded-full text-[10px] font-mono text-white pointer-events-none shadow-md">
           Drag slider left or right to reveal algorithmic compression inconsistencies
         </div>
       </div>

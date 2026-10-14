@@ -199,7 +199,7 @@ export const AccuracyPage: React.FC = () => {
           <div className="p-4 rounded-xl bg-[#FBF8EE] border border-[#E6D5A2] space-y-1">
             <span className="text-xs font-bold text-[#A88234]">Abstained (Human Review Corridor)</span>
             <div className="text-2xl font-bold text-[#A88234]">{bm.confusion_matrix.abstained_inconclusive} cases</div>
-            <p className="text-[11px] text-[#A88234] opacity-90">Borderline compression quality where TruthLens refused binary gambling.</p>
+            <p className="text-[11px] text-[#A88234] opacity-90">Borderline compression quality where Mahira refused binary gambling.</p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
